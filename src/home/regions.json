@@ -1,0 +1,57 @@
+[
+  {
+      "name": "NA",
+      "region": "na1",
+      "color": "#6b92fa"
+  },
+  {
+      "name": "EUW",
+      "region": "euw1",
+      "color": "#957dad" 
+  },
+  {
+      "name": "EUNE",
+      "region": "eun1",
+      "color": "#7dae9b"
+  },
+  {
+      "name": "KR",
+      "region": "kr",
+      "color": "#f2c6e5"
+  },
+  {
+      "name": "JP",
+      "region": "jp1",
+      "color": "#ffadad"
+  },
+  {
+      "name": "BR",
+      "region": "br1",
+      "color": "#fec868"
+  },
+  {
+      "name": "OCE",
+      "region": "oc1",
+      "color": "#a8d1d1"
+  },
+  {
+      "name": "LAN",
+      "region": "la1",
+      "color": "#b88566"
+  },
+  {
+      "name": "LAS",
+      "region": "la2",
+      "color": "#ac9f7c"
+  },
+  {
+      "name": "RU",
+      "region": "ru1",
+      "color": "#ac7d88"
+  },
+  {
+      "name": "TR",
+      "region": "tr1",
+      "color": "#85586f"
+  }
+]
