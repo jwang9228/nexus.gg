@@ -4,13 +4,14 @@ import { Routes, Route } from 'react-router'
 import Navbar from './navbar/navbar'
 import Summoner from './summoner/summoner'
 import Home from './home/home'
-import './App.css'
 
 function App() {
+  const bgColor = 'bg-[#24253a]';
+
   useEffect(() => {
-		document.body.classList.add('app-background-color');
+		document.body.classList.add(bgColor);
 		return () => {
-			document.body.classList.remove('app-background-color');
+			document.body.classList.remove(bgColor);
 		};
 	}, []);
 
@@ -21,7 +22,7 @@ function App() {
         <div className='flex-1 m-0 p-0'>
           <Routes>
             <Route index element = {<Home />} />
-            <Route path='/summoners/:server/:summonerName' element={<Summoner />} />
+            <Route path='/summoners/:region/:summonerName' element={<Summoner />} />
           </Routes>
         </div>
       </div>
