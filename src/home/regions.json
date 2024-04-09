@@ -7,7 +7,7 @@
   {
       "name": "EUW",
       "region": "euw1",
-      "color": "#957dad" 
+      "color": "#957dad"
   },
   {
       "name": "EUNE",
@@ -17,7 +17,7 @@
   {
       "name": "KR",
       "region": "kr",
-      "color": "#f2c6e5"
+      "color": "#d9b2ce"
   },
   {
       "name": "JP",

@@ -5,8 +5,10 @@ import { MdHistory } from 'react-icons/md';
 import './home.css';
 import * as summonerClient from '../summoner/summonerClient';
 import regions from './regions.json';
+import champions from '../summoner/champion.json';
 
 function Home() {
+  const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
   const navigate = useNavigate();
 
   const [selectedRegion, setSelectedRegion] = useState(regions[0]);
@@ -29,6 +31,16 @@ function Home() {
 
   const filterRecentSearches = () => {
     return recentSearches.filter((search) => search.name.toLowerCase().startsWith(summonerSearch.toLowerCase()));
+  }
+
+  const filterChampionsSearch = () => {
+    const searchLowerCase = summonerSearch.toLowerCase();
+    const filteredChampions = Object.values(champions.data).filter(champion =>
+      [champion.id, champion.name].some(prop =>
+        prop.toLowerCase().startsWith(searchLowerCase)
+      )
+    );
+    return filteredChampions;
   }
 
   useEffect(() => {
@@ -90,15 +102,31 @@ function Home() {
         </div>
       )}
       {searchbarActive && (
-        <ul className='w-screen min-[801px]:w-1/2 mt-2.5'>
+        <ul className='w-screen min-[801px]:w-1/2 mt-2.5 overflow-auto'>
+          {summonerSearch.length > 0 && filterChampionsSearch().map((champion) => (
+            <li className='bg-indigo-400 hover:bg-indigo-500 first:rounded-t-md last:rounded-b-md'>
+              <a href={`/champions/${champion.id}`} className='flex justify-between py-1.5 px-3 text-zinc-950'>
+                <div className='flex flex-row items-center'>
+                  <AiOutlineSearch className='mt-0.5 mr-3' size={18}/>
+                  <img 
+                    src={`${AWS_S3_URL}/champion/${champion.image.full}`}
+                    className='w-[16px] rounded-sm mr-1.5 mt-0.5'
+                    loading='lazy'
+                    alt='profile-icon'
+                  />
+                  {`${champion.name}`}
+                </div>
+              </a>
+            </li>
+          ))}
           {filterRecentSearches().map((search) => (
             <li className='bg-indigo-400 hover:bg-indigo-500 first:rounded-t-md last:rounded-b-md' key={search.name}>
               <a href={`/summoners/${search.region}/${search.name}-${search.tagline}`} className='flex justify-between py-1.5 px-3 text-zinc-950'>
                 <div className='flex flex-row items-center'>
                   <MdHistory className='mt-0.5 mr-3' size={18}/>
                   <img 
-                    src={`/src/images/profileicon/${search.profileIconId}.png`}
-                    className='w-[16px] rounded-sm mr-1 mt-0.5'
+                    src={`${AWS_S3_URL}/profileicon/${search.profileIconId}.png`}
+                    className='w-[16px] rounded-sm mr-1.5 mt-0.5'
                     loading='lazy'
                     alt='profile-icon'
                   />
