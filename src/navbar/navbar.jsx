@@ -1,6 +1,7 @@
 import { PiListNumbers } from 'react-icons/pi';
 import { LuLayoutDashboard } from 'react-icons/lu';
 import { AiOutlineAliwangwang } from 'react-icons/ai';
+import { FiUserPlus } from 'react-icons/fi';
 import { useState, useContext, createContext } from 'react';
 
 const NavbarContext = createContext();
@@ -24,7 +25,7 @@ export function Navbar() {
             />
             <NavbarItem 
               icon={<PiListNumbers size={25} />}
-              text='Tierlist'
+              text='Tier List'
               linkTo='/'
             />
             <NavbarItem 
@@ -33,6 +34,21 @@ export function Navbar() {
               linkTo='/'
             />
           </ul>
+          <div className='flex justify-center items-center border-t-2 border-indigo-500/75 mx-4 mb-6 text-indigo-500/80'>
+            <button type='button' className='bg-slate-900/80 p-1.5 ml-0.5 mt-2.5'>
+              <FiUserPlus size={25} />
+            </button>
+            <span 
+              className={`overflow-hidden whitespace-nowrap transition-all mt-1.5 ${
+                expanded ? 'w-32 ml-3.5' : 'w-0'
+              }`}
+            >
+              <div className='flex flex-col'>
+                <div className='font-[525]'>Guest</div>
+                <div className='text-sm text-indigo-500/70'>Logged Out</div>
+              </div>
+            </span>
+          </div>
         </NavbarContext.Provider>
       </nav>
     </aside>
@@ -47,19 +63,19 @@ function NavbarItem({ icon, text, linkTo, active }) {
     <a
       href={`${linkTo}`}
       className=
-      {`relative flex items-center py-2 px-3 my-3
-        font-[550] rounded-md cursor-pointer 
+      {`relative flex justify-center items-center py-1.5 px-2 my-3
+        font-[525] rounded-md cursor-pointer 
         transition-colors 
         ${
           active
-            ? 'bg-gradient-to-tr from-indigo-700 to-indigo-500 text-stone-950'
-            : 'hover:bg-indigo-900 text-indigo-500'
+            ? 'bg-gradient-to-tr from-indigo-600/80 to-indigo-500/80 text-stone-950'
+            : 'hover:bg-slate-900/85 text-indigo-500/70'
         }
       `}
     >
       {icon}
       <span 
-        className={`overflow-hidden transition-all ${
+        className={`overflow-hidden whitespace-nowrap transition-all ${
           expanded ? 'w-32 ml-3' : 'w-0'
         }`}
       >

@@ -2,7 +2,6 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { useState, useEffect } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 import { MdHistory } from 'react-icons/md';
-import './home.css';
 import * as summonerClient from '../summoner/summonerClient';
 import regions from './regions.json';
 import champions from '../summoner/champion.json';
@@ -30,11 +29,11 @@ function Home() {
   };
 
   const filterRecentSearches = () => {
-    return recentSearches.filter((search) => search.name.toLowerCase().startsWith(summonerSearch.toLowerCase()));
+    return recentSearches.filter((search) => `${search.name}#${search.tagline}`.toLowerCase().startsWith(summonerSearch.toLowerCase()));
   }
 
   const filterChampionsSearch = () => {
-    const searchLowerCase = summonerSearch.toLowerCase();
+    const searchLowerCase = summonerSearch.trim().toLowerCase();
     const filteredChampions = Object.values(champions.data).filter(champion =>
       [champion.id, champion.name].some(prop =>
         prop.toLowerCase().startsWith(searchLowerCase)
@@ -52,9 +51,12 @@ function Home() {
   }, []);
 
   return (
-    <div className='rift-background flex flex-col items-center h-screen'>
+    <div className={`
+      flex flex-col items-center h-screen bg-cover bg-center shadow-[inset_0_0_0_2000px_rgba(0,0,0,0.25)]
+      bg-summoners-rift-mobile laptop:bg-summoners-rift
+    `}>
       <form 
-        className='w-screen min-[801px]:w-1/2 relative mt-36'
+        className='w-screen relative px-5 mt-36 laptop:w-1/2 laptop:px-0'
         onSubmit={(e) => { 
           e.preventDefault(); 
           searchSummoner(); 
@@ -73,7 +75,7 @@ function Home() {
             type='search' 
             placeholder='Search Summoners/Champions' 
             className='w-full p-3 ps-20 pe-20 rounded-md bg-slate-900 text-slate-200 text-xl focus:outline-none'
-            onChange={(e) => { setSummonerSearch(e.target.value) }}
+            onChange={(e) => { setSummonerSearch((e.target.value).trim()) }}
             onFocus={() => setSearchbarActive(true) }
             onBlur={() => setSearchbarActive(false) }
           />
@@ -87,7 +89,7 @@ function Home() {
         </div>
       </form>
       {showRegions && (
-        <div className='flex justify-center w-screen min-[801px]:w-1/2'>
+        <div className='flex justify-center w-screen px-5 laptop:w-1/2 laptop:px-0'>
           {regions.map((region) => (
             <button
               type='button'
@@ -102,10 +104,10 @@ function Home() {
         </div>
       )}
       {searchbarActive && (
-        <ul className='w-screen min-[801px]:w-1/2 mt-2.5 overflow-auto'>
+        <ul className='w-screen overflow-auto mt-2.5 px-5 laptop:w-1/2 laptop:px-0'>
           {summonerSearch.length > 0 && filterChampionsSearch().map((champion) => (
-            <li className='bg-indigo-400 hover:bg-indigo-500 first:rounded-t-md last:rounded-b-md'>
-              <a href={`/champions/${champion.id}`} className='flex justify-between py-1.5 px-3 text-zinc-950'>
+            <li className='bg-slate-800 hover:bg-slate-900 first:rounded-t-md last:rounded-b-md' key={champion.id}>
+              <a href={`/champions/${champion.id}`} className='flex justify-between py-1.5 px-3 text-zinc-300/95'>
                 <div className='flex flex-row items-center'>
                   <AiOutlineSearch className='mt-0.5 mr-3' size={18}/>
                   <img 
@@ -114,14 +116,19 @@ function Home() {
                     loading='lazy'
                     alt='profile-icon'
                   />
-                  {`${champion.name}`}
+                  <span>
+                    {`${champion.name.substring(0, summonerSearch.length).replace(' ', '\u00A0')}`}
+                  </span>
+                  <span className='font-semibold'>
+                    {`${champion.name.substring(summonerSearch.length).replace(' ', '\u00A0')}`}
+                  </span>
                 </div>
               </a>
             </li>
           ))}
           {filterRecentSearches().map((search) => (
-            <li className='bg-indigo-400 hover:bg-indigo-500 first:rounded-t-md last:rounded-b-md' key={search.name}>
-              <a href={`/summoners/${search.region}/${search.name}-${search.tagline}`} className='flex justify-between py-1.5 px-3 text-zinc-950'>
+            <li className='bg-slate-800 hover:bg-slate-900 first:rounded-t-md last:rounded-b-md' key={search.name}>
+              <a href={`/summoners/${search.region}/${search.name}-${search.tagline}`} className='flex justify-between py-1.5 px-3 text-zinc-300/95'>
                 <div className='flex flex-row items-center'>
                   <MdHistory className='mt-0.5 mr-3' size={18}/>
                   <img 
