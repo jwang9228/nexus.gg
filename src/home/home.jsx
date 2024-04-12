@@ -116,9 +116,7 @@ function Home() {
                     loading='lazy'
                     alt='profile-icon'
                   />
-                  <span>
-                    {`${champion.name.substring(0, summonerSearch.length).replace(' ', '\u00A0')}`}
-                  </span>
+                  {`${champion.name.substring(0, summonerSearch.length).replace(' ', '\u00A0')}`}
                   <span className='font-semibold'>
                     {`${champion.name.substring(summonerSearch.length).replace(' ', '\u00A0')}`}
                   </span>
@@ -137,7 +135,16 @@ function Home() {
                     loading='lazy'
                     alt='profile-icon'
                   />
-                  {`${search.name}#${search.tagline}`}
+                  {summonerSearch.length === 0 ? (
+                    `${search.name}#${search.tagline}`
+                  ) : (
+                    <>
+                      {`${search.name}#${search.tagline}`.substring(0, summonerSearch.length)}
+                      <span className='font-semibold'>
+                        {`${search.name}#${search.tagline}`.substring(summonerSearch.length)}
+                      </span>
+                    </>
+                  )}
                 </div>
                 <span 
                   className='w-[48px] text-center'
