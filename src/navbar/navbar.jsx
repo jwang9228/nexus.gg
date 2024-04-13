@@ -2,6 +2,7 @@ import { PiListNumbers } from 'react-icons/pi';
 import { LuLayoutDashboard } from 'react-icons/lu';
 import { AiOutlineAliwangwang } from 'react-icons/ai';
 import { FiUserPlus } from 'react-icons/fi';
+import { SiLeagueoflegends } from "react-icons/si";
 import { useState, useContext, createContext } from 'react';
 
 const NavbarContext = createContext();
@@ -16,6 +17,18 @@ export function Navbar() {
     >
       <nav className='h-full flex flex-col bg-slate-950 shadow-sm'>
         <NavbarContext.Provider value={{expanded}}>
+          <div className='flex items-center mt-6 mb-4 ml-5 text-indigo-500 font-[Raleway] font-semibold text-lg'>
+            <div className='text-indigo-500/90'>
+              <SiLeagueoflegends size={27} />
+            </div>
+            <span className={`overflow-hidden whitespace-nowrap transition-all
+              ${
+                expanded ? 'w-36 ml-3' : 'w-0'
+              }`}
+            >
+              SUMMONER.GG
+            </span>
+          </div>
           <ul className='flex-1 px-3'>
             <NavbarItem 
               icon={<LuLayoutDashboard size={25} />}
@@ -40,7 +53,7 @@ export function Navbar() {
             </button>
             <span 
               className={`overflow-hidden whitespace-nowrap transition-all mt-1.5 ${
-                expanded ? 'w-32 ml-3.5' : 'w-0'
+                expanded ? 'w-36 ml-3.5' : 'w-0'
               }`}
             >
               <div className='flex flex-col'>
@@ -76,7 +89,7 @@ function NavbarItem({ icon, text, linkTo, active }) {
       {icon}
       <span 
         className={`overflow-hidden whitespace-nowrap transition-all ${
-          expanded ? 'w-32 ml-3' : 'w-0'
+          expanded ? 'w-36 ml-3' : 'w-0'
         }`}
       >
         {text}

@@ -2,9 +2,11 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { useState, useEffect } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 import { MdHistory } from 'react-icons/md';
+import TopNav from '../navbar/topnav';
 import * as summonerClient from '../summoner/summonerClient';
 import regions from './regions.json';
 import champions from '../summoner/champion.json';
+import homeLogo from './home-logo.png';
 
 function Home() {
   const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
@@ -55,8 +57,12 @@ function Home() {
       flex flex-col items-center h-screen bg-cover bg-center shadow-[inset_0_0_0_2000px_rgba(0,0,0,0.25)]
       bg-summoners-rift-mobile laptop:bg-summoners-rift
     `}>
+      <div className='ml-auto'>
+        <TopNav />
+      </div>
+      <img src={homeLogo} className='px-5 mt-32 mb-3 laptop:px-0'/>
       <form 
-        className='w-screen relative px-5 mt-36 laptop:w-1/2 laptop:px-0'
+        className='w-screen relative px-5 laptop:w-1/2 laptop:px-0'
         onSubmit={(e) => { 
           e.preventDefault(); 
           searchSummoner(); 
