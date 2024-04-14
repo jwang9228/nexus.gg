@@ -55,7 +55,7 @@ function Home() {
   return (
     <div className={`
       flex flex-col items-center h-screen bg-cover bg-center shadow-[inset_0_0_0_2000px_rgba(0,0,0,0.25)]
-      bg-summoners-rift-mobile laptop:bg-summoners-rift
+      bg-summoners-rift-mobile laptop:bg-ionia
     `}>
       <div className='ml-auto'>
         <TopNav />

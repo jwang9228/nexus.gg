@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import * as summonerClient from './summonerClient';
 
 function Summoner() {
+	const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
   const { region, summonerName } = useParams();
   const [gameName, tagline] = summonerName.split('-');
   const [summonerData, setSummonerData] = useState();
@@ -86,7 +87,7 @@ function Summoner() {
   return (
     <div className='ml-24 mr-16 mt-2'>
       {summonerData ? (
-        <div>
+        <div className='bg-summoners-rift-mobile laptop:bg-summoners-rift'>
           x
         </div>
       ) : (

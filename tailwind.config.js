@@ -10,7 +10,8 @@ export default {
     extend: {
       backgroundImage: {
         'summoners-rift': `url(${AWS_S3_URL}/general/summoners-rift.webp)`,
-        'summoners-rift-mobile': `url(${AWS_S3_URL}/general/summoners-rift-mobile.webp)`
+        'summoners-rift-mobile': `url(${AWS_S3_URL}/general/summoners-rift-mobile.webp)`,
+        'ionia': `url(${AWS_S3_URL}/general/ionia.jpg)`,
       }
     },
     screens: {

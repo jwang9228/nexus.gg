@@ -23,10 +23,10 @@ export function Navbar() {
             </div>
             <span className={`overflow-hidden whitespace-nowrap transition-all
               ${
-                expanded ? 'w-36 ml-3' : 'w-0'
+                expanded ? 'w-40 ml-3' : 'w-0'
               }`}
             >
-              SUMMONER.GG
+              AFTERSHOCK.GG
             </span>
           </div>
           <ul className='flex-1 px-3'>
@@ -53,7 +53,7 @@ export function Navbar() {
             </button>
             <span 
               className={`overflow-hidden whitespace-nowrap transition-all mt-1.5 ${
-                expanded ? 'w-36 ml-3.5' : 'w-0'
+                expanded ? 'w-40 ml-3.5' : 'w-0'
               }`}
             >
               <div className='flex flex-col'>
@@ -89,7 +89,7 @@ function NavbarItem({ icon, text, linkTo, active }) {
       {icon}
       <span 
         className={`overflow-hidden whitespace-nowrap transition-all ${
-          expanded ? 'w-36 ml-3' : 'w-0'
+          expanded ? 'w-40 ml-3' : 'w-0'
         }`}
       >
         {text}

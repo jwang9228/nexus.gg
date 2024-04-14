@@ -10,9 +10,10 @@ function TopNav() {
     <div className='flex mt-3 me-3 laptop:mt-4 laptop:me-5'>
       <button type='button' className='rounded-full bg-slate-900 px-3 py-1.5'>
         <a href={patchSite} className='text-sm laptop:text-base text-zinc-300' target='_blank' rel='noopener noreferrer'>
-          <div className='flex items-center'>
+          <div className='flex items-center font-[Raleway]'>
             <img src={`${AWS_S3_URL}/general/lol.png`} className='h-[18px] laptop:h-[20px] mr-1'/>
-            {`Patch ${patchVersion}`}
+            {'Patch\u00A0'}
+            <span className='mb-0.5'>{patchVersion}</span>
           </div>
         </a>
       </button>
