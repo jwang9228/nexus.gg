@@ -1,57 +1,57 @@
 [
   {
-      "name": "NA",
-      "region": "na1",
-      "color": "#6b92fa"
+    "name": "NA",
+    "region": "na1",
+    "color": "#6b92fa"
   },
   {
-      "name": "EUW",
-      "region": "euw1",
-      "color": "#957dad"
+    "name": "EUW",
+    "region": "euw1",
+    "color": "#957dad"
   },
   {
-      "name": "EUNE",
-      "region": "eun1",
-      "color": "#7dae9b"
+    "name": "EUNE",
+    "region": "eun1",
+    "color": "#7dae9b"
   },
   {
-      "name": "KR",
-      "region": "kr",
-      "color": "#d9b2ce"
+    "name": "KR",
+    "region": "kr",
+    "color": "#d9b2ce"
   },
   {
-      "name": "JP",
-      "region": "jp1",
-      "color": "#ffadad"
+    "name": "JP",
+    "region": "jp1",
+    "color": "#ffadad"
   },
   {
-      "name": "BR",
-      "region": "br1",
-      "color": "#fec868"
+    "name": "BR",
+    "region": "br1",
+    "color": "#fec868"
   },
   {
-      "name": "OCE",
-      "region": "oc1",
-      "color": "#a8d1d1"
+    "name": "OCE",
+    "region": "oc1",
+    "color": "#a8d1d1"
   },
   {
-      "name": "LAN",
-      "region": "la1",
-      "color": "#b88566"
+    "name": "LAN",
+    "region": "la1",
+    "color": "#b88566"
   },
   {
-      "name": "LAS",
-      "region": "la2",
-      "color": "#ac9f7c"
+    "name": "LAS",
+    "region": "la2",
+    "color": "#ac9f7c"
   },
   {
-      "name": "RU",
-      "region": "ru1",
-      "color": "#ac7d88"
+    "name": "RU",
+    "region": "ru1",
+    "color": "#ac7d88"
   },
   {
-      "name": "TR",
-      "region": "tr1",
-      "color": "#85586f"
+    "name": "TR",
+    "region": "tr1",
+    "color": "#85586f"
   }
 ]

@@ -1,0 +1,54 @@
+[
+  {
+    "name": "Bandle City",
+    "background": "bandle-city"
+  },
+  {
+    "name": "Bilgewater",
+    "background": "bilgewater"
+  },
+  {
+    "name": "Demacia",
+    "background": "demacia"
+  },
+  {
+    "name": "Ionia",
+    "background": "ionia"
+  },
+  {
+    "name": "Ixtal",
+    "background": "ixtal"
+  },
+  {
+    "name": "Noxus",
+    "background": "noxus"
+  },
+  {
+    "name": "Piltover",
+    "background": "piltover"
+  },
+  {
+    "name": "Shadow Isles",
+    "background": "shadow-isles"
+  },
+  {
+    "name": "Shurima",
+    "background": "shurima"
+  },
+  {
+    "name": "Targon",
+    "background": "targon"
+  },
+  {
+    "name": "The Freljord",
+    "background": "freljord"
+  },
+  {
+    "name": "The Void",
+    "background": "void"
+  },
+  {
+    "name": "Zaun",
+    "background": "zaun"
+  }
+]

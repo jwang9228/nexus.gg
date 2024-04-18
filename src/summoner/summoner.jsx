@@ -85,9 +85,12 @@ function Summoner() {
   }, []);
 
   return (
-    <div className='ml-24 mr-16 mt-2'>
+    <div 
+			style={{'--bg-image-url': `url(${AWS_S3_URL}/general/summoners-rift.webp)`}}
+			className='ml-24 mr-16 mt-2'
+		>
       {summonerData ? (
-        <div className='bg-summoners-rift-mobile laptop:bg-summoners-rift'>
+        <div className='bg-summoners-rift-mobile laptop:bg-[image:var(--bg-image-url)]'>
           x
         </div>
       ) : (

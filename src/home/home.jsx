@@ -6,7 +6,8 @@ import TopNav from '../navbar/topnav';
 import * as summonerClient from '../summoner/summonerClient';
 import regions from './regions.json';
 import champions from '../summoner/champion.json';
-import homeLogo from './home-logo.png';
+import backgrounds from './backgrounds.json';
+import homeLogo from '../images/home-logo.png';
 
 function Home() {
   const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
@@ -17,6 +18,7 @@ function Home() {
   const [summonerSearch, setSummonerSearch] = useState('');
   const [recentSearches, setRecentSearches] = useState([]);
   const [searchbarActive, setSearchbarActive] = useState(false);
+  const [activeBackground, setActiveBackground] = useState(backgrounds[3]);
 
   const searchSummoner = () => {
     if (summonerSearch !== '') {
@@ -53,10 +55,13 @@ function Home() {
   }, []);
 
   return (
-    <div className={`
-      flex flex-col items-center h-screen bg-cover bg-center shadow-[inset_0_0_0_2000px_rgba(0,0,0,0.25)]
-      bg-summoners-rift-mobile laptop:bg-ionia
-    `}>
+    <div 
+      style={{'--bg-image-url': `url(${AWS_S3_URL}/regions/images/${activeBackground.background}.jpeg)`}}
+      className={`
+        flex flex-col items-center h-screen bg-cover bg-center shadow-[inset_0_0_0_2000px_rgba(0,0,0,0.20)]
+        bg-summoners-rift-mobile laptop:bg-[image:var(--bg-image-url)]
+      `}
+    >
       <div className='ml-auto'>
         <TopNav />
       </div>
@@ -120,7 +125,6 @@ function Home() {
                     src={`${AWS_S3_URL}/champion/${champion.image.full}`}
                     className='w-[16px] rounded-sm mr-1.5 mt-0.5'
                     loading='lazy'
-                    alt='profile-icon'
                   />
                   {`${champion.name.substring(0, summonerSearch.length).replace(' ', '\u00A0')}`}
                   <span className='font-semibold'>
@@ -163,6 +167,16 @@ function Home() {
           ))}
         </ul>
       )}
+      <div className='ml-auto mt-auto font-[Raleway] font-[550] text-2xl text-zinc-300/90 mr-5 mb-5'>
+        {activeBackground.name}
+        <div className='flex items-center'>
+          <img 
+            src={`${AWS_S3_URL}/regions/crests/${activeBackground.background}.png`}
+            className=''
+            loading='lazy'
+          />
+        </div>
+      </div>
     </div>
   );
 }
