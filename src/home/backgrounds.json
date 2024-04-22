@@ -1,54 +1,80 @@
 [
   {
+    "index": 0,
     "name": "Bandle City",
-    "background": "bandle-city"
+    "background": "bandle-city",
+    "colors": "dark"
   },
   {
+    "index": 1,
     "name": "Bilgewater",
-    "background": "bilgewater"
+    "background": "bilgewater",
+    "colors": "light"
   },
   {
+    "index": 2,
     "name": "Demacia",
-    "background": "demacia"
+    "background": "demacia",
+    "colors": "light"
   },
   {
+    "index": 3,
     "name": "Ionia",
-    "background": "ionia"
+    "background": "ionia",
+    "colors": "light"
   },
   {
+    "index": 4,
     "name": "Ixtal",
-    "background": "ixtal"
+    "background": "ixtal",
+    "colors": "light"
   },
   {
+    "index": 5,
     "name": "Noxus",
-    "background": "noxus"
+    "background": "noxus",
+    "colors": "light"
   },
   {
+    "index": 6, 
     "name": "Piltover",
-    "background": "piltover"
+    "background": "piltover",
+    "colors": "light"
   },
   {
+    "index": 7,
     "name": "Shadow Isles",
-    "background": "shadow-isles"
+    "background": "shadow-isles",
+    "colors": "dark"
   },
   {
+    "index": 8,
     "name": "Shurima",
-    "background": "shurima"
+    "background": "shurima",
+    "colors": "light"
   },
   {
+    "index": 9,
     "name": "Targon",
-    "background": "targon"
+    "background": "targon",
+    "colors": "light"
   },
   {
+    "index": 10,
     "name": "The Freljord",
-    "background": "freljord"
+    "background": "freljord",
+    "colors": "light"
   },
   {
+    "index": 11,
     "name": "The Void",
-    "background": "void"
+    "background": "void",
+    "colors": "light"
   },
   {
+    "index": 12,
     "name": "Zaun",
-    "background": "zaun"
+    "background": "zaun",
+    "colors": "dark"
   }
 ]

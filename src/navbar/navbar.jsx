@@ -2,7 +2,6 @@ import { PiListNumbers } from 'react-icons/pi';
 import { LuLayoutDashboard } from 'react-icons/lu';
 import { AiOutlineAliwangwang } from 'react-icons/ai';
 import { FiUserPlus } from 'react-icons/fi';
-import { SiLeagueoflegends } from "react-icons/si";
 import { useState, useContext, createContext } from 'react';
 import aftershock from '../images/aftershock.webp';
 
@@ -74,12 +73,12 @@ function NavbarItem({ icon, text, linkTo, active }) {
       href={`${linkTo}`}
       className=
       {`relative flex justify-center items-center py-1.5 px-2 my-3
-        font-[525] rounded-md cursor-pointer 
+        font-[525] tracking-wide rounded-md cursor-pointer 
         transition-colors 
         ${
           active
-            ? 'bg-slate-400/85 text-stone-950'
-            : 'hover:bg-slate-900/90 text-zinc-300/85'
+            ? 'hover:bg-slate-900 text-[#9CB800]'
+            : 'hover:bg-slate-900 text-zinc-300/85'
         }
       `}
     >

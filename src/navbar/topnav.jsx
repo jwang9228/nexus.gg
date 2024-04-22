@@ -3,7 +3,7 @@ import { AiOutlineMail } from "react-icons/ai";
 
 function TopNav() {
   const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
-  const patchVersion = '14.7';
+  const patchVersion = '14.8';
   const [majorVersion, minorVersion] = patchVersion.split('.');
   const patchSite = `https://www.leagueoflegends.com/en-us/news/game-updates/patch-${majorVersion}-${minorVersion}-notes/`;
   return (

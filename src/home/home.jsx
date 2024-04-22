@@ -3,11 +3,11 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MdHistory } from 'react-icons/md';
 import TopNav from '../navbar/topnav';
+import RegionsSwiper from './regions-swiper';
 import * as summonerClient from '../summoner/summonerClient';
 import regions from './regions.json';
 import champions from '../summoner/champion.json';
 import backgrounds from './backgrounds.json';
-import homeLogo from '../images/home-logo.png';
 
 function Home() {
   const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
@@ -56,16 +56,27 @@ function Home() {
 
   return (
     <div 
-      style={{'--bg-image-url': `url(${AWS_S3_URL}/regions/images/${activeBackground.background}.jpeg)`}}
-      className={`
-        flex flex-col items-center h-screen bg-cover bg-center shadow-[inset_0_0_0_2000px_rgba(0,0,0,0.20)]
-        bg-summoners-rift-mobile laptop:bg-[image:var(--bg-image-url)]
-      `}
+      className='flex flex-col items-center h-screen shadow-[inset_0_0_0_2000px_rgba(0,0,0,0.20)]'
     >
+      {backgrounds.map((background, index) => (
+        <div 
+          key={index}
+          style={{'--bg-image-url': `url(${AWS_S3_URL}/regions/images/${background.background}.jpeg)`}}
+          className={`bg-cover bg-center z-[-1] absolute top-0 left-0 w-full h-full 
+            laptop:bg-[image:var(--bg-image-url)]
+            ${background.index === activeBackground.index ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 ease-out
+          `}
+        ></div>
+      ))}
       <div className='ml-auto'>
         <TopNav />
       </div>
-      <img src={homeLogo} className='px-5 mt-32 mb-3 laptop:px-0'/>
+      <div className={`
+        px-5 mt-32 mb-3 laptop:px-0 font-[Raleway] font-bold tracking-[0.5em]
+        ${activeBackground.colors === 'dark' ? 'text-slate-950' : 'text-slate-900'} text-2xl laptop:text-4xl 
+      `}>
+        SUMMONER.GG
+      </div>
       <form 
         className='w-screen relative px-5 laptop:w-1/2 laptop:px-0'
         onSubmit={(e) => { 
@@ -124,7 +135,6 @@ function Home() {
                   <img 
                     src={`${AWS_S3_URL}/champion/${champion.image.full}`}
                     className='w-[16px] rounded-sm mr-1.5 mt-0.5'
-                    loading='lazy'
                   />
                   {`${champion.name.substring(0, summonerSearch.length).replace(' ', '\u00A0')}`}
                   <span className='font-semibold'>
@@ -142,8 +152,6 @@ function Home() {
                   <img 
                     src={`${AWS_S3_URL}/profileicon/${search.profileIconId}.png`}
                     className='w-[16px] rounded-sm mr-1.5 mt-0.5'
-                    loading='lazy'
-                    alt='profile-icon'
                   />
                   {summonerSearch.length === 0 ? (
                     `${search.name}#${search.tagline}`
@@ -167,15 +175,8 @@ function Home() {
           ))}
         </ul>
       )}
-      <div className='ml-auto mt-auto font-[Raleway] font-[550] text-2xl text-zinc-300/90 mr-5 mb-5'>
-        {activeBackground.name}
-        <div className='flex items-center'>
-          <img 
-            src={`${AWS_S3_URL}/regions/crests/${activeBackground.background}.png`}
-            className=''
-            loading='lazy'
-          />
-        </div>
+      <div className='ml-auto mt-auto mr-6 mb-7'>
+        <RegionsSwiper activeBackground={activeBackground} setActiveBackground={setActiveBackground}/>
       </div>
     </div>
   );
