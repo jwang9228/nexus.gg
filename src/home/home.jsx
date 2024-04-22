@@ -72,10 +72,10 @@ function Home() {
         <TopNav />
       </div>
       <div className={`
-        px-5 mt-32 mb-3 laptop:px-0 font-[Raleway] font-bold tracking-[0.5em]
-        ${activeBackground.colors === 'dark' ? 'text-slate-950' : 'text-slate-900'} text-2xl laptop:text-4xl 
+        mt-32 mb-3 laptop:px-0 font-[Raleway] font-bold tracking-[0.5em]
+        ${activeBackground.colors === 'dark' ? 'text-slate-950' : 'text-slate-900'} text-xl laptop:text-4xl 
       `}>
-        SUMMONER.GG
+        AFTERSHOCK.GG
       </div>
       <form 
         className='w-screen relative px-5 laptop:w-1/2 laptop:px-0'
@@ -111,13 +111,13 @@ function Home() {
         </div>
       </form>
       {showRegions && (
-        <div className='flex justify-center w-screen px-5 laptop:w-1/2 laptop:px-0'>
+        <div className='flex flex-wrap justify-center w-screen px-5 laptop:w-1/2 laptop:px-0'>
           {regions.map((region) => (
             <button
               type='button'
               key={region.name}
               style={{ backgroundColor: region === selectedRegion ? region.color : "#464264" }}
-              className='mt-3 mx-1 w-[56px] h-[32px] rounded-md text-stone-300'
+              className='mt-3 mx-1 w-[44px] h-[26px] laptop:w-[56px] laptop:h-[32px] rounded-md text-stone-300'
               onClick={() => { setSelectedRegion(region) }}
             >
               {region.name}
@@ -175,7 +175,7 @@ function Home() {
           ))}
         </ul>
       )}
-      <div className='ml-auto mt-auto mr-6 mb-7'>
+      <div className='ml-auto mt-auto mr-5 mb-6 laptop:mr-6 laptop:mb-7'>
         <RegionsSwiper activeBackground={activeBackground} setActiveBackground={setActiveBackground}/>
       </div>
     </div>

@@ -22,7 +22,7 @@ function RegionsSwiper({activeBackground, setActiveBackground}) {
     <>
       <div 
         className={`
-          mb-2 font-[Raleway] font-semibold text-zinc-300/95 text-center text-lg tracking-widest
+          mb-2 font-[Raleway] font-semibold tracking-widest text-zinc-300/95 text-center laptop:text-lg 
           transition-opacity duration-300 ${textVisible ? 'opacity-100' : 'opacity-0'}
         `}
       >
@@ -46,10 +46,10 @@ function RegionsSwiper({activeBackground, setActiveBackground}) {
         initialSlide={activeBackground.index}
         onTouchStart={() => setTextVisible(false)}
         onTouchEnd={handleSwiperMove}
-        className='w-[130px]'
+        className='w-[100px] laptop:w-[130px]'
       >
         {backgrounds.map((background, index) => (
-          <SwiperSlide className={`bg-cover bg-center ${background === activeBackground ? 'blur-none' : 'blur-[0.55px]'}`} key={index}>
+          <SwiperSlide className={`bg-cover bg-center ${background === activeBackground ? 'blur-none' : 'blur-[0.6px]'}`} key={index}>
             <img src={`${AWS_S3_URL}/regions/crests/${background.background}.png`} className='block'/>
           </SwiperSlide>
         ))}

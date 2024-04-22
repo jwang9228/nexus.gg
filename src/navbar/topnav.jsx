@@ -7,7 +7,7 @@ function TopNav() {
   const [majorVersion, minorVersion] = patchVersion.split('.');
   const patchSite = `https://www.leagueoflegends.com/en-us/news/game-updates/patch-${majorVersion}-${minorVersion}-notes/`;
   return (
-    <div className='flex mt-3 me-3 laptop:mt-4 laptop:me-5'>
+    <div className='flex mt-3 mr-4 laptop:mt-4 laptop:mr-5'>
       <button type='button' className='rounded-full bg-slate-900 px-3 py-1.5'>
         <a href={patchSite} className='text-sm laptop:text-base text-zinc-300' target='_blank' rel='noopener noreferrer'>
           <div className='flex items-center font-[Raleway]'>
