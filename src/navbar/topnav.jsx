@@ -1,5 +1,5 @@
-import { IoLanguageSharp } from "react-icons/io5";
-import { AiOutlineMail } from "react-icons/ai";
+import { IoLanguageSharp } from 'react-icons/io5';
+import { AiOutlineMail } from 'react-icons/ai';
 
 function TopNav() {
   const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;

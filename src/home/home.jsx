@@ -62,8 +62,7 @@ function Home() {
         <div 
           key={index}
           style={{'--bg-image-url': `url(${AWS_S3_URL}/regions/images/${background.background}.jpeg)`}}
-          className={`bg-cover bg-center z-[-1] absolute top-0 left-0 w-full h-full 
-            laptop:bg-[image:var(--bg-image-url)]
+          className={`bg-cover bg-center bg-[image:var(--bg-image-url)] z-[-1] absolute top-0 left-0 w-full h-full 
             ${background.index === activeBackground.index ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 ease-out
           `}
         ></div>
@@ -72,7 +71,7 @@ function Home() {
         <TopNav />
       </div>
       <div className={`
-        mt-32 mb-3 laptop:px-0 font-[Raleway] font-bold tracking-[0.5em]
+        mt-40 mb-3 laptop:mt-28 laptop:px-0 font-[Raleway] font-bold tracking-[0.5em]
         ${activeBackground.colors === 'dark' ? 'text-slate-950' : 'text-slate-900'} text-xl laptop:text-4xl 
       `}>
         AFTERSHOCK.GG
@@ -117,7 +116,7 @@ function Home() {
               type='button'
               key={region.name}
               style={{ backgroundColor: region === selectedRegion ? region.color : "#464264" }}
-              className='mt-3 mx-1 w-[44px] h-[26px] laptop:w-[56px] laptop:h-[32px] rounded-md text-stone-300'
+              className='mx-1 mt-4 w-[46px] h-[26px] laptop:w-[56px] laptop:h-[32px] rounded-md text-stone-300'
               onClick={() => { setSelectedRegion(region) }}
             >
               {region.name}

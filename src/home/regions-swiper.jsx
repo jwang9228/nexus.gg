@@ -49,7 +49,7 @@ function RegionsSwiper({activeBackground, setActiveBackground}) {
         className='w-[100px] laptop:w-[130px]'
       >
         {backgrounds.map((background, index) => (
-          <SwiperSlide className={`bg-cover bg-center ${background === activeBackground ? 'blur-none' : 'blur-[0.6px]'}`} key={index}>
+          <SwiperSlide className={`bg-cover bg-center ${background === activeBackground ? 'blur-none' : 'blur-[0.4px]'}`} key={index}>
             <img src={`${AWS_S3_URL}/regions/crests/${background.background}.png`} className='block'/>
           </SwiperSlide>
         ))}
