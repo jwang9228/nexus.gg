@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { MdHistory } from 'react-icons/md';
 import TopNav from '../navbar/topnav';
 import RegionsSwiper from './regions-swiper';
-import * as summonerClient from '../summoner/summonerClient';
+import * as summonerClient from '../summoner/summoner-client';
 import regions from './regions.json';
 import champions from '../summoner/champion.json';
 import backgrounds from './backgrounds.json';
@@ -145,7 +145,11 @@ function Home() {
           ))}
           {filterRecentSearches().map((search) => (
             <li className='bg-slate-800 hover:bg-slate-900 first:rounded-t-md last:rounded-b-md' key={search.name}>
-              <a href={`/summoners/${search.region}/${search.name}-${search.tagline}`} className='flex justify-between py-1.5 px-3 text-zinc-300/95'>
+              <a 
+                href={`/summoners/${search.region}/${search.name}-${search.tagline}`} 
+                className='flex justify-between py-1.5 px-3 text-zinc-300/95'
+                onMouseDown={e => e.preventDefault()}
+              >
                 <div className='flex flex-row items-center'>
                   <MdHistory className='mt-0.5 mr-3' size={18}/>
                   <img 

@@ -3,12 +3,13 @@ import { LuLayoutDashboard } from 'react-icons/lu';
 import { AiOutlineAliwangwang } from 'react-icons/ai';
 import { FiUserPlus } from 'react-icons/fi';
 import { useState, useContext, createContext } from 'react';
-import aftershock from '../images/aftershock.webp';
 
 const NavbarContext = createContext();
 
 export function Navbar() {
+  const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
   const [expanded, setExpanded] = useState(false);
+
   return (
     <nav 
       className='h-screen absolute flex flex-col bg-slate-950'
@@ -17,7 +18,7 @@ export function Navbar() {
     >
       <NavbarContext.Provider value={{expanded}}>
         <div className='flex items-center mt-6 mb-3 ml-5 text-indigo-500 font-[Raleway] font-semibold text-lg'>
-          <img src={aftershock} className='w-[30px] h-[30px]' />
+          <img src={`${AWS_S3_URL}/general/aftershock.webp`} className='w-[30px] h-[30px]' />
           <span className={`overflow-hidden whitespace-nowrap transition-all
             ${expanded ? 'w-40 ml-3' : 'w-0'}`}
           >
