@@ -74,7 +74,7 @@ function Home() {
         mt-40 mb-3 laptop:mt-28 laptop:px-0 font-[Raleway] font-bold tracking-[0.5em]
         ${activeBackground.colors === 'dark' ? 'text-slate-950' : 'text-slate-900'} text-xl laptop:text-4xl 
       `}>
-        AFTERSHOCK.GG
+        DIVERGE.GG
       </div>
       <form 
         className='w-screen relative px-5 laptop:w-1/2 laptop:px-0'

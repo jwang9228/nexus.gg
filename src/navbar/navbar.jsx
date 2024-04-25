@@ -22,7 +22,7 @@ export function Navbar() {
           <span className={`overflow-hidden whitespace-nowrap transition-all
             ${expanded ? 'w-40 ml-3' : 'w-0'}`}
           >
-            <div className='bg-gradient-to-r from-[#789F00] via-[#9CB800] to-[#AEC200] inline-block text-transparent bg-clip-text'>AFTERSHOCK.GG</div>
+            <div className='bg-gradient-to-r from-[#789F00] via-[#9CB800] to-[#AEC200] inline-block text-transparent bg-clip-text'>DIVERGE.GG</div>
           </span>
         </div>
         <ul className='flex-1 px-3'>
