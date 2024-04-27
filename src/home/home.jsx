@@ -56,7 +56,7 @@ function Home() {
 
   return (
     <div 
-      className='flex flex-col items-center h-screen shadow-[inset_0_0_0_2000px_rgba(0,0,0,0.20)]'
+      className='flex flex-col items-center h-dvh shadow-[inset_0_0_0_2000px_rgba(0,0,0,0.20)]'
     >
       {backgrounds.map((background, index) => (
         <div 

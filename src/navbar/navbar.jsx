@@ -12,17 +12,17 @@ export function Navbar() {
 
   return (
     <nav 
-      className='h-screen absolute flex flex-col bg-slate-950'
+      className='h-dvh absolute flex flex-col bg-slate-950 z-10'
       onMouseOver={() => setExpanded(true)}
       onMouseOut={() => setExpanded(false)}
     >
       <NavbarContext.Provider value={{expanded}}>
-        <div className='flex items-center mt-6 mb-3 ml-5 text-indigo-500 font-[Raleway] font-semibold text-lg'>
+        <div className='flex items-center mt-6 mb-3 ml-5 font-[Raleway] font-semibold text-lg'>
           <img src={`${AWS_S3_URL}/general/aftershock.webp`} className='w-[30px] h-[30px]' />
           <span className={`overflow-hidden whitespace-nowrap transition-all
             ${expanded ? 'w-40 ml-3' : 'w-0'}`}
           >
-            <div className='bg-gradient-to-r from-[#789F00] via-[#9CB800] to-[#AEC200] inline-block text-transparent bg-clip-text'>DIVERGE.GG</div>
+            <div className='bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-400 inline-block text-transparent bg-clip-text'>DIVERGE.GG</div>
           </span>
         </div>
         <ul className='flex-1 px-3'>
@@ -76,7 +76,7 @@ function NavbarItem({ icon, text, linkTo, active }) {
         transition-colors 
         ${
           active
-            ? 'hover:bg-slate-900 text-[#9CB800]'
+            ? 'hover:bg-slate-900 text-indigo-500'
             : 'hover:bg-slate-900 text-zinc-300/85'
         }
       `}

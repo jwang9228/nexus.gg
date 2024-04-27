@@ -90,15 +90,15 @@ function Summoner() {
 			className='bg-cover bg-center bg-[image:var(--bg-image-url)] h-screen'
 		>
       {summonerData ? (
-        <div className='ml-24 mr-16'>
+        <div className='ml-24 mr-16 text-white'>
           data ready
         </div>
       ) : fetchingData ? (
-        <div className='ml-24 mr-16'>
+        <div className='ml-24 mr-16 text-white'>
           fetching data...
         </div>
       ) : (
-				<div className='ml-24 mr-16'>
+				<div className='ml-24 mr-16 text-white'>
 					data not found
 				</div>
 			)}
