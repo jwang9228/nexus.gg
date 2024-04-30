@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import * as summonerClient from './summoner-client';
+import SummonerSkeleton from './summoner-skeleton';
+import SummonerData from './summoner-data';
 
 function Summoner() {
 	const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
@@ -60,7 +62,7 @@ function Summoner() {
     const fetchData = async () => {
 			setSummonerData(undefined);
 			setFetchingData(true);
-			let response = await summonerClient.findSummonerByRegion(region, gameName);
+			let response = await summonerClient.findSummonerByRegion(region, summonerName);
 			if (!response) {
 				const riotSummonerData = await getRiotSummonerData();
 				if (riotSummonerData) {
@@ -85,24 +87,21 @@ function Summoner() {
   }, []);
 
   return (
-    <div 
-			style={{'--bg-image-url': `url(${AWS_S3_URL}/general/summoners-rift.jpeg)`}}
-			className='bg-cover bg-center bg-[image:var(--bg-image-url)] h-screen'
-		>
-      {summonerData ? (
-        <div className='ml-24 mr-16 text-white'>
-          data ready
-        </div>
-      ) : fetchingData ? (
-        <div className='ml-24 mr-16 text-white'>
-          fetching data...
-        </div>
-      ) : (
-				<div className='ml-24 mr-16 text-white'>
-					data not found
-				</div>
-			)}
-    </div>
+		<div className='flex h-dvh shadow-[inset_0_0_0_2000px_rgba(0,0,0,0.20)]'>
+			<div 
+				style={{'--bg-image-url': `url(${AWS_S3_URL}/general/summoners-rift.jpeg)`}}
+				className='bg-cover bg-center bg-[image:var(--bg-image-url)] z-[-1] absolute top-0 left-0 w-full h-full'
+			/>
+				{summonerData ? (
+						<SummonerData summonerData={summonerData}/>
+					) : fetchingData ? (
+						<SummonerSkeleton />
+					) : (
+					<div className='ml-24 mr-16 text-white'>
+						data not found
+					</div>
+				)}
+		</div>
   );
 } 
 export default Summoner;

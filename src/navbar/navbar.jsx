@@ -20,14 +20,14 @@ export function Navbar() {
         <div className='flex items-center mt-6 mb-3 ml-5 font-[Raleway] font-semibold text-lg'>
           <img src={`${AWS_S3_URL}/general/aftershock.webp`} className='w-[30px] h-[30px]' />
           <span className={`overflow-hidden whitespace-nowrap transition-all
-            ${expanded ? 'w-40 ml-3' : 'w-0'}`}
+            ${expanded ? 'w-40 ml-2.5' : 'w-0'}`}
           >
             <div className='bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-400 inline-block text-transparent bg-clip-text'>DIVERGE.GG</div>
           </span>
         </div>
         <ul className='flex-1 px-3'>
           <NavbarItem 
-            icon={<LuLayoutDashboard size={25} />}
+            icon={<LuLayoutDashboard size={24.5} />}
             text='Home'
             linkTo='/'
             active
@@ -71,20 +71,20 @@ function NavbarItem({ icon, text, linkTo, active }) {
     <a
       href={`${linkTo}`}
       className=
-      {`relative flex justify-center items-center py-1.5 px-2 my-3
+      {`relative flex justify-center items-center py-1.5 pl-1.5 pr-2 my-3
         font-[525] tracking-wide rounded-md cursor-pointer 
         transition-colors 
         ${
           active
-            ? 'hover:bg-slate-900 text-indigo-500'
-            : 'hover:bg-slate-900 text-zinc-300/85'
+            ? 'bg-slate-900/95 text-indigo-500'
+            : 'hover:bg-slate-900 text-zinc-300/85 hover:text-zinc-200/85'
         }
       `}
     >
       {icon}
       <span 
         className={`overflow-hidden whitespace-nowrap transition-all ${
-          expanded ? 'w-40 ml-3' : 'w-0'
+          expanded ? 'w-40 ml-3.5' : 'w-0'
         }`}
       >
         {text}

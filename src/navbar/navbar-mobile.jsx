@@ -20,7 +20,7 @@ function NavbarMobile() {
       }`}>
         <ul className='flex flex-col ml-[1.25rem] mt-10 mb-2'>
           <NavbarItemMobile 
-            icon={<LuLayoutDashboard size={24} />}
+            icon={<LuLayoutDashboard size={23.5} />}
             text='Home'
             linkTo='/'
             active
@@ -48,8 +48,8 @@ function NavbarItemMobile({ icon, text, linkTo, active }) {
       href={`${linkTo}`}
       className=
       {`flex flex-1 my-1.5 p-1 font-[525] tracking-wide
-        transition-colors w-full
-        ${active ? 'hover:bg-slate-900 text-[#9CB800]' : 'hover:bg-slate-900 text-zinc-300/85'}
+        transition-colors w-full 
+        ${active ? 'hover:bg-slate-900 text-indigo-500' : 'hover:bg-slate-900 text-zinc-300/85'} 
       `}
     >
       {icon}

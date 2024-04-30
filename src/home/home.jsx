@@ -144,7 +144,7 @@ function Home() {
             </li>
           ))}
           {filterRecentSearches().map((search) => (
-            <li className='bg-slate-800 hover:bg-slate-900 first:rounded-t-md last:rounded-b-md' key={search.name}>
+            <li className='bg-slate-800 hover:bg-slate-900 first:rounded-t-md last:rounded-b-md' key={`${search.name}${search.tagline}`}>
               <a 
                 href={`/summoners/${search.region}/${search.name}-${search.tagline}`} 
                 className='flex justify-between py-1.5 px-3 text-zinc-300/95'
@@ -157,7 +157,9 @@ function Home() {
                     className='w-[16px] rounded-sm mr-1.5 mt-0.5'
                   />
                   {summonerSearch.length === 0 ? (
-                    `${search.name}#${search.tagline}`
+                    <div className='truncate'>
+                      {`${search.name}#${search.tagline}`}
+                    </div>
                   ) : (
                     <>
                       {`${search.name}#${search.tagline}`.substring(0, summonerSearch.length)}
@@ -168,7 +170,7 @@ function Home() {
                   )}
                 </div>
                 <span 
-                  className='w-[48px] text-center'
+                  className='w-[40px] laptop:w-[48px] text-center'
                   style={{backgroundColor: regions.find((region) => region.region === search.region).color}}
                 >
                   {regions.find((region) => region.region === search.region).name}
