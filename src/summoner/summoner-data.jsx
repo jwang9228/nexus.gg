@@ -3,13 +3,19 @@ function SummonerData({ summonerData }) {
   return (
     <div className='mt-16'>
       <div className='flex ml-[1.5rem] laptop:ml-24 mb-4'>
-        <img src={`${AWS_S3_URL}/profileicon/${summonerData.profileIconId}.png`} className='rounded bg-slate-600 w-[4.5rem] h-[4.5rem] laptop:w-24 laptop:h-24' />
+        <img src={`${AWS_S3_URL}/profileicon/${summonerData.profileIconId}.png`} className='rounded bg-slate-600 w-[4rem] h-[4rem] laptop:w-24 laptop:h-24' />
         <div className='flex flex-col'>
           <div className='ml-3 laptop:ml-4 mb-auto text-[min(5vw,16px)] laptop:text-3xl text-zinc-300 font-semibold laptop:font-[550]'>
             {summonerData.summonerName}
             <span className='ml-1 text-zinc-300/95 font-[550] laptop:font-normal'>{`#${summonerData.tagLine}`}</span>
           </div>
-          <div className='rounded bg-slate-600 w-24 laptop:w-32 h-9 laptop:h-10 ml-3 laptop:ml-4 mt-2 laptop:mt-4' />
+          <button 
+            type='button' 
+            className='rounded w-20 laptop:w-28 py-1.5 ml-3 laptop:ml-4 
+            text-sm laptop:text-base font-[550] bg-blue-600/95 text-zinc-300 tracking-wider'
+          >
+            Update
+          </button>
         </div>
       </div>
       <div className='w-screen grid laptop:grid-cols-3 laptop:gap-3 laptop:mt-4'>

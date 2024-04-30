@@ -55,29 +55,25 @@ function Home() {
   }, []);
 
   return (
-    <div 
-      className='flex flex-col items-center h-dvh shadow-[inset_0_0_0_2000px_rgba(0,0,0,0.20)]'
-    >
+    <div className='flex flex-col items-center h-dvh shadow-[inset_0_0_0_2000px_rgba(0,0,0,0.20)]'>
       {backgrounds.map((background, index) => (
         <div 
           key={index}
           style={{'--bg-image-url': `url(${AWS_S3_URL}/regions/images/${background.background}.jpeg)`}}
-          className={`bg-cover bg-center bg-[image:var(--bg-image-url)] z-[-1] absolute top-0 left-0 w-full h-full 
+          className={`bg-cover bg-center bg-[image:var(--bg-image-url)] z-[-1] 
+            absolute top-0 left-0 w-full h-full 
             ${background.index === activeBackground.index ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 ease-out
           `}
-        ></div>
+        />
       ))}
-      <div className='ml-auto'>
-        <TopNav />
-      </div>
-      <div className={`
-        mt-40 mb-3 laptop:mt-28 laptop:px-0 font-[Raleway] font-bold tracking-[0.5em]
+      <div className='ml-auto'><TopNav /></div>
+      <div className={`mt-40 mb-3 laptop:mt-28 laptop:px-0 font-[Raleway] font-bold tracking-[0.5em]
         ${activeBackground.colors === 'dark' ? 'text-slate-950' : 'text-slate-900'} text-xl laptop:text-4xl 
       `}>
         DIVERGE.GG
       </div>
       <form 
-        className='w-screen relative px-5 laptop:w-1/2 laptop:px-0'
+        className='relative w-screen laptop:w-1/2 px-5 laptop:px-0'
         onSubmit={(e) => { 
           e.preventDefault(); 
           searchSummoner(); 
@@ -86,7 +82,8 @@ function Home() {
         <div className='relative'>
           <button 
             type='button'
-            className='absolute left-3 top-1/2 -translate-y-1/2 p-2 py-0.5 w-[56px] rounded-md text-base text-center text-stone-300'
+            className='absolute left-3 top-1/2 -translate-y-1/2 p-2 py-0.5 w-[56px] rounded-md 
+              text-base text-center text-stone-300'
             style={{ backgroundColor: selectedRegion.color }}
             onClick={() => { setShowRegions(!showRegions) }}
           >
@@ -95,7 +92,8 @@ function Home() {
           <input 
             type='search' 
             placeholder='Search Summoners/Champions' 
-            className='w-full p-3 ps-20 pe-20 rounded-md bg-slate-900 text-slate-200 text-xl focus:outline-none'
+            className='w-full p-3 ps-20 pe-20 rounded-md bg-slate-900 
+              text-slate-200 text-xl focus:outline-none'
             onChange={(e) => { setSummonerSearch((e.target.value).trim()) }}
             onFocus={() => setSearchbarActive(true) }
             onBlur={() => setSearchbarActive(false) }
@@ -110,7 +108,7 @@ function Home() {
         </div>
       </form>
       {showRegions && (
-        <div className='flex flex-wrap justify-center w-screen px-5 laptop:w-1/2 laptop:px-0'>
+        <div className='flex flex-wrap justify-center w-screen laptop:w-1/2 px-5 laptop:px-0'>
           {regions.map((region) => (
             <button
               type='button'
@@ -125,7 +123,7 @@ function Home() {
         </div>
       )}
       {searchbarActive && (
-        <ul className='w-screen overflow-auto mt-2.5 px-5 laptop:w-1/2 laptop:px-0'>
+        <ul className='w-screen overflow-auto mt-2.5 laptop:w-1/2 px-5 laptop:px-0'>
           {summonerSearch.length > 0 && filterChampionsSearch().map((champion) => (
             <li className='bg-slate-800 hover:bg-slate-900 first:rounded-t-md last:rounded-b-md' key={champion.id}>
               <a href={`/champions/${champion.id}`} className='flex justify-between py-1.5 px-3 text-zinc-300/95'>
@@ -180,7 +178,7 @@ function Home() {
           ))}
         </ul>
       )}
-      <div className='ml-auto mt-auto mr-5 mb-6 laptop:mr-6 laptop:mb-7'>
+      <div className='ml-auto mt-auto mr-5 laptop:mr-6 mb-6 laptop:mb-7'>
         <RegionsSwiper activeBackground={activeBackground} setActiveBackground={setActiveBackground}/>
       </div>
     </div>

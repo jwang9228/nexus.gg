@@ -8,7 +8,7 @@ function TopNav() {
   const patchSite = `https://www.leagueoflegends.com/en-us/news/game-updates/patch-${majorVersion}-${minorVersion}-notes/`;
   return (
     <div className='flex mt-3 mr-4 laptop:mt-4 laptop:mr-5 z-10'>
-      <button type='button' className='rounded-full bg-slate-900 px-3 py-1.5'>
+      <button type='button' className='rounded-full px-3 py-1.5 bg-slate-900'>
         <a href={patchSite} className='text-sm laptop:text-base text-zinc-300' target='_blank' rel='noopener noreferrer'>
           <div className='flex items-center font-[Raleway]'>
             <img src={`${AWS_S3_URL}/general/lol.png`} className='h-[18px] laptop:h-[20px] mr-1'/>
@@ -18,12 +18,12 @@ function TopNav() {
         </a>
       </button>
       <div className='flex items-center justify-center mx-1'>
-        <button type='button' className='rounded-full bg-slate-900 text-zinc-300/95 p-2'>
+        <button type='button' className='rounded-full p-2 text-zinc-300/95 bg-slate-900'>
           <AiOutlineMail className='w-[18px] h-[20px] laptop:w-[20px] laptop:h-[22px]'/>
         </button>
       </div>
       <div className='flex items-center justify-center'>
-        <button type='button' className='rounded-full bg-slate-900 text-zinc-300/90 p-2'>
+        <button type='button' className='rounded-full p-2 bg-slate-900 text-zinc-300/90'>
           <IoLanguageSharp className='w-[18px] h-[18px] laptop:w-[20px] laptop:h-[20px]'/>
         </button>
       </div>

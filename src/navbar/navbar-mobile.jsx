@@ -23,18 +23,15 @@ function NavbarMobile() {
             icon={<LuLayoutDashboard size={23.5} />}
             text='Home'
             linkTo='/'
-            active
-          />
+            active />
           <NavbarItemMobile
             icon={<PiListNumbers size={24} />}
             text='Tier List'
-            linkTo='/'
-          />
+            linkTo='/' />
           <NavbarItemMobile
             icon={<AiOutlineAliwangwang size={24} />}
             text='Champions'
-            linkTo='/'
-          />
+            linkTo='/' />
         </ul>
       </div>
     </nav>
@@ -47,8 +44,7 @@ function NavbarItemMobile({ icon, text, linkTo, active }) {
     <a
       href={`${linkTo}`}
       className=
-      {`flex flex-1 my-1.5 p-1 font-[525] tracking-wide
-        transition-colors w-full 
+      {`flex flex-1 w-full my-1.5 p-1 font-[525] tracking-wide transition-colors
         ${active ? 'hover:bg-slate-900 text-indigo-500' : 'hover:bg-slate-900 text-zinc-300/85'} 
       `}
     >
