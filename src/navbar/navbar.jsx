@@ -12,12 +12,12 @@ export function Navbar() {
 
   return (
     <nav 
-      className='h-dvh absolute flex flex-col z-10 bg-slate-950'
+      className='h-dvh absolute flex flex-col z-20 bg-slate-950'
       onMouseOver={() => setExpanded(true)}
       onMouseOut={() => setExpanded(false)}
     >
       <NavbarContext.Provider value={{expanded}}>
-        <div className='flex items-center mt-6 mb-3 ml-5 
+        <div className='flex items-center mt-6 mb-5 ml-5 
           font-[Raleway] font-semibold text-lg'
         >
           <img src={`${AWS_S3_URL}/general/aftershock.webp`} className='w-[30px] h-[30px]' />
@@ -31,21 +31,21 @@ export function Navbar() {
         </div>
         <ul className='flex-1 px-3'>
           <NavbarItem 
-            icon={<LuLayoutDashboard size={24.5} />}
+            icon={<LuLayoutDashboard size={22} />}
             text='Home'
             linkTo='/'
             active />
           <NavbarItem 
-            icon={<PiListNumbers size={25} />}
+            icon={<PiListNumbers size={24} />}
             text='Tier List'
             linkTo='/' />
           <NavbarItem 
-            icon={<AiOutlineAliwangwang size={25} />}
+            icon={<AiOutlineAliwangwang size={24} />}
             text='Champions'
             linkTo='/' />
         </ul>
-        <div className='flex justify-center items-center mx-4 mb-5 border-t-2 
-          border-zinc-300/70 text-zinc-300/85'
+        <div className='flex justify-center items-center mx-4 mb-5 
+          border-t-2 border-zinc-300/70 text-zinc-300/85'
         >
           <button type='button' className='bg-slate-900 p-1.5 ml-0.5 mt-2.5'>
             <FiUserPlus size={25} />
@@ -73,7 +73,7 @@ function NavbarItem({ icon, text, linkTo, active }) {
   return (
     <a
       href={`${linkTo}`}
-      className={`relative flex justify-center items-center py-1.5 pl-1.5 pr-2 my-3
+      className={`relative flex justify-center items-center p-1.5 my-2
         font-[525] tracking-wide rounded-md cursor-pointer transition-colors
         ${active ? 'bg-slate-900/95 text-indigo-500' : 'hover:bg-slate-900 text-zinc-300/85 hover:text-zinc-200/85'}
       `}
@@ -81,7 +81,7 @@ function NavbarItem({ icon, text, linkTo, active }) {
       {icon}
       <span 
         className={`overflow-hidden whitespace-nowrap transition-all
-          ${expanded ? 'w-40 ml-3.5' : 'w-0'}
+          ${expanded ? 'w-40 ml-3.5' : 'w-0'} 
         `}
       >
         {text}

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import * as summonerClient from './summoner-client';
 import SummonerSkeleton from './summoner-skeleton';
-import SummonerData from './summoner-data';
+import SummonerData from './summoner-data/summoner-data';
 
 function Summoner() {
 	const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
@@ -47,7 +47,7 @@ function Summoner() {
 			}
 		};
 		return undefined;
-	}
+	};
 
   const getMatches = async (matchIDs) => {
 		const matchesData = [];
@@ -56,7 +56,7 @@ function Summoner() {
 			matchesData.push(match);
 		}
 		setMatches(matchesData);
-	}
+	};
   
   useEffect(() => {
     const fetchData = async () => {

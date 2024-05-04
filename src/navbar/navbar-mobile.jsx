@@ -7,8 +7,8 @@ import { useState } from 'react';
 function NavbarMobile() {
   const [expanded, setExpanded] = useState(false);
   return (
-    <nav className='absolute'>
-      <div className='absolute ml-[1.25rem] mt-3 mb-1.5 z-10'>
+    <nav className='absolute z-20'>
+      <div className='absolute ml-[1.25rem] mt-3 mb-1.5 z-20'>
         <IoMenu 
           className={`${expanded ? 'text-zinc-400' : 'text-slate-900'}`} 
           size={32}
@@ -20,7 +20,7 @@ function NavbarMobile() {
       }`}>
         <ul className='flex flex-col ml-[1.25rem] mt-10 mb-2'>
           <NavbarItemMobile 
-            icon={<LuLayoutDashboard size={23.5} />}
+            icon={<LuLayoutDashboard size={23} />}
             text='Home'
             linkTo='/'
             active />

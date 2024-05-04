@@ -1,21 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import { EffectCoverflow } from 'swiper/modules';
+import * as userClient from './user-client';
 import backgrounds from './backgrounds.json';
 
 function RegionsSwiper({activeBackground, setActiveBackground}) {
   const [textVisible, setTextVisible] = useState(true);
   const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
 
-  const handleSwiperMove = (swiper) => {
+  const handleSwiperMove = async (swiper) => {
     const swiperIndex = swiper.realIndex;
     const prevSwiperIndex = activeBackground.index;
     if (swiperIndex !== prevSwiperIndex) {
       setActiveBackground(backgrounds[swiperIndex]);
     }
     setTextVisible(true);
+    const response = await userClient.setActiveBackground(backgrounds[swiperIndex]);
   };
 
   return (

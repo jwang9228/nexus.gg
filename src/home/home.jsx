@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { MdHistory } from 'react-icons/md';
 import TopNav from '../navbar/topnav';
 import RegionsSwiper from './regions-swiper';
+import * as userClient from './user-client';
 import * as summonerClient from '../summoner/summoner-client';
 import regions from './regions.json';
 import champions from '../summoner/champion.json';
@@ -34,7 +35,7 @@ function Home() {
 
   const filterRecentSearches = () => {
     return recentSearches.filter((search) => `${search.name}#${search.tagline}`.toLowerCase().startsWith(summonerSearch.toLowerCase()));
-  }
+  };
 
   const filterChampionsSearch = () => {
     const searchLowerCase = summonerSearch.trim().toLowerCase();
@@ -44,7 +45,7 @@ function Home() {
       )
     );
     return filteredChampions;
-  }
+  };
 
   useEffect(() => {
     const getRecentSearches = async () => {
@@ -52,6 +53,16 @@ function Home() {
       setRecentSearches(response);
     };
     getRecentSearches();
+
+    const fetchActiveBackground = async () => {
+      const response = await userClient.getActiveBackground();
+      if (Object.keys(response).length !== 0) {
+        setActiveBackground(response);
+      } else {
+        setActiveBackground(backgrounds[3]);
+      }
+    };
+    fetchActiveBackground();
   }, []);
 
   return (
@@ -113,7 +124,7 @@ function Home() {
             <button
               type='button'
               key={region.name}
-              style={{ backgroundColor: region === selectedRegion ? region.color : "#464264" }}
+              style={{ backgroundColor: region === selectedRegion ? region.color : '#464264' }}
               className='mx-1 mt-4 w-[46px] h-[26px] laptop:w-[56px] laptop:h-[32px] rounded-md text-stone-300'
               onClick={() => { setSelectedRegion(region) }}
             >
@@ -178,9 +189,11 @@ function Home() {
           ))}
         </ul>
       )}
-      <div className='ml-auto mt-auto mr-5 laptop:mr-6 mb-6 laptop:mb-7'>
-        <RegionsSwiper activeBackground={activeBackground} setActiveBackground={setActiveBackground}/>
-      </div>
+      {activeBackground && (
+        <div className='ml-auto mt-auto mr-5 laptop:mr-6 mb-6 laptop:mb-7'>
+          <RegionsSwiper activeBackground={activeBackground} setActiveBackground={setActiveBackground}/>
+        </div>
+      )}
     </div>
   );
 }
