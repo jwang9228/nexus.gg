@@ -47,6 +47,11 @@ function Home() {
     return filteredChampions;
   };
 
+  const handleSelectRegion = async (region) => {
+    setSelectedRegion(region);
+    await userClient.setSelectedRegion(region);
+  }
+
   useEffect(() => {
     const getRecentSearches = async () => {
       const response = await summonerClient.getRecentSearches();
@@ -63,6 +68,16 @@ function Home() {
       }
     };
     fetchActiveBackground();
+
+    const fetchSelectedRegion = async () => {
+      const response = await userClient.getSelectedRegion();
+      if (Object.keys(response).length !== 0) {
+        setSelectedRegion(response);
+      } else {
+        setSelectedRegion(regions[0]);
+      }
+    };
+    fetchSelectedRegion();
   }, []);
 
   return (
@@ -71,15 +86,14 @@ function Home() {
         <div 
           key={index}
           style={{'--bg-image-url': `url(${AWS_S3_URL}/regions/images/${background.background}.jpeg)`}}
-          className={`bg-cover bg-center bg-[image:var(--bg-image-url)] z-[-1] 
-            absolute top-0 left-0 w-full h-full 
+          className={`bg-cover bg-center bg-[image:var(--bg-image-url)] z-[-1] absolute size-full
             ${background.index === activeBackground.index ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 ease-out
           `}
         />
       ))}
       <div className='ml-auto'><TopNav /></div>
       <div className={`mt-40 mb-3 laptop:mt-28 laptop:px-0 font-[Raleway] font-bold tracking-[0.5em]
-        ${activeBackground.colors === 'dark' ? 'text-slate-950' : 'text-slate-900'} text-xl laptop:text-4xl 
+        ${activeBackground.colors === 'dark' ? 'text-slate-950' : 'text-slate-900'} text-2xl laptop:text-4xl 
       `}>
         DIVERGE.GG
       </div>
@@ -103,7 +117,7 @@ function Home() {
           <input 
             type='search' 
             placeholder='Search Summoners/Champions' 
-            className='w-full p-3 ps-20 pe-20 rounded-md bg-slate-900 
+            className='w-full py-3 px-20 rounded-md bg-slate-900 
               text-slate-200 text-xl focus:outline-none'
             onChange={(e) => { setSummonerSearch((e.target.value).trim()) }}
             onFocus={() => setSearchbarActive(true) }
@@ -126,7 +140,7 @@ function Home() {
               key={region.name}
               style={{ backgroundColor: region === selectedRegion ? region.color : '#464264' }}
               className='mx-1 mt-4 w-[46px] h-[26px] laptop:w-[56px] laptop:h-[32px] rounded-md text-stone-300'
-              onClick={() => { setSelectedRegion(region) }}
+              onClick={() => handleSelectRegion(region)}
             >
               {region.name}
             </button>
@@ -139,10 +153,10 @@ function Home() {
             <li className='bg-slate-800 hover:bg-slate-900 first:rounded-t-md last:rounded-b-md' key={champion.id}>
               <a href={`/champions/${champion.id}`} className='flex justify-between py-1.5 px-3 text-zinc-300/95'>
                 <div className='flex flex-row items-center'>
-                  <AiOutlineSearch className='mt-0.5 mr-3' size={18}/>
+                  <AiOutlineSearch className='mr-3' size={18}/>
                   <img 
                     src={`${AWS_S3_URL}/champion/${champion.image.full}`}
-                    className='w-[16px] rounded-sm mr-1.5 mt-0.5'
+                    className='size-[20px] rounded-sm mr-2'
                   />
                   {`${champion.name.substring(0, summonerSearch.length).replace(' ', '\u00A0')}`}
                   <span className='font-semibold'>
@@ -159,11 +173,11 @@ function Home() {
                 className='flex justify-between py-1.5 px-3 text-zinc-300/95'
                 onMouseDown={e => e.preventDefault()}
               >
-                <div className='flex flex-row items-center'>
-                  <MdHistory className='mt-0.5 mr-3' size={18}/>
+                <div className='flex flex-row items-center mt-0.5'>
+                  <MdHistory className='mr-3' size={18}/>
                   <img 
                     src={`${AWS_S3_URL}/profileicon/${search.profileIconId}.png`}
-                    className='w-[16px] rounded-sm mr-1.5 mt-0.5'
+                    className='w-[16px] rounded-sm mr-1.5'
                   />
                   {summonerSearch.length === 0 ? (
                     <div className='truncate'>
@@ -179,7 +193,7 @@ function Home() {
                   )}
                 </div>
                 <span 
-                  className='w-[40px] laptop:w-[48px] text-center'
+                  className='flex items-center px-2 mr-0.5 text-center text-sm'
                   style={{backgroundColor: regions.find((region) => region.region === search.region).color}}
                 >
                   {regions.find((region) => region.region === search.region).name}

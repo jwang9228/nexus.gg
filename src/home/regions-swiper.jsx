@@ -17,7 +17,7 @@ function RegionsSwiper({activeBackground, setActiveBackground}) {
       setActiveBackground(backgrounds[swiperIndex]);
     }
     setTextVisible(true);
-    const response = await userClient.setActiveBackground(backgrounds[swiperIndex]);
+    await userClient.setActiveBackground(backgrounds[swiperIndex]);
   };
 
   return (

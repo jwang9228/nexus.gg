@@ -20,7 +20,7 @@ export function Navbar() {
         <div className='flex items-center mt-6 mb-5 ml-5 
           font-[Raleway] font-semibold text-lg'
         >
-          <img src={`${AWS_S3_URL}/general/aftershock.webp`} className='w-[30px] h-[30px]' />
+          <img src={`${AWS_S3_URL}/general/aftershock.webp`} className='size-[30px]' />
           <span className={`overflow-hidden whitespace-nowrap transition-all
             ${expanded ? 'w-40 ml-2.5' : 'w-0'}`}
           >

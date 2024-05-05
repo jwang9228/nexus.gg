@@ -6,7 +6,7 @@ function SummonerData({ summonerData }) {
     <div className='mt-16 z-10'>
       <div className='flex ml-[1.5rem] laptop:ml-24 mb-4'>
         <div className='flex flex-col relative'>
-          <img src={`${AWS_S3_URL}/profileicon/${summonerData.profileIconId}.png`} className='rounded bg-slate-600 w-[4rem] h-[4rem] laptop:w-24 laptop:h-24' />
+          <img src={`${AWS_S3_URL}/profileicon/${summonerData.profileIconId}.png`} className='rounded bg-slate-600 size-16 laptop:size-24' />
           <div className='absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1.5 laptop:translate-y-2 rounded-full px-2 py-0.5 
             bg-slate-900 text-zinc-300 text-[10px] laptop:text-xs'>
             {summonerData.summonerLevel}
@@ -27,7 +27,7 @@ function SummonerData({ summonerData }) {
         </div>
       </div>
       <div className='w-screen grid laptop:grid-cols-3 laptop:gap-3 laptop:mt-4'>
-        <div className='mx-[1.5rem] my-1.5 laptop:mx-0 laptop:my-0 laptop:ml-24'>
+        <div className='mx-[1.5rem] laptop:mx-0 laptop:mt-1.5 laptop:ml-24'>
           <RankStats 
             queueData={summonerData.soloQueueRank}
             queueName='Ranked Solo/Duo'

@@ -27,3 +27,26 @@ export const getActiveBackground = async () => {
 		return undefined;
 	}
 };
+
+export const setSelectedRegion = async (selectedRegion) => {
+	try {
+		const response = await request.put(
+			`${SERVER_URL}/user/selectedRegion`,
+			selectedRegion
+		);
+		return response.data;
+	} catch (error) {
+		return undefined;
+	}
+};
+
+export const getSelectedRegion = async () => {
+  try {
+		const response = await request.get(
+			`${SERVER_URL}/user/selectedRegion`
+		);
+		return response.data;
+	} catch (error) {
+		return undefined;
+	}
+};
