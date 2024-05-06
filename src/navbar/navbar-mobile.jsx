@@ -8,7 +8,7 @@ function NavbarMobile() {
   const [expanded, setExpanded] = useState(false);
   return (
     <nav className='absolute z-20'>
-      <div className='absolute ml-[1.25rem] mt-3 mb-1.5 z-20'>
+      <div className='absolute ml-5 mt-3 mb-1.5 z-20'>
         <IoMenu 
           className={`${expanded ? 'text-zinc-400' : 'text-slate-900'}`} 
           size={32}
@@ -18,7 +18,7 @@ function NavbarMobile() {
       <div className={`absolute w-screen bg-slate-950 transition-all ease-in-out overflow-hidden ${
         expanded ? 'max-h-48 pt-2 duration-500' : 'max-h-0 pt-0 duration-[350ms]'
       }`}>
-        <ul className='flex flex-col ml-[1.25rem] mt-10 mb-2'>
+        <ul className='flex flex-col ml-5 mt-10 mb-2'>
           <NavbarItemMobile 
             icon={<LuLayoutDashboard size={23} />}
             text='Home'
@@ -44,7 +44,7 @@ function NavbarItemMobile({ icon, text, linkTo, active }) {
     <a
       href={`${linkTo}`}
       className=
-      {`flex flex-1 w-full my-1.5 p-1 font-[525] tracking-wide transition-colors
+      {`flex flex-1 w-full my-1.5 p-1 font-medium tracking-wide transition-colors
         ${active ? 'hover:bg-slate-900 text-indigo-500' : 'hover:bg-slate-900 text-zinc-300/85'} 
       `}
     >

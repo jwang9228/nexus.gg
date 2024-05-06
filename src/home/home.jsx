@@ -107,7 +107,7 @@ function Home() {
         <div className='relative'>
           <button 
             type='button'
-            className='absolute left-3 top-1/2 -translate-y-1/2 p-2 py-0.5 w-[56px] rounded-md 
+            className='absolute left-3 top-1/2 -translate-y-1/2 px-2 py-0.5 w-[56px] rounded-md 
               text-base text-center text-stone-300'
             style={{ backgroundColor: selectedRegion.color }}
             onClick={() => { setShowRegions(!showRegions) }}
@@ -117,8 +117,8 @@ function Home() {
           <input 
             type='search' 
             placeholder='Search Summoners/Champions' 
-            className='w-full py-3 px-20 rounded-md bg-slate-900 
-              text-slate-200 text-xl focus:outline-none'
+            className='w-full py-3 pl-20 pr-12 rounded-md bg-slate-900 
+              text-slate-200 text-xl truncate focus:outline-none'
             onChange={(e) => { setSummonerSearch((e.target.value).trim()) }}
             onFocus={() => setSearchbarActive(true) }
             onBlur={() => setSearchbarActive(false) }
@@ -138,7 +138,7 @@ function Home() {
             <button
               type='button'
               key={region.name}
-              style={{ backgroundColor: region === selectedRegion ? region.color : '#464264' }}
+              style={{ backgroundColor: region.name === selectedRegion.name ? region.color : '#464264' }}
               className='mx-1 mt-4 w-[46px] h-[26px] laptop:w-[56px] laptop:h-[32px] rounded-md text-stone-300'
               onClick={() => handleSelectRegion(region)}
             >
@@ -156,7 +156,7 @@ function Home() {
                   <AiOutlineSearch className='mr-3' size={18}/>
                   <img 
                     src={`${AWS_S3_URL}/champion/${champion.image.full}`}
-                    className='size-[20px] rounded-sm mr-2'
+                    className='size-5 rounded-sm mr-2'
                   />
                   {`${champion.name.substring(0, summonerSearch.length).replace(' ', '\u00A0')}`}
                   <span className='font-semibold'>
@@ -173,11 +173,11 @@ function Home() {
                 className='flex justify-between py-1.5 px-3 text-zinc-300/95'
                 onMouseDown={e => e.preventDefault()}
               >
-                <div className='flex flex-row items-center mt-0.5'>
+                <div className='flex flex-row items-center'>
                   <MdHistory className='mr-3' size={18}/>
                   <img 
                     src={`${AWS_S3_URL}/profileicon/${search.profileIconId}.png`}
-                    className='w-[16px] rounded-sm mr-1.5'
+                    className='size-5 rounded-sm mr-2'
                   />
                   {summonerSearch.length === 0 ? (
                     <div className='truncate'>

@@ -3,8 +3,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { Routes, Route } from 'react-router';
 import Navbar from './navbar/navbar';
 import NavbarMobile from './navbar/navbar-mobile';
-import Summoner from './summoner/summoner';
 import Home from './home/home';
+import Summoner from './summoner/summoner';
+import SummonerRedirect from './summoner/summoner-redirect';
 
 function App() {
   const bgColor = 'bg-[#24253a]';
@@ -29,6 +30,7 @@ function App() {
           <Routes>
             <Route index element = {<Home />} />
             <Route path='/summoners/:region/:summonerName' element={<Summoner />} />
+            <Route path='/summoners/redirect/:region/:summonerName' element={<SummonerRedirect />} />
           </Routes>
         </div>
       </div>

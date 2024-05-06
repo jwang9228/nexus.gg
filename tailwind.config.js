@@ -5,6 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    borderWidth: {
+      DEFAULT: '1px',
+      '1.5': '1.5px',
+      '2': '2px'
+    },
     extend: {
       animation: {
         pulse: 'pulse 1.75s cubic-bezier(0.4, 0, 0.6, 1) infinite',

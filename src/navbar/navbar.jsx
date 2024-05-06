@@ -56,7 +56,7 @@ export function Navbar() {
             }`}
           >
             <div className='flex flex-col'>
-              <div className='font-[550]'>Guest</div>
+              <div className='font-semibold'>Guest</div>
               <div className='text-sm'>Logged Out</div>
             </div>
           </span>
@@ -74,7 +74,7 @@ function NavbarItem({ icon, text, linkTo, active }) {
     <a
       href={`${linkTo}`}
       className={`relative flex justify-center items-center p-1.5 my-2
-        font-[525] tracking-wide rounded-md cursor-pointer transition-colors
+        font-semibold tracking-wide rounded-md cursor-pointer transition-colors
         ${active ? 'bg-slate-900/95 text-indigo-500' : 'hover:bg-slate-900 text-zinc-300/85 hover:text-zinc-200/85'}
       `}
     >
