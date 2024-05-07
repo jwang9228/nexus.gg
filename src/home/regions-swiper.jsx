@@ -24,7 +24,7 @@ function RegionsSwiper({activeBackground, setActiveBackground}) {
     <>
       <div 
         className={`
-          mb-2 font-[Raleway] font-semibold tracking-widest text-zinc-300/95 text-center laptop:text-lg 
+          mb-2 font-[Raleway] font-semibold tracking-widest text-zinc-300/95 text-center tablet:text-lg 
           transition-opacity duration-300 ${textVisible ? 'opacity-100' : 'opacity-0'}
         `}
       >
@@ -48,7 +48,7 @@ function RegionsSwiper({activeBackground, setActiveBackground}) {
         initialSlide={activeBackground.index}
         onTouchStart={() => setTextVisible(false)}
         onTouchEnd={handleSwiperMove}
-        className='w-[100px] laptop:w-[130px]'
+        className='w-[100px] tablet:w-[130px]'
       >
         {backgrounds.map((background, index) => (
           <SwiperSlide className={`bg-cover bg-center ${background.name === activeBackground.name ? 'blur-none' : 'blur-[0.4px]'}`} key={index}>

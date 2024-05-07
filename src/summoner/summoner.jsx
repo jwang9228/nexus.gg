@@ -90,7 +90,7 @@ function Summoner() {
 		<div className='flex h-dvh shadow-[inset_0_0_0_2000px_rgba(0,0,0,0.25)]'>
 			<div 
 				style={{'--bg-image-url': `url(${AWS_S3_URL}/general/summoners-rift.jpeg)`}}
-				className='bg-cover bg-center bg-[image:var(--bg-image-url)] z-[-1] absolute top-0 left-0 size-full'
+				className='bg-cover bg-center bg-fixed bg-[image:var(--bg-image-url)] z-[-1] absolute top-0 left-0 size-full'
 			/>
 				{summonerData ? (
 						<SummonerData summonerData={summonerData}/>

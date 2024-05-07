@@ -55,7 +55,7 @@ function Home() {
   useEffect(() => {
     const getRecentSearches = async () => {
       const response = await summonerClient.getRecentSearches();
-      setRecentSearches(response);
+      if (response) setRecentSearches(response);
     };
     getRecentSearches();
 
@@ -86,19 +86,19 @@ function Home() {
         <div 
           key={index}
           style={{'--bg-image-url': `url(${AWS_S3_URL}/regions/images/${background.background}.jpeg)`}}
-          className={`bg-cover bg-center bg-[image:var(--bg-image-url)] z-[-1] absolute size-full
+          className={`bg-cover bg-center bg-fixed bg-[image:var(--bg-image-url)] z-[-1] absolute size-full
             ${background.index === activeBackground.index ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 ease-out
           `}
         />
       ))}
       <div className='ml-auto'><TopNav /></div>
-      <div className={`mt-40 mb-3 laptop:mt-28 laptop:px-0 font-[Raleway] font-bold tracking-[0.5em]
-        ${activeBackground.colors === 'dark' ? 'text-slate-950' : 'text-slate-900'} text-2xl laptop:text-4xl 
+      <div className={`mt-24 mb-3 font-[Raleway] font-bold tracking-[0.5em]
+        ${activeBackground.colors === 'dark' ? 'text-slate-950' : 'text-slate-900'} text-2xl tablet:text-3xl laptop:text-4xl 
       `}>
         DIVERGE.GG
       </div>
       <form 
-        className='relative w-screen laptop:w-1/2 px-5 laptop:px-0'
+        className='relative w-screen tablet:w-4/5 laptop:w-1/2 px-5 tablet:px-0'
         onSubmit={(e) => { 
           e.preventDefault(); 
           searchSummoner(); 
@@ -120,7 +120,10 @@ function Home() {
             className='w-full py-3 pl-20 pr-12 rounded-md bg-slate-900 
               text-slate-200 text-xl truncate focus:outline-none'
             onChange={(e) => { setSummonerSearch((e.target.value).trim()) }}
-            onFocus={() => setSearchbarActive(true) }
+            onFocus={() => {
+              setSearchbarActive(true);
+              if (showRegions) setShowRegions(false);
+            }}
             onBlur={() => setSearchbarActive(false) }
           />
           <button 
@@ -133,13 +136,13 @@ function Home() {
         </div>
       </form>
       {showRegions && (
-        <div className='flex flex-wrap justify-center w-screen laptop:w-1/2 px-5 laptop:px-0'>
+        <div className='flex flex-wrap justify-center w-screen tablet:w-4/5 laptop:w-1/2 px-5 tablet:px-0 gap-y-3 gap-x-2 mt-4'>
           {regions.map((region) => (
             <button
               type='button'
               key={region.name}
               style={{ backgroundColor: region.name === selectedRegion.name ? region.color : '#464264' }}
-              className='mx-1 mt-4 w-[46px] h-[26px] laptop:w-[56px] laptop:h-[32px] rounded-md text-stone-300'
+              className='w-12 tablet:w-14 h-7 rounded-md text-stone-300'
               onClick={() => handleSelectRegion(region)}
             >
               {region.name}
@@ -148,12 +151,16 @@ function Home() {
         </div>
       )}
       {searchbarActive && (
-        <ul className='w-screen overflow-auto mt-2.5 laptop:w-1/2 px-5 laptop:px-0'>
+        <ul className='w-screen tablet:w-4/5 laptop:w-1/2 overflow-auto mt-2.5 px-5 tablet:px-0'>
           {summonerSearch.length > 0 && filterChampionsSearch().map((champion) => (
             <li className='bg-slate-800 hover:bg-slate-900 first:rounded-t-md last:rounded-b-md' key={champion.id}>
-              <a href={`/champions/${champion.id}`} className='flex justify-between py-1.5 px-3 text-zinc-300/95'>
+              <a 
+                href={`/champions/${champion.id}`} 
+                className='flex justify-between py-1.5 px-3 text-zinc-300/95'
+                onMouseDown={e => e.preventDefault()}
+              >
                 <div className='flex flex-row items-center'>
-                  <AiOutlineSearch className='mr-3' size={18}/>
+                  <AiOutlineSearch className='size-5 mr-3' size={18}/>
                   <img 
                     src={`${AWS_S3_URL}/champion/${champion.image.full}`}
                     className='size-5 rounded-sm mr-2'
@@ -174,7 +181,7 @@ function Home() {
                 onMouseDown={e => e.preventDefault()}
               >
                 <div className='flex flex-row items-center'>
-                  <MdHistory className='mr-3' size={18}/>
+                  <MdHistory className='size-5 mr-3'/>
                   <img 
                     src={`${AWS_S3_URL}/profileicon/${search.profileIconId}.png`}
                     className='size-5 rounded-sm mr-2'
@@ -193,7 +200,7 @@ function Home() {
                   )}
                 </div>
                 <span 
-                  className='flex items-center px-2 mr-0.5 text-center text-sm'
+                  className='flex items-center px-2 mr-0.5 text-sm'
                   style={{backgroundColor: regions.find((region) => region.region === search.region).color}}
                 >
                   {regions.find((region) => region.region === search.region).name}
@@ -204,7 +211,7 @@ function Home() {
         </ul>
       )}
       {activeBackground && (
-        <div className='ml-auto mt-auto mr-5 laptop:mr-6 mb-6 laptop:mb-7'>
+        <div className='ml-auto mt-auto mr-5 tablet:mr-6 mb-6 tablet:mb-7'>
           <RegionsSwiper activeBackground={activeBackground} setActiveBackground={setActiveBackground}/>
         </div>
       )}
