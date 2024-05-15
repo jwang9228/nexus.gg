@@ -1,0 +1,32 @@
+[
+  {
+      "queueId": 400,
+      "gameMode": "Normal",
+      "description": "5v5 Draft Pick games"
+  },
+  {
+      "queueId": 420,
+      "gameMode": "Ranked Solo",
+      "description": "5v5 Ranked Solo games"
+  },
+  {
+      "queueId": 430,
+      "gameMode": "Quickplay",
+      "description": "5v5 Blind Pick games"
+  },
+  {
+      "queueId": 440,
+      "gameMode": "Ranked Flex",
+      "description": "5v5 Ranked Flex games"
+  },
+  {
+      "queueId": 450,
+      "gameMode": "ARAM",
+      "description": "5v5 ARAM games"
+  },
+  {
+      "queueId": 490,
+      "gameMode": "Quickplay",
+      "description": "Normal (Quickplay)"
+  }
+]

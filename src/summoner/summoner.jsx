@@ -87,21 +87,23 @@ function Summoner() {
   }, []);
 
   return (
-		<div className='flex h-dvh shadow-[inset_0_0_0_2000px_rgba(0,0,0,0.25)]'>
+		<div className='flex relative overflow-y-auto overflow-x-hidden h-dvh shadow-[inset_0_0_0_2000px_rgba(0,0,0,0.25)]'>
 			<div 
 				style={{'--bg-image-url': `url(${AWS_S3_URL}/general/summoners-rift.jpeg)`}}
-				className='bg-cover bg-center bg-fixed bg-[image:var(--bg-image-url)] z-[-1] absolute top-0 left-0 size-full'
+				className='bg-cover bg-center bg-fixed bg-[image:var(--bg-image-url)] absolute size-full z-[-1]'
 			/>
+			<div className='flex relative overflow-y-auto overflow-x-hidden'>
 				{summonerData ? (
-						<SummonerData summonerData={summonerData}/>
-					) : fetchingData ? (
-						<SummonerSkeleton />
-					) : (
+					<SummonerData summonerData={summonerData} matches={matches}/>
+				) : fetchingData ? (
+					<SummonerSkeleton />
+				) : (
 					<div className='ml-24 mr-16 text-white'>
-						data not found
+						Data not found
 					</div>
 				)}
+			</div>
 		</div>
-  );
+	);
 } 
 export default Summoner;

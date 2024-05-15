@@ -50,7 +50,7 @@ function TopSearchbar() {
   }, []);
 
   return (
-    <div className='relative flex flex-col items-end tablet:items-center justify-end tablet:justify-center my-3 tablet:my-3.5 laptop:my-4 mx-6 tablet:mx-0'>
+    <div className='relative w-screen flex flex-col items-end tablet:items-center justify-end tablet:justify-center my-3 tablet:my-3.5 laptop:my-4 mx-6 tablet:mx-0'>
       <form 
         className='relative w-4/5 tablet:w-1/2 laptop:w-1/3'
         onSubmit={(e) => { 
@@ -61,7 +61,7 @@ function TopSearchbar() {
         <div className='relative'>
           <button 
             type='button'
-            className='absolute left-1 top-1/2 -translate-y-1/2 px-1.5 laptop:py-0.5 w-10 ml-1 
+            className='absolute left-1 top-1/2 -translate-y-1/2 px-1.5 w-10 ml-1 
               text-sm text-center text-stone-300'
             style={{ backgroundColor: selectedRegion.color }}
           >

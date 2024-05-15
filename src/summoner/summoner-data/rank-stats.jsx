@@ -26,7 +26,7 @@ function RankStats({ queueData, queueName }) {
 
   return (
     <div className='flex flex-col mt-2.5'>
-      <div className={`py-1.5 px-1.5 rounded-t-lg border-slate-950 border-x-1.5 border-t-1.5 ${!queueData && 'rounded-b-lg border-b-2'} bg-slate-900`}>
+      <div className={`p-1.5 rounded-t-lg border-slate-950 border-x-1.5 border-t-1.5 ${!queueData && 'rounded-b-lg border-b-1.5'} bg-slate-900`}>
         <div className='flex px-1 justify-between text-zinc-300/95 text-sm'>
           <span>{queueName}</span>
           {!queueData && <span className='text-zinc-400/90'>Unranked</span>}

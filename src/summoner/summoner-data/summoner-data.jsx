@@ -1,13 +1,20 @@
 import TopSearchbar from '../../home/top-searchbar';
+import NavbarMobile from '../../navbar/navbar-mobile';
 import RankStats from './rank-stats';
+import Match from './match/match';
 import { LuRefreshCw } from 'react-icons/lu';
 
-function SummonerData({ summonerData }) {
+function SummonerData({ summonerData, matches }) {
   const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
   return (
-    <div className='w-dvw z-10'>
-      <TopSearchbar />
-      <div className='mt-8'>
+    <div className='w-dvw'>
+      <div className='flex'>
+        <div className='laptop:hidden'>
+          <NavbarMobile />
+        </div>
+        <TopSearchbar />
+      </div>
+      <div className='mt-6'>
         <div className='flex ml-6 laptop:ml-24 mb-4'>
           <div className='flex flex-col relative'>
             <img 
@@ -49,8 +56,12 @@ function SummonerData({ summonerData }) {
               queueName='Ranked Flex'
             />
           </div>
-          <div className='laptop:col-span-3 rounded mx-6 laptop:mx-0 laptop:mr-7'>
-            Placeholder
+          <div className='laptop:col-span-3 mx-6 laptop:mx-0 laptop:ml-1 laptop:mr-8 my-3'>
+            <div className='flex flex-col mt-[0.30rem] gap-y-2.5'>
+              {matches && matches.map((matchData) => (
+                matchData && <Match matchData={matchData} summonerName={summonerData.summonerName} region={summonerData.server} />
+              ))}
+            </div>
           </div>
         </div>
       </div>

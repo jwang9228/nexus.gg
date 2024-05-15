@@ -10,7 +10,7 @@ import regions from './regions.json';
 import champions from '../summoner/champion.json';
 import backgrounds from './backgrounds.json';
 
-function Home() {
+function Home({modalStates}) {
   const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
   const navigate = useNavigate();
 
@@ -91,7 +91,7 @@ function Home() {
           `}
         />
       ))}
-      <div className='ml-auto'><TopNav /></div>
+      <div className='ml-auto'><TopNav modalStates={modalStates}/></div>
       <div className={`mt-24 mb-3 font-[Raleway] font-bold tracking-[0.5em]
         ${activeBackground.colors === 'dark' ? 'text-slate-950' : 'text-slate-900'} text-2xl tablet:text-3xl laptop:text-4xl 
       `}>

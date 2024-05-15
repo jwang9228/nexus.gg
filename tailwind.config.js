@@ -8,7 +8,9 @@ export default {
     borderWidth: {
       DEFAULT: '1px',
       '1.5': '1.5px',
-      '2': '2px'
+      '2': '2px',
+      '4': '4px',
+      '5': '5px',
     },
     extend: {
       animation: {
