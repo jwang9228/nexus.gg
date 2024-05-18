@@ -3,8 +3,9 @@ import { useParams } from 'react-router-dom';
 import * as summonerClient from './summoner-client';
 import SummonerSkeleton from './summoner-skeleton';
 import SummonerData from './summoner-data/summoner-data';
+import NoData from './no-data';
 
-function Summoner() {
+function Summoner({modalStates}) {
 	const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
   const { region, summonerName } = useParams();
   const [gameName, tagline] = summonerName.split('-');
@@ -94,13 +95,11 @@ function Summoner() {
 			/>
 			<div className='flex relative overflow-y-auto overflow-x-hidden'>
 				{summonerData ? (
-					<SummonerData summonerData={summonerData} matches={matches}/>
+					<SummonerData modalStates={modalStates} summonerData={summonerData} matches={matches}/>
 				) : fetchingData ? (
 					<SummonerSkeleton />
 				) : (
-					<div className='ml-24 mr-16 text-white'>
-						Data not found
-					</div>
+					<NoData modalStates={modalStates} searchName={gameName} tagline={tagline} />
 				)}
 			</div>
 		</div>

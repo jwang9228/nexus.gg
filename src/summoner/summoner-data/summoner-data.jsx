@@ -4,13 +4,13 @@ import RankStats from './rank-stats';
 import Match from './match/match';
 import { LuRefreshCw } from 'react-icons/lu';
 
-function SummonerData({ summonerData, matches }) {
+function SummonerData({ modalStates, summonerData, matches }) {
   const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
   return (
     <div className='w-dvw'>
       <div className='flex'>
         <div className='laptop:hidden'>
-          <NavbarMobile />
+          <NavbarMobile modalStates={modalStates}/>
         </div>
         <TopSearchbar />
       </div>

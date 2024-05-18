@@ -10,6 +10,7 @@ function TopSearchbar() {
   const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
   const { region } = useParams();
   const navigate = useNavigate();
+  const [showRegions, setShowRegions] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState(regions.find((r) => r.region === region));
   const [summonerSearch, setSummonerSearch] = useState('');
   const [recentSearches, setRecentSearches] = useState([]);
@@ -50,7 +51,7 @@ function TopSearchbar() {
   }, []);
 
   return (
-    <div className='relative w-screen flex flex-col items-end tablet:items-center justify-end tablet:justify-center my-3 tablet:my-3.5 laptop:my-4 mx-6 tablet:mx-0'>
+    <div className='relative w-dvw flex flex-col items-end tablet:items-center justify-end tablet:justify-center my-3 tablet:my-3.5 laptop:my-4 mx-6 tablet:mx-0'>
       <form 
         className='relative w-4/5 tablet:w-1/2 laptop:w-1/3'
         onSubmit={(e) => { 
@@ -61,9 +62,13 @@ function TopSearchbar() {
         <div className='relative'>
           <button 
             type='button'
-            className='absolute left-1 top-1/2 -translate-y-1/2 px-1.5 w-10 ml-1 
+            className='absolute left-1 top-1/2 -translate-y-1/2 w-10 ml-1 
               text-sm text-center text-stone-300'
             style={{ backgroundColor: selectedRegion.color }}
+            onClick={() => { 
+              setShowRegions(!showRegions);
+              setSearchbarActive(false); 
+            }}
           >
             {selectedRegion.name}
           </button>
@@ -71,21 +76,45 @@ function TopSearchbar() {
             type='search' 
             placeholder='Search Summoners/Champions' 
             className={`w-full py-[0.35rem] laptop:py-1.5 pl-14 pr-10 rounded 
-              ${searchbarActive && (summonerSearch.length > 0 || recentSearches.length > 0) && 'rounded-b-none'}
+              ${(showRegions || (searchbarActive && (summonerSearch.length > 0 || recentSearches.length > 0))) && 'rounded-b-none'}
               bg-slate-900 text-slate-200 text-sm tablet:text-base truncate focus:outline-none border-1.5 border-slate-950`}
             onChange={(e) => { setSummonerSearch((e.target.value).trim()) }}
-            onFocus={() => setSearchbarActive(true) }
+            onFocus={() => {
+              setSearchbarActive(true);
+              setShowRegions(false);
+            }}
             onBlur={() => setSearchbarActive(false) }
           />
           <button 
             type='button'
             className='absolute right-px top-1/2 -translate-y-1/2 p-3'
-            onClick={() => { searchSummoner() }}
+            onClick={() => {searchSummoner() }}
           >
             <AiOutlineSearch className='text-slate-500 size-4 tablet:size-5'/>
           </button>
         </div>
       </form>
+      {showRegions && (
+        <ul className='absolute w-4/5 tablet:w-1/2 laptop:w-1/3 overflow-auto top-full transform z-10'>
+          {regions.map((region) => (
+            <li className='bg-slate-800 hover:bg-slate-900 border-x-1.5 border-slate-950 last:rounded-b last:border-b-1.5' key={region.name}>
+              <button 
+                type='button' 
+                className='flex py-1.5 px-2 gap-x-2.5 text-sm truncate text-zinc-300/95'
+                onClick={() => {
+                  setSelectedRegion(region);
+                  setShowRegions(false);
+                }}
+              >
+                <div className='text-center w-10' style={{ backgroundColor: region.color }}>
+                  {region.name}
+                </div>
+                {region.title}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
       {searchbarActive && (
         <ul className='absolute w-4/5 tablet:w-1/2 laptop:w-1/3 overflow-auto top-full transform z-10'>
           {summonerSearch.length > 0 && filterChampionsSearch().map((champion) => (

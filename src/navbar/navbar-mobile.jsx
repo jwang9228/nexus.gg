@@ -2,9 +2,10 @@ import { IoMenu } from 'react-icons/io5';
 import { PiListNumbers } from 'react-icons/pi';
 import { LuLayoutDashboard } from 'react-icons/lu';
 import { AiOutlineAliwangwang } from 'react-icons/ai';
+import { FiUserPlus } from 'react-icons/fi';
 import { useState } from 'react';
 
-function NavbarMobile() {
+function NavbarMobile({modalStates}) {
   const [expanded, setExpanded] = useState(false);
   return (
     <nav className='absolute z-20'>
@@ -14,8 +15,8 @@ function NavbarMobile() {
           onClick={() => setExpanded(!expanded)}
         /> 
       </div>
-      <div className={`absolute top-0 left-0 w-screen bg-slate-950 transition-all ease-in-out overflow-hidden ${
-        expanded ? 'max-h-48 pt-2 duration-500' : 'max-h-0 pt-0 duration-[350ms]'
+      <div className={`absolute top-0 left-0 w-dvw bg-slate-950 transition-all ease-in-out overflow-hidden ${
+        expanded ? 'max-h-dvh pt-2 duration-500' : 'max-h-0 pt-0 duration-[350ms]'
       }`}>
         <ul className='flex flex-col ml-5 mt-10 tablet:mt-12 mb-2'>
           <NavbarItemMobile 
@@ -32,6 +33,22 @@ function NavbarMobile() {
             text='Champions'
             linkTo='/' />
         </ul>
+        <div className='flex items-center mx-6 my-3 border-t-2 border-zinc-300/70 text-zinc-300/85'>
+          <button 
+            type='button' 
+            className='bg-slate-900 p-1.5 ml-0.5 mt-2.5'
+            onClick={() => {
+              modalStates.setInDevModalOpen(true);
+              modalStates.setInDevFeature('Sign In');
+            }}
+          >
+            <FiUserPlus size={25} />
+          </button>
+          <div className='flex flex-col ml-3.5 mt-1.5'>
+            <div className='font-semibold'>Guest</div>
+            <div className='text-sm'>Logged Out</div>
+          </div>
+        </div>
       </div>
     </nav>
   )

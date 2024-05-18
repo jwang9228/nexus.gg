@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Routes, Route } from 'react-router';
 import Navbar from './navbar/navbar';
-import NavbarMobile from './navbar/navbar-mobile';
 import Home from './home/home';
 import Summoner from './summoner/summoner';
 import SummonerRedirect from './summoner/summoner-redirect';
@@ -38,16 +37,13 @@ function App() {
     <BrowserRouter>
       <Modals modalStates={modalStates} />
       <div className={`flex ${isModalActive() ? 'pointer-events-none opacity-30' : 'pointer-events-auto opacity-100'}`}>
-        <div className='laptop:hidden'>
-          <NavbarMobile />
-        </div>
         <div className='hidden laptop:flex'>
           <Navbar modalStates={modalStates} />
         </div>
         <div className='flex-1 m-0 p-0'>
           <Routes>
             <Route index element = {<Home modalStates={modalStates}/>} />
-            <Route path='/summoners/:region/:summonerName' element={<Summoner />} />
+            <Route path='/summoners/:region/:summonerName' element={<Summoner modalStates={modalStates}/>} />
             <Route path='/summoners/redirect/:region/:summonerName' element={<SummonerRedirect />} />
           </Routes>
         </div>

@@ -196,7 +196,7 @@ function Match({ matchData, summonerName, region }) {
         `}
         key={metadata.id}
       >
-        <div className='flex laptop:flex-col justify-between laptop:text-start text-xs tablet:text-sm'>
+        <div className='flex laptop:flex-col justify-between laptop:text-start text-xs laptop:w-20'>
           <div className='flex laptop:flex-col gap-x-1.5 laptop:gap-0 font-semibold font-[Raleway] text-slate-950'>
             {gameModes.find(gameMode => gameMode.queueId === matchInfo.queueId).gameMode}
             <span>{`(${myPlayer.matchResult})`}</span>
