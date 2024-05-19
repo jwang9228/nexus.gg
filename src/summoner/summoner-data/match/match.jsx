@@ -163,6 +163,21 @@ function Match({ matchData, summonerName, region }) {
     return secondaryTree;
   };
 
+  const calculateKDA = (kills, deaths, assists) => {
+		if (deaths === 0) { 
+			deaths = 1;
+		}
+		return ((kills + assists) / deaths).toFixed(2)
+	};
+
+  const getKDAColor = (kda) => {
+    if (kda >= 5.00) return 'text-amber-600';
+    else if (kda >= 3.00) return 'text-violet-950';
+    else if (kda >= 2.00) return 'text-indigo-950';
+    else if (kda >= 1.00) return 'text-zinc-800';
+    else return 'text-slate-800';
+  }
+
   const getBackgroundColor = () => {
     if (myPlayer.matchResult === 'Victory') return 'bg-[#506ca6]';
     else if (myPlayer.matchResult === 'Defeat') return 'bg-[#a0575c]';
@@ -175,7 +190,7 @@ function Match({ matchData, summonerName, region }) {
     else return 'hover:bg-[#929191] active:bg-[#929191]';
   };
 
-  const getItemBackground = () => {
+  const getItemBackgroundColor = () => {
     if (myPlayer.matchResult === 'Victory') return 'bg-[#3f5684]';
     else if (myPlayer.matchResult === 'Defeat') return 'bg-[#7f4549]';
     else return 'bg-[#828282]';
@@ -187,28 +202,44 @@ function Match({ matchData, summonerName, region }) {
     else return 'border-l-[#c6c6c6]';
   };
 
+  const matchStats = {
+    'borderHighlightColor': getBorderHighlightColor(),
+    'backgroundColor': getBackgroundColor(),
+    'backgroundFocusColor': getBackgroundFocusColor(),
+    'matchTimeCompact': getMatchTime(true),
+    'matchTime': getMatchTime(false),
+    'matchLastPlayed': calculateMatchLastPlayed(),
+    'gameMode': gameModes.find(gameMode => gameMode.queueId === matchInfo.queueId).gameMode,
+    'summonerSpells': getSummonerSpells(),
+    'primaryRune': getPrimaryRune(),
+    'secondaryTree': getSecondaryTree(),
+    'itemBackgroundColor': getItemBackgroundColor(),
+    'kda': calculateKDA(myPlayer.kills, myPlayer.deaths, myPlayer.assists),
+    'kdaColor': getKDAColor(calculateKDA(myPlayer.kills, myPlayer.deaths, myPlayer.assists)),
+  };
+
   return (
     <div className='rounded border-1.5 border-slate-950'>
       <button
         type='button' 
         className={`flex flex-col laptop:flex-row w-full rounded px-1.5 tablet:px-2 py-1 
-          border-l-5 ${getBorderHighlightColor()} ${getBackgroundColor()} ${getBackgroundFocusColor()}
+          border-l-5 ${matchStats.borderHighlightColor} ${matchStats.backgroundColor} ${matchStats.backgroundFocusColor}
         `}
         key={metadata.id}
       >
         <div className='flex laptop:flex-col justify-between laptop:text-start text-xs laptop:w-20'>
           <div className='flex laptop:flex-col gap-x-1.5 laptop:gap-0 font-semibold font-[Raleway] text-slate-950'>
-            {gameModes.find(gameMode => gameMode.queueId === matchInfo.queueId).gameMode}
+            {matchStats.gameMode}
             <span>{`(${myPlayer.matchResult})`}</span>
           </div>
-          <div className='flex laptop:flex-col gap-x-2 laptop:gap-0 text-slate-900'>
-            <div className='hidden laptop:flex'>{getMatchTime(false)}</div>
-            <div className='laptop:hidden flex'>{getMatchTime(true)}</div>
-            {calculateMatchLastPlayed()}
+          <div className='flex laptop:flex-col gap-x-2 laptop:gap-0 text-slate-900 font-medium laptop:font-normal'>
+            <div className='hidden laptop:flex'>{matchStats.matchTime}</div>
+            <div className='laptop:hidden flex'>{matchStats.matchTimeCompact}</div>
+            {matchStats.matchLastPlayed}
           </div>
         </div>
         <div className='flex grow tablet:mt-1 tablet:mb-0.5 laptop:my-0'>
-          <div className='flex tablet:flex-col laptop:ml-5'>
+          <div className='flex grow tablet:flex-col laptop:ml-5'>
             <div className='flex gap-x-2'>
               <div className='relative size-12 tablet:size-14 my-0.5 laptop:my-0'>
                 <img src={`${AWS_S3_URL}/champion/${myPlayer.champion}.png`} className='relative [clip-path:circle(45%)]'/>
@@ -220,24 +251,32 @@ function Match({ matchData, summonerName, region }) {
               </div>
               <div className='flex flex-col mt-1 gap-y-1'>
                 <div className='flex gap-x-1.5'>
-                  {getSummonerSpells().map((spell) => (
+                  {matchStats.summonerSpells.map((spell) => (
                     <img src={`${AWS_S3_URL}/summoner-spells/${spell}.png`} className='rounded size-5 tablet:size-6' />
                   ))}
                 </div>
                 <div className='flex gap-x-1.5'>
-                  <img src={`${AWS_S3_URL}/${getPrimaryRune()}`} className='size-5 tablet:size-6' />
+                  <img src={`${AWS_S3_URL}/${matchStats.primaryRune}`} className='size-5 tablet:size-6' />
                   <div className='flex items-center justify-center size-5 tablet:size-6'>
-                    <img src={`${AWS_S3_URL}/${getSecondaryTree()}`} className='tablet:w-5 h-4 tablet:h-[18px]' />
+                    <img src={`${AWS_S3_URL}/${matchStats.secondaryTree}`} className='tablet:w-5 h-4 tablet:h-[18px]' />
                   </div>
                 </div>
               </div>
             </div>
-            <div className='flex mt-auto tablet:mb-0.5 laptop:mb-1 gap-x-1'>
-              {myPlayer.items.map((item) => (
-                (item !== 0)
-                ? <img src={`${AWS_S3_URL}/item/${item}.png`} className='rounded size-5 tablet:size-6 laptop:size-7'/>
-                : <div className={`rounded size-5 tablet:size-6 laptop:size-7 ${getItemBackground()}`} />
-              ))}
+            <div className='flex flex-col justify-center ml-auto tablet:ml-0 tablet:mt-auto'>
+              <div className='flex mb-1.5 tablet:mb-0.5 laptop:mb-1 gap-x-1'>
+                {myPlayer.items.map((item) => (
+                  (item !== 0)
+                  ? <img src={`${AWS_S3_URL}/item/${item}.png`} className='rounded size-5 tablet:size-6 laptop:size-7'/>
+                  : <div className={`rounded size-5 tablet:size-6 laptop:size-7 ${matchStats.itemBackgroundColor}`} />
+                ))}
+              </div>
+              <div className='flex tablet:hidden gap-x-0.5 text-sm'>
+                <span className='font-medium text-slate-950'>{myPlayer.kills}</span>
+                <span className='text-slate-700'>/</span><span className='text-red-800'>{myPlayer.deaths}</span>
+                <span className='text-slate-700'>/</span><span className='font-medium text-slate-900'>{myPlayer.assists}</span>
+                <span className={`ml-auto font-medium ${matchStats.kdaColor}`}>{`${matchStats.kda} KDA`}</span>
+              </div>
             </div>
           </div>
           <div className='hidden tablet:flex ml-auto gap-x-4'>
