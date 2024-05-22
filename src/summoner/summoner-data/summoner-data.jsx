@@ -45,8 +45,8 @@ function SummonerData({ modalStates, summonerData, matches }) {
             </button>
           </div>
         </div>
-        <div className='grid laptop:grid-cols-4 laptop:gap-3 laptop:mt-4 laptop:ml-24'>
-          <div className='laptop:col-span-1 mx-6 laptop:mx-0 laptop:mt-1.5'>
+        <div className='grid laptop:grid-cols-10 laptop:gap-3 laptop:mt-4 laptop:ml-24'>
+          <div className='laptop:col-span-3 mx-6 laptop:mx-0 laptop:mt-1.5'>
             <RankStats 
               queueData={summonerData.soloQueueRank}
               queueName='Ranked Solo/Duo'
@@ -56,7 +56,7 @@ function SummonerData({ modalStates, summonerData, matches }) {
               queueName='Ranked Flex'
             />
           </div>
-          <div className='laptop:col-span-3 mx-6 laptop:mx-0 laptop:ml-1 laptop:mr-8 my-3'>
+          <div className='laptop:col-span-7 mx-6 laptop:mx-0 laptop:ml-1 laptop:mr-8 my-3'>
             <div className='flex flex-col mt-[0.30rem] gap-y-2.5'>
               {matches && matches.map((matchData) => (
                 matchData && <Match matchData={matchData} summonerName={summonerData.summonerName} region={summonerData.server} />

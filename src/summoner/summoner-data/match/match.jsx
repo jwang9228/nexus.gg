@@ -1,3 +1,6 @@
+import { GiTripleScratches, GiPentarrowsTornado } from "react-icons/gi";
+import { HiChevronDoubleUp } from "react-icons/hi";
+import { PiDiamondsFour } from "react-icons/pi";
 import gameModes from "./gamemodes.json";
 import summonerSpells from "./summoners.json";
 import runes from "./runes.json";
@@ -121,6 +124,12 @@ function Match({ matchData, summonerName, region }) {
 					(selection) => selection.perk
 				),
 			},
+      visionScore: player.visionScore,
+      creepScore: player.totalMinionsKilled,
+      doubleKills: player.doubleKills,
+      tripleKills: player.tripleKills,
+      quadraKills: player.quadraKills,
+      pentaKills: player.pentaKills,
 		};
 		teamData[playerTeamId].push(playerData);
 		if (player.riotIdGameName === summonerName) {
@@ -202,6 +211,12 @@ function Match({ matchData, summonerName, region }) {
     else return 'border-l-[#c6c6c6]';
   };
 
+  const getBackgroundHighlightColor = () => {
+    if (myPlayer.matchResult === 'Victory') return 'bg-[#3785c4]';
+    else if (myPlayer.matchResult === 'Defeat') return 'bg-[#cc494b]';
+    else return 'bg-[#c6c6c6]';
+  };
+
   const matchStats = {
     'borderHighlightColor': getBorderHighlightColor(),
     'backgroundColor': getBackgroundColor(),
@@ -217,6 +232,59 @@ function Match({ matchData, summonerName, region }) {
     'kda': calculateKDA(myPlayer.kills, myPlayer.deaths, myPlayer.assists),
     'kdaColor': getKDAColor(calculateKDA(myPlayer.kills, myPlayer.deaths, myPlayer.assists)),
   };
+
+  const myTeam = Object.values(teamData).find(team => team.includes(myPlayer));
+  const enemyTeam = Object.values(teamData).find(team => !team.includes(myPlayer));
+
+  const getTeamStats = (team) => {
+   let kills = 0;
+   let deaths = 0;
+   team.map((player) => {
+    kills += player.kills;
+    deaths += player.deaths;
+   });
+   return {
+    'kills': kills,
+    'deaths': deaths,
+   }
+  };
+  const myTeamStats = getTeamStats(myTeam);
+  const enemyTeamStats = getTeamStats(enemyTeam);
+
+  const calculateKP = (player) => {
+    return Math.round(((myPlayer.kills + myPlayer.assists) / myTeamStats.kills) * 100);
+  };
+
+  const calculateCSM = (player) => {
+    const gameDurationSeconds = matchInfo.gameDuration;
+		const minutes = Math.floor((gameDurationSeconds % 3600) / 60);
+    if (minutes == 0) {
+      return player.creepScore;
+    }
+    return (player.creepScore / minutes).toFixed(1);
+  }
+
+  const getPlayerHighestMultiKills = (player) => {
+    if (player.pentaKills > 0) {
+      return ['Penta Kill', <GiPentarrowsTornado className='size-fit'/>];
+    } else if (player.quadraKills > 0) {
+      return ['Quadra Kill', <PiDiamondsFour className='size-fit' />];
+    } else if (player.tripleKills > 0) {
+      return ['Triple Kill', <GiTripleScratches className='size-fit'/>];
+    } else if (player.doubleKills > 0) {
+      return ['Double Kill', <HiChevronDoubleUp className='size-fit'/>];
+    } else {
+      return [undefined, undefined];
+    }
+  }
+
+  const myPlayerStats = {
+    'kp': calculateKP(myPlayer),
+    'csm': calculateCSM(myPlayer),
+    'multiKill': getPlayerHighestMultiKills(myPlayer)[0],
+    'multiKillIcon': getPlayerHighestMultiKills(myPlayer)[1],
+    'multiKillBackground': getBackgroundHighlightColor(myPlayer),
+  }
 
   return (
     <div className='rounded border-1.5 border-slate-950'>
@@ -239,7 +307,7 @@ function Match({ matchData, summonerName, region }) {
           </div>
         </div>
         <div className='flex grow tablet:mt-1 tablet:mb-0.5 laptop:my-0'>
-          <div className='flex grow tablet:flex-col laptop:ml-5'>
+          <div className='flex tablet:flex-col grow tablet:grow-0 laptop:ml-5'>
             <div className='flex gap-x-2'>
               <div className='relative size-12 tablet:size-14 my-0.5 laptop:my-0'>
                 <img src={`${AWS_S3_URL}/champion/${myPlayer.champion}.png`} className='relative [clip-path:circle(45%)]'/>
@@ -277,6 +345,27 @@ function Match({ matchData, summonerName, region }) {
                 <span className='text-slate-700'>/</span><span className='font-medium text-slate-900'>{myPlayer.assists}</span>
                 <span className={`ml-auto font-medium ${matchStats.kdaColor}`}>{`${matchStats.kda} KDA`}</span>
               </div>
+            </div>
+          </div>
+          <div className='hidden tablet:flex grow justify-center gap-x-12 mb-1'>
+            <div className='flex flex-col items-center gap-y-1'>
+              <div className='flex gap-x-0.5'>
+                <span className='font-medium text-slate-950'>{myPlayer.kills}</span>
+                <span className='text-slate-700'>/</span><span className='text-red-800'>{myPlayer.deaths}</span>
+                <span className='text-slate-700'>/</span><span className='font-medium text-slate-900'>{myPlayer.assists}</span>
+              </div>
+              <span className={`font-medium ${matchStats.kdaColor}`}>{`${matchStats.kda} KDA`}</span>
+              {myPlayerStats.multiKill &&
+                <div className={`flex justify-center items-center rounded mt-auto px-1 gap-x-1 text-sm ${myPlayerStats.multiKillBackground}`}>
+                  {myPlayerStats.multiKillIcon}
+                  <span>{`${myPlayerStats.multiKill}`}</span>
+                </div>
+              }
+            </div>
+            <div className='flex flex-col items-center gap-y-0.5'>
+              <span>{`${myPlayerStats.kp}% KP`}</span>
+              <span>{`${myPlayer.creepScore} CS (${myPlayerStats.csm})`}</span>
+              <span className='text-sm'>{`Vision: ${myPlayer.visionScore}`}</span>
             </div>
           </div>
           <div className='hidden tablet:flex ml-auto gap-x-4'>
