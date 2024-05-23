@@ -4,6 +4,7 @@ import * as summonerClient from './summoner-client';
 import SummonerSkeleton from './summoner-skeleton';
 import SummonerData from './summoner-data/summoner-data';
 import NoData from './no-data';
+import regions from '../home/regions.json';
 
 function Summoner({modalStates}) {
 	const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
@@ -30,10 +31,11 @@ function Summoner({modalStates}) {
 	};
 
   const getRiotSummonerData = async () => {
-		const data = await summonerClient.getSummonerData(region, summonerName);
+		const riotApiRegion = regions.find((r) => r.region === region).riotApiRegion;
+		const data = await summonerClient.getSummonerData(riotApiRegion, summonerName);
 		if (data) {
-			const matchIDs = await summonerClient.getMatchesByPUUID(region, data.puuid, matchCount);
-			const winrateData = await summonerClient.getWinrateData(region, data.id);
+			const matchIDs = await summonerClient.getMatchesByPUUID(riotApiRegion, data.puuid, matchCount);
+			const winrateData = await summonerClient.getWinrateData(riotApiRegion, data.id);
 			return {
 				summonerName: data.gameName,
 				tagLine: data.tagLine,
@@ -41,7 +43,7 @@ function Summoner({modalStates}) {
 				summonerId: data.id,
 				profileIconId: data.profileIconId,
 				puuid: data.puuid,
-				server: region,
+				server: riotApiRegion,
 				matchIDs: matchIDs,
 				soloQueueRank: getWinrateDataByQueue('solo', winrateData),
 				flexQueueRank: getWinrateDataByQueue('flex', winrateData),
@@ -51,19 +53,35 @@ function Summoner({modalStates}) {
 	};
 
   const getMatches = async (matchIDs) => {
+		const riotApiRegion = regions.find((r) => r.region === region).riotApiRegion;
 		const matchesData = [];
 		for (const matchID of matchIDs) {
-			const match = await summonerClient.getMatchData(region, matchID);
+			const match = await summonerClient.getMatchData(riotApiRegion, matchID);
 			matchesData.push(match);
 		}
 		setMatches(matchesData);
 	};
+
+	const processSummonerData = async (summonerData) => {
+		await getMatches(summonerData.matchIDs);
+		setSummonerData(summonerData);
+	}
+
+	const updateSummoner = async () => {
+		setSummonerData(undefined);
+		setFetchingData(true);
+		const updatedSummonerData = await getRiotSummonerData();
+		await summonerClient.updateSummoner(updatedSummonerData);
+		await processSummonerData(updatedSummonerData);
+		setFetchingData(false);
+	};
   
   useEffect(() => {
+		const riotApiRegion = regions.find((r) => r.region === region).riotApiRegion;
     const fetchData = async () => {
 			setSummonerData(undefined);
 			setFetchingData(true);
-			let response = await summonerClient.findSummonerByRegion(region, summonerName);
+			let response = await summonerClient.findSummonerByRegion(riotApiRegion, summonerName);
 			if (!response) {
 				const riotSummonerData = await getRiotSummonerData();
 				if (riotSummonerData) {
@@ -79,8 +97,7 @@ function Summoner({modalStates}) {
           profileIconId: response.profileIconId,
         };
         await summonerClient.addRecentSearch(searchData);
-        await getMatches(response.matchIDs);
-        setSummonerData(response);
+        await processSummonerData(response);
       }
 			setFetchingData(false);
 		};
@@ -95,7 +112,7 @@ function Summoner({modalStates}) {
 			/>
 			<div className='flex relative overflow-y-auto overflow-x-hidden'>
 				{summonerData ? (
-					<SummonerData modalStates={modalStates} summonerData={summonerData} matches={matches}/>
+					<SummonerData modalStates={modalStates} summonerData={summonerData} matches={matches} updateSummoner={updateSummoner}/>
 				) : fetchingData ? (
 					<SummonerSkeleton />
 				) : (

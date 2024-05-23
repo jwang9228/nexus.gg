@@ -40,7 +40,7 @@ function App() {
         <div className='hidden laptop:flex'>
           <Navbar modalStates={modalStates} />
         </div>
-        <div className='flex-1 m-0 p-0'>
+        <div className='flex-1 w-full m-0 p-0'>
           <Routes>
             <Route index element = {<Home modalStates={modalStates}/>} />
             <Route path='/summoners/:region/:summonerName' element={<Summoner modalStates={modalStates}/>} />

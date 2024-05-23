@@ -4,7 +4,7 @@ import RankStats from './rank-stats';
 import Match from './match/match';
 import { LuRefreshCw } from 'react-icons/lu';
 
-function SummonerData({ modalStates, summonerData, matches }) {
+function SummonerData({ modalStates, summonerData, matches, updateSummoner }) {
   const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
   return (
     <div className='w-dvw'>
@@ -37,6 +37,7 @@ function SummonerData({ modalStates, summonerData, matches }) {
               className='rounded w-24 tablet:w-28 py-1.5
                 text-sm tablet:text-base text-zinc-300 tracking-wide font-semibold 
                 bg-blue-600 hover:bg-blue-600/95'
+              onClick={() => updateSummoner()}
             >
               <div className='flex items-center justify-center'>
                 <LuRefreshCw className='size-4 tablet:size-[18px]'/>

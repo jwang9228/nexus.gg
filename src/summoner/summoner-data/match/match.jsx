@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { GiTripleScratches, GiPentarrowsTornado } from "react-icons/gi";
 import { HiChevronDoubleUp } from "react-icons/hi";
 import { PiDiamondsFour } from "react-icons/pi";
@@ -11,6 +12,8 @@ function Match({ matchData, summonerName, region }) {
 	const matchInfo = matchData.info;
 
   if (!gameModes.find(gameMode => gameMode.queueId === matchInfo.queueId)) return;
+
+  const [showFullDetails, setShowFullDetails] = useState(false);
 
   const timeToStr = (time, timeUnit) => { 
     return time !== 0 ? `${time}${timeUnit}` : '';
@@ -252,7 +255,10 @@ function Match({ matchData, summonerName, region }) {
   const enemyTeamStats = getTeamStats(enemyTeam);
 
   const calculateKP = (player) => {
-    return Math.round(((myPlayer.kills + myPlayer.assists) / myTeamStats.kills) * 100);
+    if (myTeamStats.kills == 0) {
+      return 0;
+    }
+    return Math.round(((player.kills + player.assists) / myTeamStats.kills) * 100);
   };
 
   const calculateCSM = (player) => {
@@ -287,13 +293,13 @@ function Match({ matchData, summonerName, region }) {
   }
 
   return (
-    <div className='rounded border-1.5 border-slate-950'>
-      <button
-        type='button' 
-        className={`flex flex-col laptop:flex-row w-full rounded px-1.5 tablet:px-2 py-1 
+    <div className={`rounded border-1.5 border-slate-950`}>
+      <div
+        className={`flex flex-col laptop:flex-row w-full rounded-t ${!showFullDetails && 'rounded-b'} px-1.5 tablet:px-2 py-1 hover:cursor-pointer
           border-l-5 ${matchStats.borderHighlightColor} ${matchStats.backgroundColor} ${matchStats.backgroundFocusColor}
         `}
         key={metadata.id}
+        onClick={() => { setShowFullDetails(!showFullDetails) }}
       >
         <div className='flex laptop:flex-col justify-between laptop:text-start text-xs laptop:w-20'>
           <div className='flex laptop:flex-col gap-x-1.5 laptop:gap-0 font-semibold font-[Raleway] text-slate-950'>
@@ -390,7 +396,12 @@ function Match({ matchData, summonerName, region }) {
             ))}
           </div>
         </div>
-      </button>
+      </div>
+      {showFullDetails && 
+        <div className='rounded-b bg-white'>
+          test
+        </div>
+      }
     </div>
   )
 }

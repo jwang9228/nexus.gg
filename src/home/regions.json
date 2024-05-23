@@ -3,66 +3,77 @@
     "name": "NA",
     "title": "North America",
     "region": "na1",
+    "riotApiRegion": "na1",
     "color": "#6b92fa"
   },
   {
     "name": "EUW",
     "title": "Europe West",
-    "region": "euw1",
+    "region": "euw",
+    "riotApiRegion": "euw1",
     "color": "#957dad"
   },
   {
     "name": "EUNE",
     "title": "Europe Nordic & East",
-    "region": "eun1",
+    "region": "eune",
+    "riotApiRegion": "eun1",
     "color": "#7dae9b"
   },
   {
     "name": "KR",
     "title": "Korea",
-    "region": "kr",
+    "region": "kr1",
+    "riotApiRegion": "kr",
     "color": "#d9b2ce"
   },
   {
     "name": "JP",
     "title": "Japan",
     "region": "jp1",
+    "riotApiRegion": "jp1",
     "color": "#ffadad"
   },
   {
     "name": "BR",
     "title": "Brazil",
     "region": "br1",
+    "riotApiRegion": "br1",
     "color": "#fec868"
   },
   {
     "name": "OCE",
     "title": "Oceania",
-    "region": "oc1",
+    "region": "oce",
+    "riotApiRegion": "oc1",
     "color": "#86a7a7"
   },
   {
     "name": "LAN",
     "title": "Latin America North",
-    "region": "la1",
+    "region": "lan",
+    "riotApiRegion": "la1",
     "color": "#b88566"
   },
   {
     "name": "LAS",
     "title": "Latin America South",
-    "region": "la2",
+    "region": "las",
+    "riotApiRegion": "la2",
     "color": "#ac9f7c"
   },
   {
     "name": "RU",
     "title": "Russia",
     "region": "ru1",
+    "riotApiRegion": "ru",
     "color": "#ac7d88"
   },
   {
     "name": "TR",
     "title": "Turkey",
     "region": "tr1",
+    "riotApiRegion": "tr1",
     "color": "#85586f"
   }
 ]
