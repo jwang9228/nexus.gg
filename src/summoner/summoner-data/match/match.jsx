@@ -5,6 +5,7 @@ import { PiDiamondsFour } from "react-icons/pi";
 import gameModes from "./gamemodes.json";
 import summonerSpells from "./summoners.json";
 import runes from "./runes.json";
+import AdvancedMatch from "./advancedMatch";
 
 function Match({ matchData, summonerName, region }) {
   const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
@@ -85,6 +86,7 @@ function Match({ matchData, summonerName, region }) {
 		return matchLastPlayed;
   };
 
+  let highestChampDamage = 0;
   playersData.forEach((player) => {
 		const playerTeamId = player.teamId;
 		if (!teamData[playerTeamId]) {
@@ -94,7 +96,10 @@ function Match({ matchData, summonerName, region }) {
 		const playerRunes = player.perks.styles;
 		const playerPrimaryRunes = playerRunes[0];
 		const playerSecondaryRunes = playerRunes[1];
+    const playerChampDamage = player.totalDamageDealtToChampions;
+    highestChampDamage = Math.max(highestChampDamage, playerChampDamage);
 		const playerData = {
+      side: player.teamId == 100 ? 'Blue' : 'Red',
 			name: player.riotIdGameName,
 			tagline: player.riotIdTagline,
 			timePlayed: player.timePlayed,
@@ -103,6 +108,7 @@ function Match({ matchData, summonerName, region }) {
 			kills: player.kills,
 			deaths: player.deaths,
 			assists: player.assists,
+      champDamage: playerChampDamage,
 			level: player.champLevel,
 			role: player.teamPosition,
 			items: [
@@ -129,6 +135,7 @@ function Match({ matchData, summonerName, region }) {
 			},
       visionScore: player.visionScore,
       creepScore: player.totalMinionsKilled,
+      goldEarned: player.goldEarned,
       doubleKills: player.doubleKills,
       tripleKills: player.tripleKills,
       quadraKills: player.quadraKills,
@@ -155,30 +162,28 @@ function Match({ matchData, summonerName, region }) {
 		});
 	};
 
-  const getSummonerSpells = () => {
-    const summonerSpell1 = summonerSpells.find(summonerSpell => summonerSpell.key === myPlayer.summonerSpells[0]).name;
-	  const summonerSpell2 = summonerSpells.find(summonerSpell => summonerSpell.key === myPlayer.summonerSpells[1]).name;
+  const getSummonerSpells = (player) => {
+    const summonerSpell1 = summonerSpells.find(summonerSpell => summonerSpell.key === player.summonerSpells[0]).name;
+	  const summonerSpell2 = summonerSpells.find(summonerSpell => summonerSpell.key === player.summonerSpells[1]).name;
     return [summonerSpell1, summonerSpell2];
   };
   
-  const getPrimaryRune = () => {
-    const primaryTreeId = myPlayer.primaryRunes.primaryTree.toString().trim();
+  const getPrimaryRune = (player) => {
+    const primaryTreeId = player.primaryRunes.primaryTree.toString().trim();
     const primaryTreeKeystones = runes.find(runeTrees => runeTrees.id.toString().trim() === primaryTreeId).slots[0].runes;
-    const primaryKeystoneId = myPlayer.primaryRunes.runes[0].toString().trim();
+    const primaryKeystoneId = player.primaryRunes.runes[0].toString().trim();
     const primaryKeystone = primaryTreeKeystones.find(keystone => keystone.id.toString().trim() === primaryKeystoneId).icon;
     return primaryKeystone;
   };
   
-  const getSecondaryTree = () => {
-    const secondaryTreeId = myPlayer.secondaryRunes.secondaryTree.toString().trim();
+  const getSecondaryTree = (player) => {
+    const secondaryTreeId = player.secondaryRunes.secondaryTree.toString().trim();
     const secondaryTree = runes.find(runeTrees => runeTrees.id.toString().trim() === secondaryTreeId).icon;
     return secondaryTree;
   };
 
   const calculateKDA = (kills, deaths, assists) => {
-		if (deaths === 0) { 
-			deaths = 1;
-		}
+		if (deaths === 0) deaths = 1;
 		return ((kills + assists) / deaths).toFixed(2)
 	};
 
@@ -196,17 +201,23 @@ function Match({ matchData, summonerName, region }) {
     else return 'bg-[#9b9b9b]';
   };
 
+  const getEnemyBackgroundColor = () => {
+    if (myPlayer.matchResult === 'Victory') return 'bg-[#a0575c]';
+    else if (myPlayer.matchResult === 'Defeat') return 'bg-[#506ca6]';
+    else return 'bg-[#9b9b9b]';
+  }
+
   const getBackgroundFocusColor = () => {
     if (myPlayer.matchResult === 'Victory') return 'hover:bg-[#46639e] active:bg-[#46639e]';
     else if (myPlayer.matchResult === 'Defeat') return 'hover:bg-[#944c51] active:bg-[#944c51]';
     else return 'hover:bg-[#929191] active:bg-[#929191]';
   };
 
-  const getItemBackgroundColor = () => {
-    if (myPlayer.matchResult === 'Victory') return 'bg-[#3f5684]';
-    else if (myPlayer.matchResult === 'Defeat') return 'bg-[#7f4549]';
+  const getItemBackgroundColor = (player) => {
+    if (player.matchResult === 'Victory') return 'bg-[#3f5684]';
+    else if (player.matchResult === 'Defeat') return 'bg-[#7f4549]';
     else return 'bg-[#828282]';
-  }
+  };
 
   const getBorderHighlightColor = () => {
     if (myPlayer.matchResult === 'Victory') return 'border-l-[#3785c4]';
@@ -220,26 +231,10 @@ function Match({ matchData, summonerName, region }) {
     else return 'bg-[#c6c6c6]';
   };
 
-  const matchStats = {
-    'borderHighlightColor': getBorderHighlightColor(),
-    'backgroundColor': getBackgroundColor(),
-    'backgroundFocusColor': getBackgroundFocusColor(),
-    'matchTimeCompact': getMatchTime(true),
-    'matchTime': getMatchTime(false),
-    'matchLastPlayed': calculateMatchLastPlayed(),
-    'gameMode': gameModes.find(gameMode => gameMode.queueId === matchInfo.queueId).gameMode,
-    'summonerSpells': getSummonerSpells(),
-    'primaryRune': getPrimaryRune(),
-    'secondaryTree': getSecondaryTree(),
-    'itemBackgroundColor': getItemBackgroundColor(),
-    'kda': calculateKDA(myPlayer.kills, myPlayer.deaths, myPlayer.assists),
-    'kdaColor': getKDAColor(calculateKDA(myPlayer.kills, myPlayer.deaths, myPlayer.assists)),
-  };
-
   const myTeam = Object.values(teamData).find(team => team.includes(myPlayer));
   const enemyTeam = Object.values(teamData).find(team => !team.includes(myPlayer));
 
-  const getTeamStats = (team) => {
+  const getTeamKD = (team) => {
    let kills = 0;
    let deaths = 0;
    team.map((player) => {
@@ -251,24 +246,20 @@ function Match({ matchData, summonerName, region }) {
     'deaths': deaths,
    }
   };
-  const myTeamStats = getTeamStats(myTeam);
-  const enemyTeamStats = getTeamStats(enemyTeam);
+  const myTeamKD = getTeamKD(myTeam);
+  const enemyTeamKD = getTeamKD(enemyTeam);
 
-  const calculateKP = (player) => {
-    if (myTeamStats.kills == 0) {
-      return 0;
-    }
-    return Math.round(((player.kills + player.assists) / myTeamStats.kills) * 100);
+  const calculateKP = (player, teamStats) => {
+    if (teamStats.kills == 0) return 0;
+    return Math.round(((player.kills + player.assists) / teamStats.kills) * 100);
   };
 
   const calculateCSM = (player) => {
     const gameDurationSeconds = matchInfo.gameDuration;
 		const minutes = Math.floor((gameDurationSeconds % 3600) / 60);
-    if (minutes == 0) {
-      return player.creepScore;
-    }
+    if (minutes == 0) return player.creepScore;
     return (player.creepScore / minutes).toFixed(1);
-  }
+  };
 
   const getPlayerHighestMultiKills = (player) => {
     if (player.pentaKills > 0) {
@@ -282,34 +273,76 @@ function Match({ matchData, summonerName, region }) {
     } else {
       return [undefined, undefined];
     }
-  }
+  };
+
+  const getPlayerMatchStats = (player, teamKD) => {
+    const playerKDA = calculateKDA(player.kills, player.deaths, player.assists);
+    const playerHighestMultiKills = getPlayerHighestMultiKills(player);
+    const champDamage = player.champDamage;
+    const champDamagePercentage = Math.floor((champDamage / highestChampDamage) * 100);
+    return {
+      'name': player.name,
+      'tagline': player.tagline,
+      'level': player.level,
+      'champion': player.champion,
+      'summonerSpells': getSummonerSpells(player),
+      'primaryRune': getPrimaryRune(player),
+      'secondaryTree': getSecondaryTree(player),
+      'items': player.items,
+      'itemBackgroundColor': getItemBackgroundColor(player),
+      'kills': player.kills,
+      'deaths': player.deaths,
+      'assists': player.assists,
+      'champDamage': champDamage,
+      'champDamagePercentage': champDamagePercentage,
+      'kda': playerKDA,
+      'kdaColor': getKDAColor(playerKDA),
+      'kp': calculateKP(player, teamKD),
+      'cs': player.creepScore,
+      'csm': calculateCSM(player),
+      'goldEarned': player.goldEarned,
+      'multiKill': playerHighestMultiKills[0],
+      'multiKillIcon': playerHighestMultiKills[1],
+      'multiKillBackground': getBackgroundHighlightColor(player)
+    };
+  };
 
   const myPlayerStats = {
-    'kp': calculateKP(myPlayer),
-    'csm': calculateCSM(myPlayer),
-    'multiKill': getPlayerHighestMultiKills(myPlayer)[0],
-    'multiKillIcon': getPlayerHighestMultiKills(myPlayer)[1],
-    'multiKillBackground': getBackgroundHighlightColor(myPlayer),
-  }
+    ...getPlayerMatchStats(myPlayer, myTeamKD),
+    'matchResult': myPlayer.matchResult,
+    'borderHighlightColor': getBorderHighlightColor(),
+    'backgroundColor': getBackgroundColor(),
+    'enemyBackgroundColor': getEnemyBackgroundColor(),
+    'backgroundFocusColor': getBackgroundFocusColor(),
+    'matchTimeCompact': getMatchTime(true),
+    'matchTime': getMatchTime(false),
+    'matchLastPlayed': calculateMatchLastPlayed(),
+    'gameMode': gameModes.find(gameMode => gameMode.queueId === matchInfo.queueId).gameMode,
+  };
+
+  const myTeamStats = [];
+  const enemyTeamStats = [];
+  myTeam.map((player) => myTeamStats.push(getPlayerMatchStats(player, myTeamKD)));
+  enemyTeam.map((player) => enemyTeamStats.push(getPlayerMatchStats(player, enemyTeamKD)));
 
   return (
     <div className={`rounded border-1.5 border-slate-950`}>
       <div
         className={`flex flex-col laptop:flex-row w-full rounded-t ${!showFullDetails && 'rounded-b'} px-1.5 tablet:px-2 py-1 hover:cursor-pointer
-          border-l-5 ${matchStats.borderHighlightColor} ${matchStats.backgroundColor} ${matchStats.backgroundFocusColor}
+          border-l-5 ${myPlayerStats.borderHighlightColor} ${myPlayerStats.backgroundColor} ${myPlayerStats.backgroundFocusColor}
         `}
         key={metadata.id}
         onClick={() => { setShowFullDetails(!showFullDetails) }}
       >
         <div className='flex laptop:flex-col justify-between laptop:text-start text-xs laptop:w-20'>
           <div className='flex laptop:flex-col gap-x-1.5 laptop:gap-0 font-semibold font-[Raleway] text-slate-950'>
-            {matchStats.gameMode}
+            {myPlayerStats.gameMode}
             <span>{`(${myPlayer.matchResult})`}</span>
           </div>
           <div className='flex laptop:flex-col gap-x-2 laptop:gap-0 text-slate-900 font-medium laptop:font-normal'>
-            <div className='hidden laptop:flex'>{matchStats.matchTime}</div>
-            <div className='laptop:hidden flex'>{matchStats.matchTimeCompact}</div>
-            {matchStats.matchLastPlayed}
+            <div className='hidden laptop:flex'>{myPlayerStats.matchTime}</div>
+            <div className='laptop:hidden flex'>{myPlayerStats.matchTimeCompact}</div>
+            {myPlayerStats.matchLastPlayed}
           </div>
         </div>
         <div className='flex grow tablet:mt-1 tablet:mb-0.5 laptop:my-0'>
@@ -325,14 +358,14 @@ function Match({ matchData, summonerName, region }) {
               </div>
               <div className='flex flex-col mt-1 gap-y-1'>
                 <div className='flex gap-x-1.5'>
-                  {matchStats.summonerSpells.map((spell) => (
+                  {myPlayerStats.summonerSpells.map((spell) => (
                     <img src={`${AWS_S3_URL}/summoner-spells/${spell}.png`} className='rounded size-5 tablet:size-6' />
                   ))}
                 </div>
                 <div className='flex gap-x-1.5'>
-                  <img src={`${AWS_S3_URL}/${matchStats.primaryRune}`} className='size-5 tablet:size-6' />
+                  <img src={`${AWS_S3_URL}/${myPlayerStats.primaryRune}`} className='size-5 tablet:size-6' />
                   <div className='flex items-center justify-center size-5 tablet:size-6'>
-                    <img src={`${AWS_S3_URL}/${matchStats.secondaryTree}`} className='tablet:w-5 h-4 tablet:h-[18px]' />
+                    <img src={`${AWS_S3_URL}/${myPlayerStats.secondaryTree}`} className='tablet:w-5 h-4 tablet:h-[18px]' />
                   </div>
                 </div>
               </div>
@@ -342,14 +375,14 @@ function Match({ matchData, summonerName, region }) {
                 {myPlayer.items.map((item) => (
                   (item !== 0)
                   ? <img src={`${AWS_S3_URL}/item/${item}.png`} className='rounded size-5 tablet:size-6 laptop:size-7'/>
-                  : <div className={`rounded size-5 tablet:size-6 laptop:size-7 ${matchStats.itemBackgroundColor}`} />
+                  : <div className={`rounded size-5 tablet:size-6 laptop:size-7 ${myPlayerStats.itemBackgroundColor}`} />
                 ))}
               </div>
               <div className='flex tablet:hidden gap-x-0.5 text-sm'>
                 <span className='font-medium text-slate-950'>{myPlayer.kills}</span>
                 <span className='text-slate-700'>/</span><span className='text-red-800'>{myPlayer.deaths}</span>
                 <span className='text-slate-700'>/</span><span className='font-medium text-slate-900'>{myPlayer.assists}</span>
-                <span className={`ml-auto font-medium ${matchStats.kdaColor}`}>{`${matchStats.kda} KDA`}</span>
+                <span className={`ml-auto font-medium ${myPlayerStats.kdaColor}`}>{`${myPlayerStats.kda} KDA`}</span>
               </div>
             </div>
           </div>
@@ -360,7 +393,7 @@ function Match({ matchData, summonerName, region }) {
                 <span className='text-slate-700'>/</span><span className='text-red-800'>{myPlayer.deaths}</span>
                 <span className='text-slate-700'>/</span><span className='font-medium text-slate-900'>{myPlayer.assists}</span>
               </div>
-              <span className={`font-medium ${matchStats.kdaColor}`}>{`${matchStats.kda} KDA`}</span>
+              <span className={`font-medium ${myPlayerStats.kdaColor}`}>{`${myPlayerStats.kda} KDA`}</span>
               {myPlayerStats.multiKill &&
                 <div className={`flex justify-center items-center rounded mt-auto px-1 gap-x-1 text-sm ${myPlayerStats.multiKillBackground}`}>
                   {myPlayerStats.multiKillIcon}
@@ -398,8 +431,11 @@ function Match({ matchData, summonerName, region }) {
         </div>
       </div>
       {showFullDetails && 
-        <div className='rounded-b bg-white'>
-          test
+        <div className='border-t-1.5 border-slate-900'>
+          <div className='flex flex-col'>
+            <AdvancedMatch teamStats={myTeamStats} isMyTeam={true} myPlayerStats={myPlayerStats} backgroundColor={getBackgroundColor()} region={region} />
+            <AdvancedMatch teamStats={enemyTeamStats} isMyTeam={false} backgroundColor={getEnemyBackgroundColor()} region={region} />
+          </div>
         </div>
       }
     </div>
