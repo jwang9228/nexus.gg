@@ -1,5 +1,5 @@
-import NavbarMobile from "../navbar/navbar-mobile";
-import TopSearchbar from "../home/top-searchbar";
+import NavbarMobile from "../navbar/NavbarMobile";
+import TopSearchbar from "../home/TopSearchbar";
 
 function NoData({modalStates, searchName, tagline}) {
   const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
@@ -26,15 +26,7 @@ function NoData({modalStates, searchName, tagline}) {
               <li>{'Included #[tagline] in your search for custom tags'}</li>
               <li>Selected the correct region</li>
             </ul>
-          </div>
-          {
-          
-            /*
-          
-          {'Still could not find your summoner? Contact us'}
-            */
-          }
-          
+          </div>          
         </div>
       </div>
     </div>

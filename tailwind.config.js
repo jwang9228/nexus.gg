@@ -26,6 +26,23 @@ export default {
           },
         },
       },
+      fontSize: {
+        xxs: ['10px', '12px'], 
+      },
+      colors: {
+        'victory-bg': '#506ca6',
+        'defeat-bg': '#a0575c',
+        'remake-bg': '#9b9b9b',
+        'victory-bg-focus': '#46639e',
+        'defeat-bg-focus': '#944c51',
+        'remake-bg-focus': '#929191',
+        'victory-highlight': '#3785c4',
+        'defeat-highlight': '#c43739',
+        'remake-highlight': '#c6c6c6',
+        'victory-item-bg': '#3f5684',
+        'defeat-item-bg': '#7f4549',
+        'remake-item-bg': '#828282',
+      },
     },
     screens: {
       'mobile': '299px',

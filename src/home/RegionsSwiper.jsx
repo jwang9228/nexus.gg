@@ -1,40 +1,38 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import { EffectCoverflow } from 'swiper/modules';
-import * as userClient from './user-client';
-import backgrounds from './backgrounds.json';
+import backgrounds from '../metadata/backgrounds.json';
+import * as userClient from './userClient';
 
 function RegionsSwiper({activeBackground, setActiveBackground}) {
-  const [textVisible, setTextVisible] = useState(true);
   const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
+  const [textVisible, setTextVisible] = useState(true);
 
   const handleSwiperMove = async (swiper) => {
     const swiperIndex = swiper.realIndex;
     const prevSwiperIndex = activeBackground.index;
-    if (swiperIndex !== prevSwiperIndex) {
-      setActiveBackground(backgrounds[swiperIndex]);
-    }
+    const currentBackground = backgrounds[swiperIndex];
+    if (swiperIndex !== prevSwiperIndex) setActiveBackground(currentBackground);
     setTextVisible(true);
-    await userClient.setActiveBackground(backgrounds[swiperIndex]);
+    await userClient.setActiveBackground(currentBackground);
   };
 
   return (
     <>
       <div 
-        className={`
-          mb-2 font-[Raleway] font-semibold tracking-widest text-zinc-300/95 text-center tablet:text-lg 
-          transition-opacity duration-300 ${textVisible ? 'opacity-100' : 'opacity-0'}
-        `}
+        className={`mb-2 font-[Raleway] font-semibold tracking-widest 
+          text-zinc-300/95 text-center tablet:text-lg 
+          transition-opacity duration-300 ${textVisible ? 'opacity-100' : 'opacity-0'}`}
       >
         {activeBackground.name}
       </div>
       <Swiper
         effect={'coverflow'}
-        grabCursor={true}
-        centeredSlides={true}
-        loop={true}
+        grabCursor
+        centeredSlides
+        loop
         slidesPerView={2.7}
         spaceBetween={12}
         coverflowEffect={{
@@ -50,13 +48,20 @@ function RegionsSwiper({activeBackground, setActiveBackground}) {
         onTouchEnd={handleSwiperMove}
         className='w-[100px] tablet:w-[130px]'
       >
-        {backgrounds.map((background, index) => (
-          <SwiperSlide className={`bg-cover bg-center ${background.name === activeBackground.name ? 'blur-none' : 'blur-[0.4px]'}`} key={index}>
-            <img src={`${AWS_S3_URL}/regions/crests/${background.background}.png`} className='block'/>
+        {backgrounds.map(background => (
+          <SwiperSlide 
+            key={activeBackground.index}
+            className={`bg-cover bg-center 
+              ${background.name === activeBackground.name ? 'blur-none' : 'blur-[0.4px]'}`}
+            >
+            <img 
+              src={`${AWS_S3_URL}/regions/crests/${background.background}.png`} 
+              className='block'
+            />
           </SwiperSlide>
         ))}
       </Swiper>
     </>
   )
-}
+};
 export default RegionsSwiper;

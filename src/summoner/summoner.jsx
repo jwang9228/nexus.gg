@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import * as summonerClient from './summoner-client';
-import SummonerSkeleton from './summoner-skeleton';
-import SummonerData from './summoner-data/summoner-data';
-import NoData from './no-data';
-import regions from '../home/regions.json';
+import * as summonerClient from './summonerClient';
+import SummonerSkeleton from './SummonerSkeleton';
+import SummonerData from './summoner-data/SummonerData';
+import NoSummonerData from './NoSummonerData';
+import regions from '../metadata/regions.json';
 
 function Summoner({modalStates}) {
 	const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
@@ -31,7 +31,7 @@ function Summoner({modalStates}) {
 	};
 
   const getRiotSummonerData = async () => {
-		const riotApiRegion = regions.find((r) => r.region === region).riotApiRegion;
+		const riotApiRegion = regions.find(r => r.region === region).riotApiRegion;
 		const data = await summonerClient.getSummonerData(riotApiRegion, summonerName);
 		if (data) {
 			const matchIDs = await summonerClient.getMatchesByPUUID(riotApiRegion, data.puuid, matchCount);
@@ -116,7 +116,7 @@ function Summoner({modalStates}) {
 				) : fetchingData ? (
 					<SummonerSkeleton />
 				) : (
-					<NoData modalStates={modalStates} searchName={gameName} tagline={tagline} />
+					<NoSummonerData modalStates={modalStates} searchName={gameName} tagline={tagline} />
 				)}
 			</div>
 		</div>

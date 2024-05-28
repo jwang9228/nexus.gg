@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { GiTripleScratches, GiPentarrowsTornado } from "react-icons/gi";
-import { HiChevronDoubleUp } from "react-icons/hi";
-import { PiDiamondsFour } from "react-icons/pi";
-import gameModes from "./gamemodes.json";
-import summonerSpells from "./summoners.json";
-import runes from "./runes.json";
-import AdvancedMatch from "./advancedMatch";
+import { useState } from 'react';
+import { GiTripleScratches, GiPentarrowsTornado, GiHydra, GiSeaDragon, GiEyestalk, GiDrippingHoney, GiTowerFall } from 'react-icons/gi';
+import { HiChevronDoubleUp } from 'react-icons/hi';
+import { PiDiamondsFour } from 'react-icons/pi';
+import gameModes from '../../../metadata/gamemodes.json';
+import summonerSpells from '../../../metadata/summoners.json';
+import runes from '../../../metadata/runes.json';
+import AdvancedMatch from './AdvancedMatch';
 
 function Match({ matchData, summonerName, region }) {
   const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
@@ -99,7 +99,7 @@ function Match({ matchData, summonerName, region }) {
     const playerChampDamage = player.totalDamageDealtToChampions;
     highestChampDamage = Math.max(highestChampDamage, playerChampDamage);
 		const playerData = {
-      side: player.teamId == 100 ? 'Blue' : 'Red',
+      teamId: player.teamId,
 			name: player.riotIdGameName,
 			tagline: player.riotIdTagline,
 			timePlayed: player.timePlayed,
@@ -195,69 +195,90 @@ function Match({ matchData, summonerName, region }) {
     else return 'text-slate-800';
   }
 
-  const getBackgroundColor = () => {
-    if (myPlayer.matchResult === 'Victory') return 'bg-[#506ca6]';
-    else if (myPlayer.matchResult === 'Defeat') return 'bg-[#a0575c]';
-    else return 'bg-[#9b9b9b]';
+  const getBackgroundColor = (isMyTeam) => {
+    if (myPlayer.matchResult === 'Victory') {
+      return isMyTeam ? 'bg-victory-bg' : 'bg-defeat-bg';
+    } else if (myPlayer.matchResult === 'Defeat') {
+      return isMyTeam ? 'bg-defeat-bg' : 'bg-victory-bg';
+    } else return 'bg-remake-bg';
   };
 
-  const getEnemyBackgroundColor = () => {
-    if (myPlayer.matchResult === 'Victory') return 'bg-[#a0575c]';
-    else if (myPlayer.matchResult === 'Defeat') return 'bg-[#506ca6]';
-    else return 'bg-[#9b9b9b]';
-  }
-
   const getBackgroundFocusColor = () => {
-    if (myPlayer.matchResult === 'Victory') return 'hover:bg-[#46639e] active:bg-[#46639e]';
-    else if (myPlayer.matchResult === 'Defeat') return 'hover:bg-[#944c51] active:bg-[#944c51]';
-    else return 'hover:bg-[#929191] active:bg-[#929191]';
+    if (myPlayer.matchResult === 'Victory') return 'hover:bg-victory-bg-focus active:bg-victory-bg-focus';
+    else if (myPlayer.matchResult === 'Defeat') return 'hover:bg-defeat-bg-focus active:bg-defeat-bg-focus';
+    else return 'hover:bg-remake-bg-focus active:bg-remake-bg-focus';
   };
 
   const getItemBackgroundColor = (player) => {
-    if (player.matchResult === 'Victory') return 'bg-[#3f5684]';
-    else if (player.matchResult === 'Defeat') return 'bg-[#7f4549]';
-    else return 'bg-[#828282]';
+    if (player.matchResult === 'Victory') return 'bg-victory-item-bg';
+    else if (player.matchResult === 'Defeat') return 'bg-defeat-item-bg';
+    else return 'bg-remake-item-bg';
   };
 
   const getBorderHighlightColor = () => {
-    if (myPlayer.matchResult === 'Victory') return 'border-l-[#3785c4]';
-    else if (myPlayer.matchResult === 'Defeat') return 'border-l-[#c43739]';
-    else return 'border-l-[#c6c6c6]';
+    if (myPlayer.matchResult === 'Victory') return 'border-l-victory-highlight';
+    else if (myPlayer.matchResult === 'Defeat') return 'border-l-defeat-highlight';
+    else return 'border-l-remake-highlight';
   };
 
   const getBackgroundHighlightColor = () => {
-    if (myPlayer.matchResult === 'Victory') return 'bg-[#3785c4]';
-    else if (myPlayer.matchResult === 'Defeat') return 'bg-[#cc494b]';
-    else return 'bg-[#c6c6c6]';
+    if (myPlayer.matchResult === 'Victory') return 'bg-victory-highlight';
+    else if (myPlayer.matchResult === 'Defeat') return 'bg-defeat-highlight';
+    else return 'bg-remake-highlight';
   };
 
   const myTeam = Object.values(teamData).find(team => team.includes(myPlayer));
   const enemyTeam = Object.values(teamData).find(team => !team.includes(myPlayer));
 
-  const getTeamKD = (team) => {
-   let kills = 0;
-   let deaths = 0;
-   team.map((player) => {
-    kills += player.kills;
-    deaths += player.deaths;
-   });
-   return {
-    'kills': kills,
-    'deaths': deaths,
-   }
-  };
-  const myTeamKD = getTeamKD(myTeam);
-  const enemyTeamKD = getTeamKD(enemyTeam);
+  const teamsObjectivesData = {};
+  matchInfo.teams.map((team) => {
+    const objectivesData = team.objectives;
+    teamsObjectivesData[team.teamId] = {
+      grubKills: [objectivesData.horde.kills, <GiDrippingHoney className='size-fit' />],
+      dragonKills: [objectivesData.dragon.kills, <GiSeaDragon className='size-fit' />],
+      riftKills: [objectivesData.riftHerald.kills, <GiEyestalk className='size-fit' />],
+      baronKills: [objectivesData.baron.kills, <GiHydra className='size-fit' />],
+      towerKills: [objectivesData.tower.kills, <GiTowerFall className='size-fit' />],
+    };
+  });
 
-  const calculateKP = (player, teamStats) => {
-    if (teamStats.kills == 0) return 0;
-    return Math.round(((player.kills + player.assists) / teamStats.kills) * 100);
+  const getTeamOverallStats = (team) => { 
+    let kills = 0;
+    let deaths = 0;
+    let assists = 0;
+    let gold = 0;
+    team.map((player) => {
+      kills += player.kills;
+      deaths += player.deaths;
+      assists += player.assists;
+      gold += player.goldEarned;
+    });
+    return {
+      'objectives': teamsObjectivesData[team[0].teamId],
+      'side': team[0].teamId === 100 ? 'Blue' : 'Red',
+      'kills': kills,
+      'deaths': deaths,
+      'assists': assists,
+      'gold': gold,
+    };
+  };
+
+  const myTeamOverallStats = getTeamOverallStats(myTeam);
+  const enemyTeamOverallStats = getTeamOverallStats(enemyTeam);
+
+  myTeamOverallStats['matchResult'] = myPlayer.matchResult;
+  enemyTeamOverallStats['matchResult'] = 
+    (myPlayer.matchResult === 'Victory') ? 'Defeat' : (myPlayer.matchResult === 'Defeat') ? 'Victory' : 'Remake';
+
+  const calculateKP = (player, teamKills) => {
+    if (teamKills === 0) return 0;
+    return Math.round(((player.kills + player.assists) / teamKills) * 100);
   };
 
   const calculateCSM = (player) => {
     const gameDurationSeconds = matchInfo.gameDuration;
 		const minutes = Math.floor((gameDurationSeconds % 3600) / 60);
-    if (minutes == 0) return player.creepScore;
+    if (minutes === 0) return player.creepScore;
     return (player.creepScore / minutes).toFixed(1);
   };
 
@@ -275,7 +296,7 @@ function Match({ matchData, summonerName, region }) {
     }
   };
 
-  const getPlayerMatchStats = (player, teamKD) => {
+  const getPlayerMatchStats = (player, teamKills) => {
     const playerKDA = calculateKDA(player.kills, player.deaths, player.assists);
     const playerHighestMultiKills = getPlayerHighestMultiKills(player);
     const champDamage = player.champDamage;
@@ -297,22 +318,23 @@ function Match({ matchData, summonerName, region }) {
       'champDamagePercentage': champDamagePercentage,
       'kda': playerKDA,
       'kdaColor': getKDAColor(playerKDA),
-      'kp': calculateKP(player, teamKD),
+      'kp': calculateKP(player, teamKills),
       'cs': player.creepScore,
       'csm': calculateCSM(player),
       'goldEarned': player.goldEarned,
       'multiKill': playerHighestMultiKills[0],
       'multiKillIcon': playerHighestMultiKills[1],
-      'multiKillBackground': getBackgroundHighlightColor(player)
+      'multiKillBackground': getBackgroundHighlightColor(player),
+      'side': player.side,
     };
   };
 
   const myPlayerStats = {
-    ...getPlayerMatchStats(myPlayer, myTeamKD),
+    ...getPlayerMatchStats(myPlayer, myTeamOverallStats.kills),
     'matchResult': myPlayer.matchResult,
     'borderHighlightColor': getBorderHighlightColor(),
-    'backgroundColor': getBackgroundColor(),
-    'enemyBackgroundColor': getEnemyBackgroundColor(),
+    'backgroundColor': getBackgroundColor(true),
+    'enemyBackgroundColor': getBackgroundColor(false),
     'backgroundFocusColor': getBackgroundFocusColor(),
     'matchTimeCompact': getMatchTime(true),
     'matchTime': getMatchTime(false),
@@ -322,8 +344,8 @@ function Match({ matchData, summonerName, region }) {
 
   const myTeamStats = [];
   const enemyTeamStats = [];
-  myTeam.map((player) => myTeamStats.push(getPlayerMatchStats(player, myTeamKD)));
-  enemyTeam.map((player) => enemyTeamStats.push(getPlayerMatchStats(player, enemyTeamKD)));
+  myTeam.map((player) => myTeamStats.push(getPlayerMatchStats(player, myTeamOverallStats.kills)));
+  enemyTeam.map((player) => enemyTeamStats.push(getPlayerMatchStats(player, enemyTeamOverallStats.kills)));
 
   return (
     <div className={`rounded border-1.5 border-slate-950`}>
@@ -431,11 +453,24 @@ function Match({ matchData, summonerName, region }) {
         </div>
       </div>
       {showFullDetails && 
-        <div className='border-t-1.5 border-slate-900'>
-          <div className='flex flex-col'>
-            <AdvancedMatch teamStats={myTeamStats} isMyTeam={true} myPlayerStats={myPlayerStats} backgroundColor={getBackgroundColor()} region={region} />
-            <AdvancedMatch teamStats={enemyTeamStats} isMyTeam={false} backgroundColor={getEnemyBackgroundColor()} region={region} />
+        <div className='flex flex-col'>
+          <div className='flex justify-evenly py-1 border-t-1.5 border-slate-900 text-sm text-zinc-300/95 bg-slate-800'>
+            {'Overview'} <span>{'Build'}</span>
           </div>
+          <AdvancedMatch 
+            overallTeamStats={myTeamOverallStats} 
+            teamStats={myTeamStats} 
+            myPlayerStats={myPlayerStats} 
+            isMyTeam={true} 
+            region={region} 
+          />
+          <AdvancedMatch 
+            overallTeamStats={enemyTeamOverallStats}
+            teamStats={enemyTeamStats} 
+            myPlayerStats={myPlayerStats} 
+            isMyTeam={false} 
+            region={region} 
+          />
         </div>
       }
     </div>

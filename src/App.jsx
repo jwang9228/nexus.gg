@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Routes, Route } from 'react-router';
-import Navbar from './navbar/navbar';
-import Home from './home/home';
-import Summoner from './summoner/summoner';
-import SummonerRedirect from './summoner/summoner-redirect';
-import Modals from './modals/modals';
+import Navbar from './navbar/Navbar';
+import Home from './home/Home';
+import Summoner from './summoner/Summoner';
+import SummonerRedirect from './summoner/SummonerRedirect';
+import Modals from './modals/Modals';
 
 function App() {
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [inDevModalOpen, setInDevModalOpen] = useState(false);
   const [inDevFeature, setInDevFeature] = useState('');
+  
   const isModalActive = () => {
     return contactModalOpen || inDevModalOpen;
   };
@@ -36,20 +37,30 @@ function App() {
   return (
     <BrowserRouter>
       <Modals modalStates={modalStates} />
-      <div className={`flex ${isModalActive() ? 'pointer-events-none opacity-30' : 'pointer-events-auto opacity-100'}`}>
+      <div className={`flex 
+        ${isModalActive() 
+          ? 'pointer-events-none opacity-30' 
+          : 'pointer-events-auto opacity-100'
+        }`
+      }>
         <div className='hidden laptop:flex'>
           <Navbar modalStates={modalStates} />
         </div>
-        <div className='flex-1 w-full m-0 p-0'>
+        <div className='flex-1 w-full'>
           <Routes>
-            <Route index element = {<Home modalStates={modalStates}/>} />
-            <Route path='/summoners/:region/:summonerName' element={<Summoner modalStates={modalStates}/>} />
-            <Route path='/summoners/redirect/:region/:summonerName' element={<SummonerRedirect />} />
+            <Route index element={<Home modalStates={modalStates}/>} />
+            <Route 
+              path='/summoners/:region/:summonerName' 
+              element={<Summoner modalStates={modalStates}/>} 
+            />
+            <Route 
+              path='/summoners/redirect/:region/:summonerName'
+              element={<SummonerRedirect />} 
+            />
           </Routes>
         </div>
       </div>
     </BrowserRouter>
   )
-}
-
-export default App
+};
+export default App;

@@ -1,7 +1,7 @@
-import TopSearchbar from '../../home/top-searchbar';
-import NavbarMobile from '../../navbar/navbar-mobile';
-import RankStats from './rank-stats';
-import Match from './match/match';
+import TopSearchbar from '../../home/TopSearchbar';
+import NavbarMobile from '../../navbar/NavbarMobile';
+import RankStats from './RankStats';
+import Match from './match/Match';
 import { LuRefreshCw } from 'react-icons/lu';
 
 function SummonerData({ modalStates, summonerData, matches, updateSummoner }) {
@@ -22,7 +22,7 @@ function SummonerData({ modalStates, summonerData, matches, updateSummoner }) {
               className='rounded bg-slate-600 size-16 tablet:size-20 laptop:size-24 border border-slate-950' 
             />
             <div className='absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1.5 tablet:translate-y-2 rounded-full px-2 py-0.5 
-              bg-slate-900 text-zinc-300 text-[10px] tablet:text-xs'>
+              bg-slate-900 text-zinc-300 text-xxs tablet:text-xs'>
               {summonerData.summonerLevel}
             </div>
           </div>
