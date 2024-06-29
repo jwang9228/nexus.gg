@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import * as summonerClient from './summonerClient';
 import SummonerSkeleton from './SummonerSkeleton';
-import SummonerData from './summoner-data/SummonerData';
+import SummonerData from './data/SummonerData';
 import NoSummonerData from './NoSummonerData';
 import regions from '../metadata/regions.json';
+import * as summonerClient from './summonerClient';
 
 function Summoner({modalStates}) {
 	const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
@@ -65,7 +65,7 @@ function Summoner({modalStates}) {
 	const processSummonerData = async (summonerData) => {
 		await getMatches(summonerData.matchIDs);
 		setSummonerData(summonerData);
-	}
+	};
 
 	const updateSummoner = async () => {
 		setSummonerData(undefined);
@@ -77,7 +77,7 @@ function Summoner({modalStates}) {
 	};
   
   useEffect(() => {
-		const riotApiRegion = regions.find((r) => r.region === region).riotApiRegion;
+		const riotApiRegion = regions.find(r => r.region === region).riotApiRegion;
     const fetchData = async () => {
 			setSummonerData(undefined);
 			setFetchingData(true);
@@ -105,21 +105,28 @@ function Summoner({modalStates}) {
   }, []);
 
   return (
-		<div className='flex relative overflow-y-auto overflow-x-hidden h-dvh shadow-[inset_0_0_0_2000px_rgba(0,0,0,0.25)]'>
+		<div className='flex relative 
+			overflow-y-auto overflow-x-hidden h-dvh shadow-[inset_0_0_0_2000px_rgba(0,0,0,0.25)]'
+		>
 			<div 
 				style={{'--bg-image-url': `url(${AWS_S3_URL}/general/summoners-rift.jpeg)`}}
-				className='bg-cover bg-center bg-fixed bg-[image:var(--bg-image-url)] absolute size-full z-[-1]'
+				className='absolute size-full z-[-1] 
+					bg-cover bg-center bg-fixed bg-[image:var(--bg-image-url)]'
 			/>
 			<div className='flex relative overflow-y-auto overflow-x-hidden'>
-				{summonerData ? (
-					<SummonerData modalStates={modalStates} summonerData={summonerData} matches={matches} updateSummoner={updateSummoner}/>
-				) : fetchingData ? (
-					<SummonerSkeleton />
-				) : (
-					<NoSummonerData modalStates={modalStates} searchName={gameName} tagline={tagline} />
-				)}
+				{summonerData 
+					? (<SummonerData 
+							modalStates={modalStates} 
+							summonerData={summonerData} 
+							matches={matches} 
+							updateSummoner={updateSummoner}
+						/>) 
+					: fetchingData 
+						? <SummonerSkeleton />
+						: <NoSummonerData modalStates={modalStates} searchName={gameName} tagline={tagline} />
+				}
 			</div>
 		</div>
 	);
-} 
+};
 export default Summoner;

@@ -18,5 +18,5 @@ function SummonerRedirect() {
 			/>
     </div>
   );
-}
+};
 export default SummonerRedirect;

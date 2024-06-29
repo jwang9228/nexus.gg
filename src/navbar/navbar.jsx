@@ -12,7 +12,7 @@ export function Navbar({modalStates}) {
 
   return (
     <nav 
-      className='h-dvh absolute flex flex-col z-20 bg-slate-950'
+      className='flex flex-col absolute z-20 h-dvh bg-slate-950'
       onMouseOver={() => setExpanded(true)}
       onMouseOut={() => setExpanded(false)}
     >
@@ -24,8 +24,10 @@ export function Navbar({modalStates}) {
           <span className={`overflow-hidden whitespace-nowrap transition-all
             ${expanded ? 'w-40 ml-2' : 'w-0'}`}
           >
-            <div className='bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-400 inline-block text-transparent bg-clip-text tracking-widest'>
-              DIVERGE.GG
+            <div className='bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-400 
+              inline-block bg-clip-text text-transparent  tracking-widest'
+            >
+              {'DIVERGE.GG'}
             </div>
           </span>
         </div>
@@ -34,22 +36,25 @@ export function Navbar({modalStates}) {
             icon={<LuLayoutDashboard size={22} />}
             text='Home'
             linkTo='/'
-            active />
+            active 
+          />
           <NavbarItem 
             icon={<PiListNumbers size={24} />}
             text='Tier List'
-            linkTo='/' />
+            linkTo='/' 
+          />
           <NavbarItem 
             icon={<AiOutlineAliwangwang size={24} />}
             text='Champions'
-            linkTo='/' />
+            linkTo='/' 
+          />
         </ul>
         <div className='flex justify-center items-center mx-4 mb-5 
           border-t-2 border-zinc-300/70 text-zinc-300/85'
         >
           <button 
             type='button' 
-            className='bg-slate-900 p-1.5 ml-0.5 mt-2.5'
+            className='ml-0.5 mt-2.5 p-1.5 bg-slate-900'
             onClick={() => {
               modalStates.setInDevModalOpen(true);
               modalStates.setInDevFeature('Sign In');
@@ -57,21 +62,19 @@ export function Navbar({modalStates}) {
           >
             <FiUserPlus size={25} />
           </button>
-          <span 
-            className={`overflow-hidden whitespace-nowrap transition-all mt-1.5 ${
-              expanded ? 'w-40 ml-3.5' : 'w-0 ml-0'
-            }`}
+          <span className={`overflow-hidden whitespace-nowrap transition-all mt-1.5 
+            ${expanded ? 'w-40 ml-3.5' : 'w-0 ml-0'}`}
           >
             <div className='flex flex-col'>
-              <div className='font-semibold'>Guest</div>
-              <div className='text-sm'>Logged Out</div>
+              <div className='font-semibold'>{'Guest'}</div>
+              <div className='text-sm'>{'Logged Out'}</div>
             </div>
           </span>
         </div>
       </NavbarContext.Provider>
     </nav>
   )
-}
+};
 export default Navbar;
 
 function NavbarItem({ icon, text, linkTo, active }) {
@@ -80,19 +83,18 @@ function NavbarItem({ icon, text, linkTo, active }) {
   return (
     <a
       href={`${linkTo}`}
-      className={`relative flex justify-center items-center p-1.5 my-2
-        font-semibold tracking-wide rounded-md cursor-pointer transition-colors
-        ${active ? 'bg-slate-900/95 text-indigo-500' : 'hover:bg-slate-900 text-zinc-300/85 hover:text-zinc-200/85'}
-      `}
+      className={`flex relative justify-center items-center p-1.5 my-2
+        rounded-md cursor-pointer transition-colors font-semibold tracking-wide
+        ${active 
+          ? 'bg-slate-900/95 text-indigo-500' 
+          : 'hover:bg-slate-900 text-zinc-300/85 hover:text-zinc-200/85'}`}
     >
       {icon}
-      <span 
-        className={`overflow-hidden whitespace-nowrap transition-all
-          ${expanded ? 'w-40 ml-3.5' : 'w-0'} 
-        `}
+      <span className={`overflow-hidden whitespace-nowrap transition-all
+        ${expanded ? 'w-40 ml-3.5' : 'w-0'}`}
       >
         {text}
       </span>
     </a>
   )
-}
+};
