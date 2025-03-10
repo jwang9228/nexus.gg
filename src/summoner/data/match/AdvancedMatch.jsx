@@ -8,8 +8,9 @@ function AdvancedMatch({
   isMyTeam, region, 
   summonerSpellsData
 }) {
+  const DDRAGON_URL = 'https://ddragon.leagueoflegends.com/cdn'
+  const DDRAGON_URL_PATCH = `${DDRAGON_URL}/${import.meta.env.VITE_PATCH_VERSION}`;
   const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
-
   const objectives = overallTeamStats.objectives;
 
   const formatGoldEarned = (goldEarned) => {
@@ -60,7 +61,7 @@ function AdvancedMatch({
         >
           <div className='relative size-9 tablet:size-11'>
             <img 
-              src={`${AWS_S3_URL}/champion/${player.champion}.png`} 
+              src={`${DDRAGON_URL_PATCH}/img/champion/${player.champion}.png`} 
               className='relative [clip-path:circle(45%)]'
             />
             <span className='flex absolute bottom-0 left-0 items-center justify-center 
@@ -81,12 +82,13 @@ function AdvancedMatch({
             </div>
             <div className='flex gap-x-1'>
               <img 
-                src={`${AWS_S3_URL}/${player.primaryRuneIcon}`} 
+                src={`${DDRAGON_URL}/img/${player.primaryRuneIcon}`} 
                 className='size-4 tablet:size-5' 
               />
               <div className='flex items-center justify-center mt-0.5 size-fit'>
+                {console.log(player.secondaryTreeIcon)}
                 <img 
-                  src={`${AWS_S3_URL}/${player.secondaryTreeIcon}`} 
+                  src={`${DDRAGON_URL}/img/${player.secondaryTreeIcon}`} 
                   className='tablet:w-4 h-3 tablet:h-3.5' 
                 />
               </div>
@@ -151,7 +153,7 @@ function AdvancedMatch({
               {player.items.map(item => (
                 (item !== 0)
                 ? <img 
-                    src={`${AWS_S3_URL}/item/${item}.png`} 
+                    src={`${DDRAGON_URL_PATCH}/img/item/${item}.png`} 
                     className='rounded-sm size-4 tablet:size-7'
                   />
                 : <div className={`rounded-sm size-4 tablet:size-7

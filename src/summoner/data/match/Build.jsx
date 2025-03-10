@@ -67,33 +67,46 @@ function Build({primaryTreeId, primaryRunes, secondaryTreeId, secondaryRunes, st
   }; 
 
   const myBuildStats = {
+    'primaryTreeName': getTreeByID(primaryTreeId).name,
+    'primaryTreeIcon': getTreeByID(primaryTreeId).icon,
     'primaryTreeKeystones': getPrimaryTreeKeystones(),
     'primaryTreeRunes': getTreeRunesByID(primaryTreeId),
+    'secondaryTreeName': getTreeByID(secondaryTreeId).name,
+    'secondaryTreeIcon': getTreeByID(secondaryTreeId).icon,
     'secondaryTreeRunes': getTreeRunesByID(secondaryTreeId),
     'statmods': getStatmods()
   };
 
   return (
     <div className='flex border-t-1.5 border-slate-900 bg-slate-800'>
-      {/* TODO: icon with tree name (Ex: domination/precision)*/}
-      <div className='flex flex-col w-1/2 px-6 py-2'>
-        <div className='flex justify-center gap-x-2'>
+      <div className='flex flex-col w-1/2 px-2 pb-2'>
+        <div className='flex items-center rounded m-2 py-0.5 bg-slate-900'>
+          <img 
+            src={`${AWS_S3_URL}/${myBuildStats.primaryTreeIcon}`}
+            className='ml-2 size-4'
+          />
+          <div className='ml-2 text-sm text-zinc-300'>
+            {myBuildStats.primaryTreeName}
+          </div>
+        </div>
+        <div className='flex justify-center gap-x-3'>
           {myBuildStats.primaryTreeKeystones.map(keystone => (
             <img 
               src={`${AWS_S3_URL}/${keystone.icon}`} 
-              className={`size-8 
+              className={`size-10
                 ${!primaryRunes.includes(keystone.id) && 'grayscale'}`
               }
             />
           ))}
         </div>
-        <div className='flex flex-col gap-y-1.5 mt-auto mb-1'>
+        <hr className='mx-2.5 my-3 border-zinc-500' />
+        <div className='flex flex-col gap-y-1.5 mt-auto'>
           {myBuildStats.primaryTreeRunes.map(runeSet => (
-            <div className='flex justify-center gap-x-4'>
+            <div className='flex justify-center gap-x-5'>
               {runeSet.runes.map(rune => (
                 <img 
                   src={`${AWS_S3_URL}/${rune.icon}`} 
-                  className={`size-6 
+                  className={`size-7 
                     ${!primaryRunes.includes(rune.id) && 'grayscale'}`
                   }
                 />
@@ -102,10 +115,19 @@ function Build({primaryTreeId, primaryRunes, secondaryTreeId, secondaryRunes, st
           ))}
         </div>
       </div>
-      <div className='flex flex-col w-1/2 gap-y-2 px-6 py-2 mt-0.5'>
+      <div className='flex flex-col w-1/2 gap-y-2 px-2 pb-2'>
+        <div className='flex items-center rounded mx-2 mt-2 mb-1 py-0.5 bg-slate-900'>
+          <img 
+            src={`${AWS_S3_URL}/${myBuildStats.secondaryTreeIcon}`}
+            className='ml-2 size-4'
+          />
+          <div className='ml-2 text-sm text-zinc-300'>
+            {myBuildStats.secondaryTreeName}
+          </div>
+        </div>
         <div className='flex flex-col gap-y-1.5'>
           {myBuildStats.secondaryTreeRunes.map(runeSet => (
-            <div className='flex justify-center gap-x-4'>
+            <div className='flex justify-center gap-x-8'>
               {runeSet.runes.map(rune => (
                 <img 
                   src={`${AWS_S3_URL}/${rune.icon}`} 
@@ -117,16 +139,19 @@ function Build({primaryTreeId, primaryRunes, secondaryTreeId, secondaryRunes, st
             </div>
           ))}
         </div>
-        <div className='flex flex-col'>
+        <hr className='mx-4 mt-0.5 border-zinc-500' />
+        <div className='flex flex-col gap-y-1'>
           {myBuildStats.statmods.map(statmodRow => (
-            <div className='flex justify-center gap-x-4'> 
+            <div className='flex justify-center gap-x-8'> 
               {statmodRow.map(statmod => (
-                <img 
-                  src={`${AWS_S3_URL}/${statmod.icon}`} 
-                  className={`size-5
-                    ${!statmod.active && 'grayscale'}`
-                  }
-                />
+                <div className='rounded-full size-5 bg-slate-900'>
+                  <img 
+                    src={`${AWS_S3_URL}/${statmod.icon}`} 
+                    className={`size-5
+                      ${!statmod.active && 'grayscale'}`
+                    }
+                  />
+                </div>
               ))}
             </div>
           ))}

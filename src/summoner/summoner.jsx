@@ -4,7 +4,7 @@ import SummonerSkeleton from './SummonerSkeleton';
 import SummonerData from './data/SummonerData';
 import NoSummonerData from './NoSummonerData';
 import regions from '../metadata/regions.json';
-import * as summonerClient from './summonerClient';
+import * as summonerClient from '../client/summonerClient';
 
 function Summoner({modalStates}) {
 	const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;

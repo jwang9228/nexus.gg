@@ -4,10 +4,10 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { MdHistory } from 'react-icons/md';
 import regions from '../metadata/regions.json';
 import champions from '../metadata/champion.json';
-import * as summonerClient from '../summoner/summonerClient';
+import * as summonerClient from '../client/summonerClient';
 
 function TopSearchbar() {
-  const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
+  const DDRAGON_URL = `https://ddragon.leagueoflegends.com/cdn/${import.meta.env.VITE_PATCH_VERSION}`;
   const { region } = useParams();
   const navigate = useNavigate();
   const [showRegions, setShowRegions] = useState(false);
@@ -77,7 +77,7 @@ function TopSearchbar() {
             {selectedRegion.name}
           </button>
           <input 
-            type='search' 
+            type='text' 
             placeholder='Search Summoners/Champions' 
             onChange={(e) => setSummonerSearch((e.target.value).trim())}
             onFocus={() => {
@@ -142,7 +142,7 @@ function TopSearchbar() {
               >
                 <AiOutlineSearch className='size-5 mr-3'/>
                 <img 
-                  src={`${AWS_S3_URL}/champion/${champion.image.full}`}
+                  src={`${DDRAGON_URL}/img/champion/${champion.image.full}`}
                   className='size-5 rounded-sm mr-2'
                 />
                 {`${champion.name.substring(0, summonerSearch.length).replace(' ', '\u00A0')}`}
@@ -165,7 +165,7 @@ function TopSearchbar() {
 
                   <MdHistory className='size-5 mr-3'/>
                   <img 
-                    src={`${AWS_S3_URL}/profileicon/${search.profileIconId}.png`}
+                    src={`${DDRAGON_URL}/img/profileicon/${search.profileIconId}.png`}
                     className='size-5 rounded-sm mr-2'
                   />
                   {summonerSearch.length === 0 ? (

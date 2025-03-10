@@ -1,9 +1,10 @@
 import { IoLanguageSharp } from 'react-icons/io5';
 import { AiOutlineMail } from 'react-icons/ai';
+import champions from '../metadata/champion.json';
 
 function TopNav({modalStates}) {
   const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
-  const patchVersion = '14.12';
+  const patchVersion = champions.version;
   const [majorVersion, minorVersion] = patchVersion.split('.');
   const patchSite = `https://www.leagueoflegends.com/en-us/news/game-updates/patch-${majorVersion}-${minorVersion}-notes/`;
 

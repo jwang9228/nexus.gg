@@ -18,6 +18,8 @@ import summonerSpells from '../../../metadata/summoners.json';
 import runes from '../../../metadata/runes.json';
 
 function Match({matchData, summonerName, region}) {
+  const DDRAGON_URL = 'https://ddragon.leagueoflegends.com/cdn'
+  const DDRAGON_URL_PATCH = `${DDRAGON_URL}/${import.meta.env.VITE_PATCH_VERSION}`;
   const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
   const metadata = matchData.metadata;
 	const matchInfo = matchData.info;
@@ -547,7 +549,7 @@ function Match({matchData, summonerName, region}) {
             <div className='flex gap-x-2'>
               <div className='relative size-12 tablet:size-14 my-0.5 laptop:my-0'>
                 <img 
-                  src={`${AWS_S3_URL}/champion/${myPlayer.champion}.png`} 
+                  src={`${DDRAGON_URL_PATCH}/img/champion/${myPlayer.champion}.png`}
                   className='relative [clip-path:circle(45%)]'
                 />
                 <span className='flex absolute bottom-0 right-0 
@@ -568,12 +570,12 @@ function Match({matchData, summonerName, region}) {
                 </div>
                 <div className='flex gap-x-1.5'>
                   <img 
-                    src={`${AWS_S3_URL}/${myPlayerStats.primaryRuneIcon}`} 
+                    src={`${DDRAGON_URL}/img/${myPlayerStats.primaryRuneIcon}`} 
                     className='size-5 tablet:size-6' 
                   />
                   <div className='flex items-center justify-center size-5 tablet:size-6'>
                     <img 
-                      src={`${AWS_S3_URL}/${myPlayerStats.secondaryTreeIcon}`} 
+                      src={`${DDRAGON_URL}/img/${myPlayerStats.secondaryTreeIcon}`} 
                       className='tablet:w-5 h-4 tablet:h-[18px]' 
                     />
                   </div>
@@ -587,7 +589,7 @@ function Match({matchData, summonerName, region}) {
                 {myPlayer.items.map((item) => (
                   (item !== 0)
                   ? <img 
-                    src={`${AWS_S3_URL}/item/${item}.png`} 
+                    src={`${DDRAGON_URL_PATCH}/img/item/${item}.png`} 
                     className='rounded size-5 tablet:size-6 laptop:size-7'
                   />
                   : <div className={`rounded size-5 tablet:size-6 laptop:size-7 
@@ -643,7 +645,7 @@ function Match({matchData, summonerName, region}) {
                     className='flex gap-x-1'
                   >
                     <img
-                      src={`${AWS_S3_URL}/champion/${player.champion}.png`}
+                      src={`${DDRAGON_URL_PATCH}/img/champion/${player.champion}.png`}
                       className='rounded-sm size-[18px]'
                     />
                     <a 

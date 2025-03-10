@@ -10,14 +10,16 @@ function SummonerSkeleton() {
       </div>
       <div className='w-screen grid laptop:grid-cols-3 laptop:gap-3 laptop:mt-4'>
         <div className='mx-6 my-2.5 laptop:mx-0 laptop:my-0 laptop:ml-24'>
+          {/*
           <div className='bg-slate-600 rounded'>
-            ranked solo {/* TODO: test height and width of these elements by putting transparent dummys*/}
+            ranked solo 
           </div>
           <div className='bg-slate-600 rounded'>
             ranked flex
           </div>
+          */}
         </div>
-        <div className='laptop:col-span-2 bg-slate-600 rounded mx-6 laptop:mx-0 laptop:mr-7'>02</div>
+        <div className='laptop:col-span-2 bg-slate-600 rounded mx-6 laptop:mx-0 laptop:mr-7'></div>
       </div>
     </div>
   )

@@ -4,22 +4,22 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { MdHistory } from 'react-icons/md';
 import TopNav from '../navbar/Topnav';
 import NavbarMobile from '../navbar/NavbarMobile';
-import RegionsSwiper from './RegionsSwiper';
 import regions from '../metadata/regions.json';
 import champions from '../metadata/champion.json';
 import backgrounds from '../metadata/backgrounds.json';
-import * as userClient from './userClient';
-import * as summonerClient from '../summoner/summonerClient';
+import * as userClient from '../client/userClient';
+import * as summonerClient from '../client/summonerClient';
 
 function Home({modalStates}) {
   const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
+  const DDRAGON_URL = `https://ddragon.leagueoflegends.com/cdn/${import.meta.env.VITE_PATCH_VERSION}`;
   const navigate = useNavigate();
   const [selectedRegion, setSelectedRegion] = useState(regions[0]);
   const [showRegions, setShowRegions] = useState(false);
   const [summonerSearch, setSummonerSearch] = useState('');
   const [recentSearches, setRecentSearches] = useState([]);
   const [searchbarActive, setSearchbarActive] = useState(false);
-  const [activeBackground, setActiveBackground] = useState(backgrounds[3]);
+  const [activeBackground, setActiveBackground] = useState(backgrounds[2]);
 
   const searchSummoner = () => {
     if (summonerSearch !== '') {
@@ -55,20 +55,14 @@ function Home({modalStates}) {
 
   useEffect(() => {
     const fetchHomeData = async () => {
-      const [recentSearchesResponse, activeBackgroundResponse, selectedRegionResponse] = 
+      const [recentSearchesResponse, selectedRegionResponse] = 
         await Promise.all([
           summonerClient.getRecentSearches(),
-          userClient.getActiveBackground(),
           userClient.getSelectedRegion()
         ]
       );
 
       if (recentSearchesResponse) setRecentSearches(recentSearchesResponse);
-      if (Object.keys(activeBackgroundResponse).length !== 0) {
-        setActiveBackground(activeBackgroundResponse);
-      } else {
-        setActiveBackground(backgrounds[3]);
-      }
       if (Object.keys(selectedRegionResponse).length !== 0) {
         setSelectedRegion(selectedRegionResponse);
       } else {
@@ -77,6 +71,16 @@ function Home({modalStates}) {
     };
 
     fetchHomeData();
+
+    const changeBackgroundInterval = setInterval(() => {
+      setActiveBackground(prevBackground => {
+        const currentIndex = backgrounds.indexOf(prevBackground);
+        const nextIndex = (currentIndex + 1) % backgrounds.length;
+        return backgrounds[nextIndex];
+      });
+    }, 15000); 
+
+    return () => clearInterval(changeBackgroundInterval);
   }, []);
 
   return (
@@ -88,12 +92,12 @@ function Home({modalStates}) {
           className={`absolute size-full z-[-1] 
             bg-cover bg-center bg-fixed bg-[image:var(--bg-image-url)]
             ${background.index === activeBackground.index ? 'opacity-100' : 'opacity-0'} 
-            transition-opacity duration-300 ease-out`}
+            transition-opacity duration-1000 ease-out`}
         />
       ))}
       <div className='laptop:hidden'><NavbarMobile modalStates={modalStates}/></div>
-      <div className='ml-auto'><TopNav modalStates={modalStates}/></div>
-      <div className='flex flex-col items-center'>
+      <div className='ml-auto h-1/6'><TopNav modalStates={modalStates}/></div>
+      <div className='flex flex-col items-center h-5/6'>
         <div className={`mt-24 mb-3 font-[Raleway] font-bold tracking-[0.5em]
           ${activeBackground.colors === 'dark' ? 'text-slate-950' : 'text-slate-900'} 
           text-2xl tablet:text-3xl laptop:text-4xl`}
@@ -118,7 +122,7 @@ function Home({modalStates}) {
               {selectedRegion.name}
             </button>
             <input 
-              type='search' 
+              type='text' 
               placeholder='Search Summoners/Champions' 
               onChange={(e) => setSummonerSearch((e.target.value).trim())}
               onFocus={() => {
@@ -150,6 +154,7 @@ function Home({modalStates}) {
                   ? region.color 
                   : '#464264'
                 }}
+                onClick={() => handleSelectRegion(region)}
                 className='w-12 tablet:w-14 h-7 rounded-md text-stone-300'
               >
                 {region.name}
@@ -158,7 +163,7 @@ function Home({modalStates}) {
           </div>
         )}
         {searchbarActive && (
-          <ul className='w-dvw tablet:w-4/5 laptop:w-1/2 overflow-auto mt-2.5 px-5 tablet:px-0'>
+          <ul className='w-dvw tablet:w-4/5 laptop:w-1/2 overflow-auto my-2.5 px-5 tablet:px-0'>
             {summonerSearch.length > 0 && filterChampionsSearch().map(champion => (
               <li 
                 key={champion.id}
@@ -172,7 +177,7 @@ function Home({modalStates}) {
                 >
                   <AiOutlineSearch className='size-5 mr-3' />
                   <img 
-                    src={`${AWS_S3_URL}/champion/${champion.image.full}`}
+                    src={`${DDRAGON_URL}/img/champion/${champion.image.full}`}
                     className='size-5 rounded-sm mr-2'
                   />
                   {`${champion.name.substring(0, summonerSearch.length).replace(' ', '\u00A0')}`}
@@ -195,7 +200,7 @@ function Home({modalStates}) {
                 >
                   <MdHistory className='size-5 mr-3'/>
                   <img 
-                    src={`${AWS_S3_URL}/profileicon/${search.profileIconId}.png`}
+                    src={`${DDRAGON_URL}/img/profileicon/${search.profileIconId}.png`}
                     className='size-5 rounded-sm mr-2'
                   />
                   {summonerSearch.length === 0 
@@ -223,11 +228,6 @@ function Home({modalStates}) {
           </ul>
         )}
       </div>
-      {activeBackground && (
-        <div className='mt-auto mb-6 tablet:mb-7 ml-auto mr-5 tablet:mr-6'>
-          <RegionsSwiper activeBackground={activeBackground} setActiveBackground={setActiveBackground} />
-        </div>
-      )}
     </div>
   );
 };

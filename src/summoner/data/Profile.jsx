@@ -1,13 +1,13 @@
 import { LuRefreshCw } from 'react-icons/lu';
 
 function Profile({summonerData, updateSummoner}) {
-  const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
+  const DDRAGON_URL = `https://ddragon.leagueoflegends.com/cdn/${import.meta.env.VITE_PATCH_VERSION}`;
 
   return (
     <div className='flex mb-4'>
       <div className='flex flex-col relative'>
         <img 
-          src={`${AWS_S3_URL}/profileicon/${summonerData.profileIconId}.png`} 
+          src={`${DDRAGON_URL}/img/profileicon/${summonerData.profileIconId}.png`}
           className='size-16 tablet:size-20 laptop:size-24 
             border border-slate-950 rounded bg-slate-600' 
         />
