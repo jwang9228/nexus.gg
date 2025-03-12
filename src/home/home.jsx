@@ -117,7 +117,7 @@ function Home({modalStates}) {
               onClick={() => setShowRegions(!showRegions)}
               style={{backgroundColor: selectedRegion.color}}
               className='absolute top-1/2 left-3 -translate-y-1/2 
-                w-[56px] px-2 py-0.5 rounded-md text-base text-center text-stone-300'
+                w-14 px-2 py-0.5 rounded-md text-base text-center text-stone-300'
             >
               {selectedRegion.name}
             </button>

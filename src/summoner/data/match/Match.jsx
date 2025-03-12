@@ -576,7 +576,7 @@ function Match({matchData, summonerName, region}) {
                   <div className='flex items-center justify-center size-5 tablet:size-6'>
                     <img 
                       src={`${DDRAGON_URL}/img/${myPlayerStats.secondaryTreeIcon}`} 
-                      className='tablet:w-5 h-4 tablet:h-[18px]' 
+                      className='tablet:w-5 h-4 tablet:h-[1.13rem]' 
                     />
                   </div>
                 </div>
@@ -646,7 +646,7 @@ function Match({matchData, summonerName, region}) {
                   >
                     <img
                       src={`${DDRAGON_URL_PATCH}/img/champion/${player.champion}.png`}
-                      className='rounded-sm size-[18px]'
+                      className='rounded-sm size-[1.13rem]'
                     />
                     <a 
                       href={`/summoners/${region}/${player.name}-${player.tagline}`}

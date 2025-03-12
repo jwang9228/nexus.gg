@@ -18,7 +18,7 @@ function ContactModal({setContactModalOpen}) {
       <div className='flex items-center'>
         <img src={`${AWS_S3_URL}/general/blitz-question.webp`} className='size-16' />
         <div className='flex flex-col px-2 text-lg'>
-          {'Contact us:'} 
+          {'Contact at:'} 
           <a 
             href='mailto:diverge.gg@gmail.com' 
             className='text-sky-500 hover:underline'

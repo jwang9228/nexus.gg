@@ -32,7 +32,7 @@ function Profile({summonerData, updateSummoner}) {
           onClick={() => updateSummoner()}
         >
           <div className='flex items-center justify-center'>
-            <LuRefreshCw className='size-4 tablet:size-[18px]'/>
+            <LuRefreshCw className='size-4 tablet:size-[1.13rem]'/>
             <span className='ml-1.5'>Update</span>
           </div>
         </button>

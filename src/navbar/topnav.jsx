@@ -1,10 +1,9 @@
 import { IoLanguageSharp } from 'react-icons/io5';
 import { AiOutlineMail } from 'react-icons/ai';
-import champions from '../metadata/champion.json';
 
 function TopNav({modalStates}) {
   const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
-  const patchVersion = champions.version;
+  const patchVersion = '25.05';
   const [majorVersion, minorVersion] = patchVersion.split('.');
   const patchSite = `https://www.leagueoflegends.com/en-us/news/game-updates/patch-${majorVersion}-${minorVersion}-notes/`;
 
@@ -21,7 +20,7 @@ function TopNav({modalStates}) {
           className='text-sm tablet:text-base text-zinc-300'
         >
           <div className='flex items-center font-[Raleway]'>
-            <img src={`${AWS_S3_URL}/general/lol.png`} className='size-[18px] tablet:size-5 mr-1'/>
+            <img src={`${AWS_S3_URL}/general/lol.png`} className='size-[1.13rem] tablet:size-5 mr-1'/>
             {'Patch\u00A0'}
             <span className='mb-0.5'>{patchVersion}</span>
           </div>
@@ -32,7 +31,7 @@ function TopNav({modalStates}) {
         className='p-2 rounded-full bg-slate-900 text-zinc-300/95' 
         onClick={() => modalStates.setContactModalOpen(true)}
       >
-        <AiOutlineMail className='size-[18px] tablet:size-5'/>
+        <AiOutlineMail className='size-[1.13rem] tablet:size-5'/>
       </button>
       <button 
         type='button' 
@@ -42,7 +41,7 @@ function TopNav({modalStates}) {
           modalStates.setInDevFeature('Language Select');
         }}
       >
-        <IoLanguageSharp className='size-[18px] tablet:size-5'/>
+        <IoLanguageSharp className='size-[1.13rem] tablet:size-5'/>
       </button>
     </div>
   )
