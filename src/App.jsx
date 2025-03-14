@@ -5,6 +5,7 @@ import Navbar from './navbar/Navbar';
 import Home from './home/Home';
 import Summoner from './summoner/Summoner';
 import SummonerRedirect from './summoner/SummonerRedirect';
+import Champion from './champion/Champion';
 import Modals from './modals/Modals';
 
 function App() {
@@ -48,14 +49,18 @@ function App() {
         </div>
         <div className='flex-1 w-full'>
           <Routes>
-            <Route index element={<Home modalStates={modalStates}/>} />
+            <Route index element={<Home modalStates={modalStates} />} />
             <Route 
               path='/summoners/:region/:summonerName' 
-              element={<Summoner modalStates={modalStates}/>} 
+              element={<Summoner modalStates={modalStates} />} 
             />
             <Route 
               path='/summoners/redirect/:region/:summonerName'
               element={<SummonerRedirect />} 
+            />
+            <Route 
+              path='/champions/:region/:championName'
+              element={<Champion modalStates={modalStates} />}
             />
           </Routes>
         </div>

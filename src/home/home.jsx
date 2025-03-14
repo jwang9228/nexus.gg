@@ -171,7 +171,7 @@ function Home({modalStates}) {
                   bg-slate-800 hover:bg-slate-900'
               >
                 <a 
-                  href={`/champions/${champion.id}`} 
+                  href={`/champions/${selectedRegion.region}/${champion.name}`} 
                   onMouseDown={(e) => e.preventDefault()}
                   className='flex items-center px-3 py-1.5 text-zinc-300/95'
                 >

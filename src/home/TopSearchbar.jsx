@@ -136,7 +136,7 @@ function TopSearchbar() {
                 bg-slate-800 hover:bg-slate-900'
             >
               <a 
-                href={`/champions/${champion.id}`} 
+                href={`/champions/${selectedRegion.region}/${champion.name}`} 
                 onMouseDown={(e) => e.preventDefault()}
                 className='flex items-center px-2 py-1.5 text-sm text-zinc-300/95'
               >
