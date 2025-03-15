@@ -6,6 +6,7 @@ import Home from './home/Home';
 import Summoner from './summoner/Summoner';
 import SummonerRedirect from './summoner/SummonerRedirect';
 import Champion from './champion/Champion';
+import ChampionRedirect from './champion/ChampionRedirect';
 import Modals from './modals/Modals';
 
 function App() {
@@ -61,6 +62,10 @@ function App() {
             <Route 
               path='/champions/:region/:championName'
               element={<Champion modalStates={modalStates} />}
+            />
+            <Route 
+              path='/champions/redirect/:region/:championName'
+              element={<ChampionRedirect />} 
             />
           </Routes>
         </div>

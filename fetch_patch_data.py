@@ -21,8 +21,8 @@ def get_patch_metadata(latest_patch_num):
   metadata_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'src\\metadata')
   data_url = 'https://ddragon.leagueoflegends.com/cdn/{0}/data/en_US/'.format(latest_patch_num)
 
-  # champion.json -> champion details
-  champion_metadata = requests.get('{0}champion.json'.format(data_url)).json()
+  # championFull.json -> champion details
+  champion_metadata = requests.get('{0}championFull.json'.format(data_url)).json()
   champion_file = os.path.join(metadata_dir, 'champion.json')
   with open(champion_file, 'w') as f:
     json.dump(champion_metadata, f, indent=4)

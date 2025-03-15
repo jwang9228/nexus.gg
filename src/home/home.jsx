@@ -26,9 +26,9 @@ function Home({modalStates}) {
       const [gameName, tagline] = summonerSearch.split('#');
       const region = selectedRegion.region;
       if (tagline) {
-        navigate(`/summoners/${region}/${gameName}-${tagline}`);
+        navigate(`/summoners/redirect/${region}/${gameName}-${tagline}`);
       } else {
-        navigate(`/summoners/${region}/${gameName}-${region.toUpperCase()}`);
+        navigate(`/summoners/redirect/${region}/${gameName}-${region.toUpperCase()}`);
       }
     }
   };
@@ -171,7 +171,7 @@ function Home({modalStates}) {
                   bg-slate-800 hover:bg-slate-900'
               >
                 <a 
-                  href={`/champions/${selectedRegion.region}/${champion.name}`} 
+                  href={`/champions/redirect/${selectedRegion.region}/${champion.name}`} 
                   onMouseDown={(e) => e.preventDefault()}
                   className='flex items-center px-3 py-1.5 text-zinc-300/95'
                 >
@@ -194,7 +194,7 @@ function Home({modalStates}) {
                   bg-slate-800 hover:bg-slate-900' 
               >
                 <a 
-                  href={`/summoners/${search.region}/${search.name}-${search.tagline}`} 
+                  href={`/summoners/redirect/${search.region}/${search.name}-${search.tagline}`} 
                   onMouseDown={(e) => e.preventDefault()}
                   className='flex items-center py-1.5 px-3 text-zinc-300/95'
                 >

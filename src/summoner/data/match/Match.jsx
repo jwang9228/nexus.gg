@@ -283,7 +283,7 @@ function Match({matchData, summonerName, region}) {
 			name: player.riotIdGameName,
 			tagline: player.riotIdTagline,
 			timePlayed: player.timePlayed,
-			champion: player.championName,
+			champion: player.championName === 'FiddleSticks' ? 'Fiddlesticks' : player.championName,
 			matchResult: getMatchResult(player),
 			kills: player.kills,
 			deaths: player.deaths,
@@ -649,7 +649,7 @@ function Match({matchData, summonerName, region}) {
                       className='rounded-sm size-[1.13rem]'
                     />
                     <a 
-                      href={`/summoners/${region}/${player.name}-${player.tagline}`}
+                      href={`/summoners/redirect/${region}/${player.name}-${player.tagline}`}
                       className={`w-20 truncate hover:underline 
                       text-start text-xs font-[Raleway] 
                       ${myPlayer.name === player.name ? 'font-semibold' : 'font-medium'}`}

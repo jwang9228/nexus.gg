@@ -96,7 +96,7 @@ function AdvancedMatch({
           </div>
           <div className='flex flex-col ml-1 tablet:ml-2'> 
             <a 
-              href={`/summoners/${region}/${player.name}-${player.tagline}`}
+              href={`/summoners/redirect/${region}/${player.name}-${player.tagline}`}
               className='w-20 tablet:w-32 laptop:w-40 font-medium text-xs tablet:text-sm truncate'
             >
               {player.name}

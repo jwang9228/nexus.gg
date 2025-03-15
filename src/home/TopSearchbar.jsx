@@ -136,7 +136,7 @@ function TopSearchbar() {
                 bg-slate-800 hover:bg-slate-900'
             >
               <a 
-                href={`/champions/${selectedRegion.region}/${champion.name}`} 
+                href={`/champions/redirect/${selectedRegion.region}/${champion.name}`} 
                 onMouseDown={(e) => e.preventDefault()}
                 className='flex items-center px-2 py-1.5 text-sm text-zinc-300/95'
               >
@@ -158,7 +158,7 @@ function TopSearchbar() {
               className='bg-slate-800 hover:bg-slate-900 border-x-1.5 border-slate-950 last:rounded-b last:border-b-1.5'
             >
               <a 
-                href={`/summoners/${search.region}/${search.name}-${search.tagline}`} 
+                href={`/summoners/redirect/${search.region}/${search.name}-${search.tagline}`} 
                 className='flex items-center py-1.5 px-2 text-sm text-zinc-300/95'
                 onMouseDown={e => e.preventDefault()}
               >
