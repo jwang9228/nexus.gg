@@ -5,7 +5,7 @@ import champions from '../metadata/champion.json';
 function Champion({modalStates}) {
   const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
   const { championName } = useParams();
-  const championData = Object.values(champions.data).find(champion => champion.name === championName);
+  const championData = Object.values(champions.data).find(champion => champion.name === championName || champion.id === championName);
 
   return (
     <div className='flex relative 

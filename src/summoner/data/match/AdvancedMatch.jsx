@@ -60,16 +60,18 @@ function AdvancedMatch({
           ${isMyTeam && player.name === myPlayerStats.name && getMyBackgroundColor()}`}
         >
           <div className='relative size-9 tablet:size-11'>
-            <img 
-              src={`${DDRAGON_URL_PATCH}/img/champion/${player.champion}.png`} 
-              className='relative [clip-path:circle(45%)]'
-            />
-            <span className='flex absolute bottom-0 left-0 items-center justify-center 
-              size-[0.8rem] tablet:size-4 p-1 ml-0.5 mb-0.5
-              rounded-full bg-slate-400 font-semibold text-xxs text-slate-900'
-            >
-              {player.level}
-            </span>
+            <a href={`/champions/${region}/${player.champion}`}>
+              <img 
+                src={`${DDRAGON_URL_PATCH}/img/champion/${player.champion}.png`} 
+                className='relative [clip-path:circle(45%)]'
+              />
+              <span className='flex absolute bottom-0 left-0 items-center justify-center 
+                size-[0.8rem] tablet:size-4 p-1 ml-0.5 mb-0.5
+                rounded-full bg-slate-400 font-semibold text-xxs text-slate-900'
+              >
+                {player.level}
+              </span>
+            </a>
           </div>
           <div className='flex flex-col ml-0.5 mt-0.5 gap-y-0.5'>
             <div className='flex gap-x-0.5'>

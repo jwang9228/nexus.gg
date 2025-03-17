@@ -28,10 +28,16 @@ function ChampionData({modalStates, champion}) {
                 className='rounded size-8 tablet:size-9 laptop:size-10 border-2 border-black'
               />
               {['Q', 'W', 'E', 'R'].map((spellKey, i) => (
-                <img 
-                  src={`${DDRAGON_URL}/img/spell/${champion.spells[i].image.full}`}
-                  className='rounded size-8 tablet:size-9 laptop:size-10 border-2 border-black'
-                />
+                <div className='relative'>
+                  <img 
+                    src={`${DDRAGON_URL}/img/spell/${champion.spells[i].image.full}`}
+                    className='rounded size-8 tablet:size-9 laptop:size-10 border-2 border-black'
+                  />
+                  <div className='absolute bottom-0 right-0 px-0.5 rounded
+                    text-xs laptop:text-sm text-zinc-300 font-medium bg-slate-900'>
+                    {spellKey}
+                  </div>
+                </div>
               ))}
             </div>
           </div>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   GiTripleScratches, 
   GiPentarrowsTornado, 
@@ -21,6 +22,7 @@ function Match({matchData, summonerName, region}) {
   const DDRAGON_URL = 'https://ddragon.leagueoflegends.com/cdn'
   const DDRAGON_URL_PATCH = `${DDRAGON_URL}/${import.meta.env.VITE_PATCH_VERSION}`;
   const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
+  const navigate = useNavigate();
   const metadata = matchData.metadata;
 	const matchInfo = matchData.info;
 
@@ -548,16 +550,18 @@ function Match({matchData, summonerName, region}) {
           <div className='flex tablet:flex-col grow tablet:grow-0 laptop:ml-5'>
             <div className='flex gap-x-2'>
               <div className='relative size-12 tablet:size-14 my-0.5 laptop:my-0'>
-                <img 
-                  src={`${DDRAGON_URL_PATCH}/img/champion/${myPlayer.champion}.png`}
-                  className='relative [clip-path:circle(45%)]'
-                />
-                <span className='flex absolute bottom-0 right-0 
-                  items-center justify-center size-4 p-2 mr-0.5 mb-0.5 rounded-full
-                  bg-slate-400 font-semibold text-xs text-slate-900'
-                >
-                  {myPlayer.level}
-                </span>
+                <a href={`/champions/${region}/${myPlayer.champion}`}>
+                  <img 
+                    src={`${DDRAGON_URL_PATCH}/img/champion/${myPlayer.champion}.png`}
+                    className='relative [clip-path:circle(45%)]'
+                  />
+                  <span className='flex absolute bottom-0 right-0 
+                    items-center justify-center size-4 p-2 mr-0.5 mb-0.5 rounded-full
+                    bg-slate-400 font-semibold text-xs text-slate-900'
+                  >
+                    {myPlayer.level}
+                  </span>
+                </a>
               </div>
               <div className='flex flex-col mt-1 gap-y-1'>
                 <div className='flex gap-x-1.5'>
