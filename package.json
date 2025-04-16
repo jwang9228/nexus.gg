@@ -1,12 +1,12 @@
 {
-  "name": "diverge.gg",
+  "name": "nexus.gg",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "sync": "aws s3 sync ./dist s3://diverge-gg-web-app/",
+    "sync": "aws s3 sync ./dist s3://nexus-gg-web-app/",
     "invalidate": "aws cloudfront create-invalidation --distribution-id EK4BZTBWED6XB --paths /*",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"

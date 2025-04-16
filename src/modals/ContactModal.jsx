@@ -20,10 +20,10 @@ function ContactModal({setContactModalOpen}) {
         <div className='flex flex-col px-2 text-lg'>
           {'Contact at:'} 
           <a 
-            href='mailto:diverge.gg@gmail.com' 
+            href='mailto:nexus.gg@gmail.com' 
             className='text-sky-500 hover:underline'
           >
-            {'diverge.gg@gmail.com'}
+            {'nexus.gg@gmail.com'}
           </a>
         </div>
       </div>
