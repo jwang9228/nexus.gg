@@ -27,7 +27,7 @@ export function Navbar({modalStates}) {
             <div className='bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-400 
               inline-block bg-clip-text text-transparent  tracking-widest'
             >
-              {'NEXUS.GG'}
+              {'NEXUS'}
             </div>
           </span>
         </div>

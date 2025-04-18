@@ -102,7 +102,7 @@ function Home({modalStates}) {
           ${activeBackground.colors === 'dark' ? 'text-slate-950' : 'text-slate-900'} 
           text-2xl tablet:text-3xl laptop:text-4xl`}
         >
-          {'NEXUS.GG'}
+          {'NEXUS'}
         </div>
         <form 
           onSubmit={(e) => { 
