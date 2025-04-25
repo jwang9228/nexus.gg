@@ -1,7 +1,7 @@
 import { IoClose } from 'react-icons/io5';
 
 function DevelopmentModal({inDevFeature, setInDevModalOpen}) {
-  const AWS_S3_URL = import.meta.env.VITE_AWS_S3_URL;
+  const AWS_S3_URL = process.env.NEXT_PUBLIC_AWS_S3_URL;
 
   return (
     <div className='flex flex-col px-5 py-3 gap-y-1.5 rounded-lg shadow 

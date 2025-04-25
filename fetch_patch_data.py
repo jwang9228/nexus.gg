@@ -46,10 +46,10 @@ def fetch_patch_data():
   try:
     load_dotenv('.env')
     latest_patch_num = get_latest_patch()
-    current_patch_num = os.getenv('VITE_PATCH_VERSION')
-    # update .env VITE_PATCH_VERSION if it needs to be updated, fetch updated metadata
+    current_patch_num = os.getenv('NEXT_PUBLIC_PATCH_VERSION')
+    # update .env NEXT_PUBLIC_PATCH_VERSION if it needs to be updated, fetch updated metadata
     if current_patch_num < latest_patch_num:
-      set_key('.env', 'VITE_PATCH_VERSION', latest_patch_num)
+      set_key('.env', 'NEXT_PUBLIC_PATCH_VERSION', latest_patch_num)
       get_patch_metadata(latest_patch_num)
 
   except Exception as e:
