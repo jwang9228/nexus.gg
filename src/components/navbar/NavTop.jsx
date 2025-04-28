@@ -1,8 +1,9 @@
+import Link from 'next/link';
+import Image from 'next/image';
 import { IoLanguageSharp } from 'react-icons/io5';
 import { AiOutlineMail } from 'react-icons/ai';
 
-export default function NavTop({modalStates}) {
-  const AWS_S3_URL = process.env.NEXT_PUBLIC_AWS_S3_URL;
+export default function NavTop() {
   const patchVersion = '25.08';
   const [majorVersion, minorVersion] = patchVersion.split('.');
   const patchSite = `https://www.leagueoflegends.com/en-us/news/game-updates/patch-${majorVersion}-${minorVersion}-notes/`;
@@ -13,33 +14,35 @@ export default function NavTop({modalStates}) {
         type='button' 
         className='px-2.5 py-1.5 rounded-full bg-slate-900'
       >
-        <a 
+        <Link
           href={patchSite} 
           target='_blank' 
           rel='noopener noreferrer'
           className='text-sm tablet:text-base text-zinc-300'
         >
           <div className='flex items-center font-[Raleway]'>
-            <img src={`${AWS_S3_URL}/general/lol.png`} className='size-[1.13rem] tablet:size-5 mr-1'/>
+            <Image
+              src={`${process.env.NEXT_PUBLIC_AWS_S3_URL}/general/lol.png`} 
+              alt=''
+              className='size-[1.13rem] tablet:size-5 mr-1' 
+              width={18} height={18}
+            />
             {'Patch\u00A0'}
             <span className='mb-0.5'>{patchVersion}</span>
           </div>
-        </a>
+        </Link>
       </button>
       <button 
         type='button' 
         className='p-2 rounded-full bg-slate-900 text-zinc-300/95' 
-        onClick={() => modalStates.setContactModalOpen(true)}
       >
-        <AiOutlineMail className='size-[1.13rem] tablet:size-5'/>
+        <a href='mailto:jwang.srv1@gmail.com' target='_blank' rel='noopener noreferrer'>
+          <AiOutlineMail className='size-[1.13rem] tablet:size-5'/>
+        </a>
       </button>
       <button 
         type='button' 
         className='p-2 rounded-full bg-slate-900 text-zinc-300/90'
-        onClick={() => {
-          modalStates.setInDevModalOpen(true);
-          modalStates.setInDevFeature('Language Select');
-        }}
       >
         <IoLanguageSharp className='size-[1.13rem] tablet:size-5'/>
       </button>

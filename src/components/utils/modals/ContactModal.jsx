@@ -1,6 +1,7 @@
+import Link from 'next/link';
 import { IoClose } from 'react-icons/io5';
 
-function ContactModal({setContactModalOpen}) {
+export default function ContactModal({setContactModalOpen}) {
   const AWS_S3_URL = process.env.NEXT_PUBLIC_AWS_S3_URL;
 
   return (
@@ -19,15 +20,14 @@ function ContactModal({setContactModalOpen}) {
         <img src={`${AWS_S3_URL}/general/blitz-question.webp`} className='size-16' />
         <div className='flex flex-col px-2 text-lg'>
           {'Contact at:'} 
-          <a 
-            href='mailto:nexus@gmail.com' 
+          <Link
+            href='mailto:jwang.srv1@gmail.com' 
             className='text-sky-500 hover:underline'
           >
-            {'nexus@gmail.com'}
-          </a>
+            {'jwang.srv1@gmail.com'}
+          </Link>
         </div>
       </div>
     </div>
   )
-};
-export default ContactModal;
+}

@@ -1,15 +1,16 @@
+import Image from 'next/image';
 import { LuRefreshCw } from 'react-icons/lu';
 
 export default function Profile({summonerData, updateSummoner}) {
-  const DDRAGON_URL = `https://ddragon.leagueoflegends.com/cdn/${process.env.NEXT_PUBLIC_PATCH_VERSION}`;
-
   return (
     <div className='flex mb-4'>
       <div className='flex flex-col relative'>
-        <img 
-          src={`${DDRAGON_URL}/img/profileicon/${summonerData.profileIconId}.png`}
+        <Image
+          src={`${process.env.NEXT_PUBLIC_DDRAGON_URL}/img/profileicon/${summonerData.profileIconId}.png`}
+          alt=''
           className='size-16 tablet:size-20 laptop:size-24 
             border border-slate-950 rounded bg-slate-600' 
+          width={64} height={64}
         />
         <div className='absolute bottom-0 left-1/2 transform 
           -translate-x-1/2 translate-y-1.5 tablet:translate-y-2 px-2 py-0.5 

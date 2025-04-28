@@ -1,16 +1,12 @@
 import TopSearch from '../home/TopSearch';
-import NavMobile from '../navbar/NavMobile';
 import Profile from './profile/Profile';
 import RankStats from './profile/RankStats';
 import Match from './match/Match';
 
-export default function SummonerData({modalStates, summonerData, matches, updateSummoner}) {
+export default function SummonerData({summonerData, matches, updateSummoner}) {
   return (
     <div className='w-dvw'>
       <div className='flex'>
-        <div className='laptop:hidden'>
-          <NavMobile modalStates={modalStates} />
-        </div>
         <TopSearch />
       </div>
       <div className='mt-6 mx-6 laptop:mx-0 laptop:ml-24'>
@@ -28,9 +24,10 @@ export default function SummonerData({modalStates, summonerData, matches, update
           </div>
           <div className='laptop:col-span-7 laptop:ml-1 laptop:mr-8 mt-2 mb-4'>
             <div className='flex flex-col gap-y-2.5'>
-              {matches && matches.map(matchData => (
+              {matches && matches.map((matchData, i) => (
                 matchData && 
                   <Match 
+                    key={i}
                     matchData={matchData} 
                     summonerName={summonerData.summonerName} 
                     region={summonerData.server} 

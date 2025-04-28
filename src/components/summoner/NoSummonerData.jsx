@@ -1,14 +1,10 @@
-import NavMobile from '../navbar/NavMobile';
+import Image from 'next/image';
 import TopSearch from '../home/TopSearch';
 
-export default function NoSummonerData({modalStates, searchName, tagline}) {
-  const AWS_S3_URL = process.env.NEXT_PUBLIC_AWS_S3_URL;
+export default function NoSummonerData({searchName, tagline}) {
   return (
     <div className='flex flex-col w-dvw h-dvh'>
       <div className='flex'>
-        <div className='laptop:hidden'>
-          <NavMobile modalStates={modalStates} />
-        </div>
         <TopSearch />
       </div>
       <div className='flex grow justify-center items-center'>
@@ -18,9 +14,11 @@ export default function NoSummonerData({modalStates, searchName, tagline}) {
           <div className='flex flex-col items-center 
             text-xl tablet:text-2xl text-zinc-300/95 text-center'
           >
-            <img 
-              src={`${AWS_S3_URL}/general/sad-kitten.webp`} 
+            <Image
+              src={`${process.env.NEXT_PUBLIC_AWS_S3_URL}/general/sad-kitten.webp`} 
+              alt=''
               className='size-36 tablet:size-40'
+              width={144} height={144}
             />
             <span className='px-1'>
               {'Oh no! We couldn\'t find summoner:'}

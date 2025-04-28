@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link';
 import { IoMenu } from 'react-icons/io5';
 import { PiListNumbers } from 'react-icons/pi';
 import { LuLayoutDashboard } from 'react-icons/lu';
@@ -7,7 +8,7 @@ import { AiOutlineAliwangwang } from 'react-icons/ai';
 import { FiUserPlus } from 'react-icons/fi';
 import { useState } from 'react';
 
-export default function NavMobile({modalStates}) {
+export default function NavMobile({setModalStateDev}) {
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -34,21 +35,22 @@ export default function NavMobile({modalStates}) {
             icon={<PiListNumbers size={24} />}
             text='Tier List'
             linkTo='/' 
+            disabled
+            setModalStateDev={setModalStateDev}
           />
           <NavbarItemMobile
             icon={<AiOutlineAliwangwang size={24} />}
             text='Champions'
-            linkTo='/' 
+            linkTo='/'
+            disabled
+            setModalStateDev={setModalStateDev} 
           />
         </ul>
         <div className='flex items-center mx-6 my-3 border-t-2 border-zinc-300/70 text-zinc-300/85'>
           <button 
             type='button' 
             className='ml-0.5 mt-2.5 p-1.5 bg-slate-900 '
-            onClick={() => {
-              modalStates.setInDevModalOpen(true);
-              modalStates.setInDevFeature('Sign In');
-            }}
+            onClick={() => setModalStateDev('Sign In')}
           >
             <FiUserPlus size={25} />
           </button>
@@ -62,20 +64,26 @@ export default function NavMobile({modalStates}) {
   )
 };
 
-function NavbarItemMobile({ icon, text, linkTo, active }) {
+function NavbarItemMobile({ icon, text, linkTo, active, disabled, setModalStateDev }) {
   return (
-    <a
+    <Link
       href={`${linkTo}`}
       className={`flex flex-1 w-full my-1.5 p-1 
         font-medium tracking-wide transition-colors
         ${active 
           ? 'hover:bg-slate-900 text-indigo-500' 
           : 'hover:bg-slate-900 text-zinc-300/85'}`}
+        onClick={(e) =>  {
+            if (disabled) {
+              e.preventDefault();
+              setModalStateDev(text);
+            }
+        }}
     >
       {icon}
       <span className='overflow-hidden whitespace-nowrap ml-3'>
         {text}
       </span>
-    </a>
+    </Link>
   )
 };

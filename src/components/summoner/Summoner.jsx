@@ -5,11 +5,10 @@ import NoSummonerData from './NoSummonerData';
 import regions from '../../metadata/regions.json';
 import * as summonerClient from '../../client/summonerClient';
 
-export default function Summoner({modalStates, region, summonerName}) {
-	const AWS_S3_URL = process.env.NEXT_PUBLIC_AWS_S3_URL;
+export default function Summoner({region, summonerName}) {
   const [gameName, tagline] = summonerName.split('-');
   const [summonerData, setSummonerData] = useState();
-  const [fetchingData, setFetchingData] = useState();
+  const [fetchingData, setFetchingData] = useState(true);
   const [matches, setMatches] = useState();
   const matchCount = 20;
 
@@ -66,8 +65,8 @@ export default function Summoner({modalStates, region, summonerName}) {
 	};
 
 	const updateSummoner = async () => {
-		setSummonerData(undefined);
 		setFetchingData(true);
+		setSummonerData(undefined);
 		const updatedSummonerData = await getRiotSummonerData();
 		await summonerClient.updateSummoner(updatedSummonerData);
 		await processSummonerData(updatedSummonerData);
@@ -77,8 +76,8 @@ export default function Summoner({modalStates, region, summonerName}) {
   useEffect(() => {
 		const riotApiRegion = regions.find(r => r.region === region).riotApiRegion;
     const fetchData = async () => {
-			setSummonerData(undefined);
 			setFetchingData(true);
+			setSummonerData(undefined);
 			let response = await summonerClient.findSummonerByRegion(riotApiRegion, summonerName);
 			if (!response) {
 				const riotSummonerData = await getRiotSummonerData();
@@ -104,48 +103,16 @@ export default function Summoner({modalStates, region, summonerName}) {
 
   return (
 		<>
-		{/*
-		<div className='flex relative 
-			overflow-y-auto overflow-x-hidden h-dvh shadow-[inset_0_0_0_2000px_rgba(0,0,0,0.25)]'
-		>
-			<div 
-				style={{'--bg-image-url': `url(${AWS_S3_URL}/general/summoners-rift.jpeg)`}}
-				className='absolute size-full z-[-1] 
-					bg-cover bg-center bg-fixed bg-[image:var(--bg-image-url)]'
-			/>
-			<div className='flex relative overflow-y-auto overflow-x-hidden'>
-				{summonerData 
-					? (<SummonerData 
-							modalStates={modalStates} 
-							summonerData={summonerData} 
-							matches={matches} 
-							updateSummoner={updateSummoner}
-						/>) 
-					: fetchingData 
-						? <SummonerSkeleton />
-						: <NoSummonerData modalStates={modalStates} searchName={gameName} tagline={tagline} />
-				}
-				{summonerData 
-					? (<SummonerData 
-							modalStates={modalStates} 
-							summonerData={summonerData} 
-							matches={matches} 
-							updateSummoner={updateSummoner}
-						/>) 
-					: <NoSummonerData modalStates={modalStates} searchName={gameName} tagline={tagline} />
-				}
-			</div>
-		</div>
-		*/}
-		{summonerData 
-					? (<SummonerData 
-							modalStates={modalStates} 
-							summonerData={summonerData} 
-							matches={matches} 
-							updateSummoner={updateSummoner}
-						/>) 
-					: <NoSummonerData modalStates={modalStates} searchName={gameName} tagline={tagline} />
-				}
+			{summonerData 
+				? (<SummonerData 
+						summonerData={summonerData} 
+						matches={matches} 
+						updateSummoner={updateSummoner}
+					/>) 
+				: fetchingData 
+					? <SummonerSkeleton />
+					: <NoSummonerData searchName={gameName} tagline={tagline} />
+			}
 		</>
 	);
 };

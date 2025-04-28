@@ -29,9 +29,6 @@ export default {
       fontSize: {
         xxs: ['10px', '12px'], 
       },
-      size: {
-        '4.5': '1.25rem'
-      },
       colors: {
         'victory-bg': '#506ca6',
         'defeat-bg': '#a0575c',

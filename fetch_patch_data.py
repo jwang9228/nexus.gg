@@ -1,25 +1,20 @@
-'''
-python script -> resides in root dir, fetches from datadragon, updates metadata files, 
-sets current version in a json/yaml (have the patch read from this instead of hard coded)
-
--> can the script upload assets to aws?
-'''
-
 import requests
 from dotenv import load_dotenv, set_key
 import traceback
 import os
 import json
 
+DDRAGON_URL = 'https://ddragon.leagueoflegends.com'
+
 def get_latest_patch():
-  response = requests.get('https://ddragon.leagueoflegends.com/api/versions.json')
+  response = requests.get(f'{DDRAGON_URL}/api/versions.json')
   # response is array of version (patch) numbers, first elem is most recent
   data = response.json()[0]
   return data
 
 def get_patch_metadata(latest_patch_num):
   metadata_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'src\\metadata')
-  data_url = 'https://ddragon.leagueoflegends.com/cdn/{0}/data/en_US/'.format(latest_patch_num)
+  data_url = f'{DDRAGON_URL}/cdn/{latest_patch_num}/data/en_US/'
 
   # championFull.json -> champion details
   champion_metadata = requests.get('{0}championFull.json'.format(data_url)).json()
@@ -49,8 +44,9 @@ def fetch_patch_data():
     current_patch_num = os.getenv('NEXT_PUBLIC_PATCH_VERSION')
     # update .env NEXT_PUBLIC_PATCH_VERSION if it needs to be updated, fetch updated metadata
     if current_patch_num < latest_patch_num:
-      set_key('.env', 'NEXT_PUBLIC_PATCH_VERSION', latest_patch_num)
       get_patch_metadata(latest_patch_num)
+      set_key('.env', 'NEXT_PUBLIC_PATCH_VERSION', latest_patch_num)
+      set_key('.env', 'NEXT_PUBLIC_DDRAGON_URL', f'{DDRAGON_URL}/cdn/{latest_patch_num}')
 
   except Exception as e:
     traceback.print_exc()

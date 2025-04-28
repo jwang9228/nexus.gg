@@ -7,7 +7,7 @@ export default function Layout({ children }) {
   return (
     <html lang='en'>
       <head>
-        <link rel="icon" type="image/webp" href={`${process.env.NEXT_PUBLIC_AWS_S3_URL}/general/pengu.webp`} />
+        <link rel="icon" type="image/webp" href={`${process.env.NEXT_PUBLIC_AWS_S3_URL}/general/piercing-arrow.png`} />
         <title>Nexus</title>
       </head>
       <body>

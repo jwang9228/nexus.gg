@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 export default function TooltipContent({mainContent, tooltipContent}) {
   const [tooltipActive, setTooltipActive] = useState(false);
+  
   return (
     <div 
       tabIndex={0}  

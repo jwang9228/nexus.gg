@@ -3,19 +3,17 @@
 import { useState, useEffect } from 'react'; 
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { MdHistory } from 'react-icons/md';
 import NavTop from '../navbar/NavTop';
-import NavMobile from '../navbar/NavMobile';
 import regions from '../../metadata/regions.json'
 import champions from '../../metadata/champion.json';
 import backgrounds from '../../metadata/backgrounds.json';
 import * as userClient from '../../client/userClient';
 import * as summonerClient from '../../client/summonerClient';
 
-export default function HomePage({modalStates}) {
-  const AWS_S3_URL = process.env.NEXT_PUBLIC_AWS_S3_URL;
-  const DDRAGON_URL = `https://ddragon.leagueoflegends.com/cdn/${process.env.NEXT_PUBLIC_PATCH_VERSION}`;
+export default function HomePage() {
   const [selectedRegion, setSelectedRegion] = useState(regions[0]);
   const [showRegions, setShowRegions] = useState(false);
   const [summonerSearch, setSummonerSearch] = useState('');
@@ -90,15 +88,14 @@ export default function HomePage({modalStates}) {
       {backgrounds.map(background => (
         <div 
           key={background.index}
-          style={{'--bg-image-url': `url(${AWS_S3_URL}/regions/images/${background.background}.jpeg)`}}
+          style={{'--bg-image-url': `url(${process.env.NEXT_PUBLIC_AWS_S3_URL}/regions/images/${background.background}.jpeg)`}}
           className={`absolute size-full z-[-1] 
             bg-cover bg-center bg-fixed bg-[image:var(--bg-image-url)]
             ${background.index === activeBackground.index ? 'opacity-100' : 'opacity-0'} 
             transition-opacity duration-1000 ease-out`}
         />
       ))}
-      <div className='laptop:hidden'><NavMobile modalStates={modalStates}/></div>
-      <div className='ml-auto h-1/6'><NavTop modalStates={modalStates}/></div>
+      <div className='ml-auto h-1/6'><NavTop /></div>
       <div className='flex flex-col items-center h-5/6'>
         <div className={`mt-24 mb-3 font-[Raleway] font-bold tracking-[0.5em]
           ${activeBackground.colors === 'dark' ? 'text-slate-950' : 'text-slate-900'} 
@@ -178,9 +175,11 @@ export default function HomePage({modalStates}) {
                   className='flex items-center px-3 py-1.5 text-zinc-300/95'
                 >
                   <AiOutlineSearch className='size-5 mr-3' />
-                  <img 
-                    src={`${DDRAGON_URL}/img/champion/${champion.image.full}`}
+                  <Image 
+                    src={`${process.env.NEXT_PUBLIC_DDRAGON_URL}/img/champion/${champion.image.full}`}
+                    alt=''
                     className='size-5 rounded-sm mr-2'
+                    width={20} height={20} priority
                   />
                   {`${champion.name.substring(0, summonerSearch.length).replace(' ', '\u00A0')}`}
                   <span className='font-semibold'>
@@ -201,9 +200,11 @@ export default function HomePage({modalStates}) {
                   className='flex items-center py-1.5 px-3 text-zinc-300/95'
                 >
                   <MdHistory className='size-5 mr-3'/>
-                  <img 
-                    src={`${DDRAGON_URL}/img/profileicon/${search.profileIconId}.png`}
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_DDRAGON_URL}/img/profileicon/${search.profileIconId}.png`}
+                    alt=''
                     className='size-5 rounded-sm mr-2'
+                    width={20} height={20} priority
                   />
                   {summonerSearch.length === 0 
                     ? <div className='truncate'>

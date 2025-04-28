@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link';
+import Image from 'next/image';
 import { useParams, redirect } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
@@ -9,7 +11,6 @@ import champions from '../../metadata/champion.json';
 import * as summonerClient from '../../client/summonerClient';
 
 export default function TopSearch() {
-  const DDRAGON_URL = `https://ddragon.leagueoflegends.com/cdn/${process.env.NEXT_PUBLIC_PATCH_VERSION}`;
   const { region } = useParams();
   const [showRegions, setShowRegions] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState(regions.find(r => r.region === region));
@@ -136,21 +137,23 @@ export default function TopSearch() {
               className='border-x-1.5 border-slate-950 last:rounded-b last:border-b-1.5 
                 bg-slate-800 hover:bg-slate-900'
             >
-              <a 
+              <Link
                 href={`/champions/${selectedRegion.region}/${champion.id}`} 
                 onMouseDown={(e) => e.preventDefault()}
                 className='flex items-center px-2 py-1.5 text-sm text-zinc-300/95'
               >
                 <AiOutlineSearch className='size-5 mr-3'/>
-                <img 
-                  src={`${DDRAGON_URL}/img/champion/${champion.image.full}`}
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_DDRAGON_URL}/img/champion/${champion.image.full}`}
+                  alt=''
                   className='size-5 rounded-sm mr-2'
+                  width={20} height={20} priority
                 />
                 {`${champion.name.substring(0, summonerSearch.length).replace(' ', '\u00A0')}`}
                 <span className='font-semibold'>
                   {`${champion.name.substring(summonerSearch.length).replace(' ', '\u00A0')}`}
                 </span>
-              </a>
+              </Link>
             </li>
           ))}
           {filterRecentSearches().map(search => (
@@ -158,16 +161,17 @@ export default function TopSearch() {
               key={`${search.name}${search.tagline}`}
               className='bg-slate-800 hover:bg-slate-900 border-x-1.5 border-slate-950 last:rounded-b last:border-b-1.5'
             >
-              <a 
+              <Link
                 href={`/summoners/${search.region}/${search.name}-${search.tagline}`} 
                 className='flex items-center py-1.5 px-2 text-sm text-zinc-300/95'
                 onMouseDown={e => e.preventDefault()}
               >
-
                   <MdHistory className='size-5 mr-3'/>
-                  <img 
-                    src={`${DDRAGON_URL}/img/profileicon/${search.profileIconId}.png`}
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_DDRAGON_URL}/img/profileicon/${search.profileIconId}.png`}
+                    alt=''
                     className='size-5 rounded-sm mr-2'
+                    width={20} height={20} priority
                   />
                   {summonerSearch.length === 0 ? (
                     <div className='truncate w-40 tablet:w-full'>
@@ -188,7 +192,7 @@ export default function TopSearch() {
                 >
                   {regions.find(region => region.region === search.region).name}
                 </span>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

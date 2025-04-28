@@ -2,9 +2,6 @@ import runes from '../../../metadata/runes.json';
 import statmods from '../../../metadata/statmods.json';
 
 export default function Build({primaryTreeId, primaryRunes, secondaryTreeId, secondaryRunes, statRunes}) {
-  const AWS_S3_URL = process.env.NEXT_PUBLIC_AWS_S3_URL;
-  console.log(statRunes)
-
   /**
    * Gets the tree object defined in runes.json given a tree ID
    * @param treeID tree ID 
@@ -81,9 +78,11 @@ export default function Build({primaryTreeId, primaryRunes, secondaryTreeId, sec
     <div className='flex border-t-1.5 border-slate-900 bg-slate-800'>
       <div className='flex flex-col w-1/2 px-2 pb-2'>
         <div className='flex items-center rounded m-2 py-0.5 bg-slate-900'>
-          <img 
-            src={`${AWS_S3_URL}/${myBuildStats.primaryTreeIcon}`}
+          <Image
+            src={`https://ddragon.leagueoflegends.com/cdn/img/${myBuildStats.primaryTreeIcon}`}
+            alt=''
             className='ml-2 size-4'
+            width={16} height={16}
           />
           <div className='ml-2 text-sm text-zinc-300'>
             {myBuildStats.primaryTreeName}
@@ -91,11 +90,13 @@ export default function Build({primaryTreeId, primaryRunes, secondaryTreeId, sec
         </div>
         <div className='flex justify-center gap-x-3'>
           {myBuildStats.primaryTreeKeystones.map(keystone => (
-            <img 
-              src={`${AWS_S3_URL}/${keystone.icon}`} 
+            <Image 
+              src={`https://ddragon.leagueoflegends.com/cdn/img/${keystone.icon}`} 
+              alt=''
               className={`size-10
                 ${!primaryRunes.includes(keystone.id) && 'grayscale'}`
               }
+              width={40} height={40}
             />
           ))}
         </div>
@@ -104,11 +105,13 @@ export default function Build({primaryTreeId, primaryRunes, secondaryTreeId, sec
           {myBuildStats.primaryTreeRunes.map(runeSet => (
             <div className='flex justify-center gap-x-5'>
               {runeSet.runes.map(rune => (
-                <img 
-                  src={`${AWS_S3_URL}/${rune.icon}`} 
+                <Image
+                  src={`https://ddragon.leagueoflegends.com/cdn/img/${rune.icon}`} 
+                  alt=''
                   className={`size-7 
                     ${!primaryRunes.includes(rune.id) && 'grayscale'}`
                   }
+                  width={28} height={28}
                 />
               ))}
             </div>
@@ -117,9 +120,11 @@ export default function Build({primaryTreeId, primaryRunes, secondaryTreeId, sec
       </div>
       <div className='flex flex-col w-1/2 gap-y-2 px-2 pb-2'>
         <div className='flex items-center rounded mx-2 mt-2 mb-1 py-0.5 bg-slate-900'>
-          <img 
-            src={`${AWS_S3_URL}/${myBuildStats.secondaryTreeIcon}`}
+          <Image
+            src={`https://ddragon.leagueoflegends.com/cdn/img/${myBuildStats.secondaryTreeIcon}`}
+            alt=''
             className='ml-2 size-4'
+            width={16} height={16}
           />
           <div className='ml-2 text-sm text-zinc-300'>
             {myBuildStats.secondaryTreeName}
@@ -129,11 +134,13 @@ export default function Build({primaryTreeId, primaryRunes, secondaryTreeId, sec
           {myBuildStats.secondaryTreeRunes.map(runeSet => (
             <div className='flex justify-center gap-x-8'>
               {runeSet.runes.map(rune => (
-                <img 
-                  src={`${AWS_S3_URL}/${rune.icon}`} 
+                <Image
+                  src={`https://ddragon.leagueoflegends.com/cdn/img/${rune.icon}`} 
+                  alt=''
                   className={`size-5 
                     ${!secondaryRunes.includes(rune.id) && 'grayscale'}`
                   }
+                  width={20} height={20}
                 />
               ))}
             </div>
@@ -145,11 +152,13 @@ export default function Build({primaryTreeId, primaryRunes, secondaryTreeId, sec
             <div className='flex justify-center gap-x-8'> 
               {statmodRow.map(statmod => (
                 <div className='rounded-full size-5 bg-slate-900'>
-                  <img 
-                    src={`${AWS_S3_URL}/${statmod.icon}`} 
+                  <Image
+                    src={`https://ddragon.leagueoflegends.com/cdn/img/${statmod.icon}`} 
+                    alt=''
                     className={`size-5
                       ${!statmod.active && 'grayscale'}`
                     }
+                    width={20} height={20}
                   />
                 </div>
               ))}

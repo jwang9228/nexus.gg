@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import Image from 'next/image';
 import { PiSwordDuotone, PiCoinsDuotone } from 'react-icons/pi';
 import TooltipContent from '../../utils/TooltipContent';
 
@@ -8,9 +10,6 @@ export default function AdvancedMatch({
   isMyTeam, region, 
   summonerSpellsData
 }) {
-  const DDRAGON_URL = 'https://ddragon.leagueoflegends.com/cdn';
-  const DDRAGON_URL_PATCH = `${DDRAGON_URL}/${process.env.NEXT_PUBLIC_PATCH_VERSION}`;
-  const AWS_S3_URL = process.env.NEXT_PUBLIC_AWS_S3_URL;
   const objectives = overallTeamStats.objectives;
 
   const formatGoldEarned = (goldEarned) => {
@@ -55,15 +54,17 @@ export default function AdvancedMatch({
           </div>
         </div>
       </div>
-      {teamStats.map((player) => (
-        <div className={`flex px-1 
+      {teamStats.map(player => (
+        <div key={player.name} className={`flex px-1 
           ${isMyTeam && player.name === myPlayerStats.name && getMyBackgroundColor()}`}
         >
           <div className='relative size-9 tablet:size-11'>
-            <a href={`/champions/${region}/${player.champion}`}>
-              <img 
-                src={`${DDRAGON_URL_PATCH}/img/champion/${player.champion}.png`} 
+            <Link href={`/champions/${region}/${player.champion}`}>
+              <Image
+                src={`${process.env.NEXT_PUBLIC_DDRAGON_URL}/img/champion/${player.champion}.png`} 
+                alt=''
                 className='relative [clip-path:circle(45%)]'
+                fill
               />
               <span className='flex absolute bottom-0 left-0 items-center justify-center 
                 size-[0.8rem] tablet:size-4 p-1 ml-0.5 mb-0.5
@@ -71,38 +72,43 @@ export default function AdvancedMatch({
               >
                 {player.level}
               </span>
-            </a>
+            </Link>
           </div>
           <div className='flex flex-col ml-0.5 mt-0.5 gap-y-0.5'>
             <div className='flex gap-x-0.5'>
               {player.summonerSpells.map(spell => (
-                <img 
-                  src={`${AWS_S3_URL}/summoner-spells/${(summonerSpellsData[spell].name).toLowerCase()}.png`} 
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_AWS_S3_URL}/summoner-spells/${(summonerSpellsData[spell].name).toLowerCase()}.png`} 
+                  alt=''
                   className='rounded-sm size-4 tablet:size-5' 
+                  width={16} height={16}
                 />
               ))}
             </div>
             <div className='flex gap-x-1'>
-              <img 
-                src={`${DDRAGON_URL}/img/${player.primaryRuneIcon}`} 
+              <Image 
+                src={`https://ddragon.leagueoflegends.com/cdn/img/${player.primaryRuneIcon}`} 
+                alt=''
                 className='size-4 tablet:size-5' 
+                width={16} height={16}
               />
               <div className='flex items-center justify-center mt-0.5 size-fit'>
-                {console.log(player.secondaryTreeIcon)}
-                <img 
-                  src={`${DDRAGON_URL}/img/${player.secondaryTreeIcon}`} 
+                <Image
+                  src={`https://ddragon.leagueoflegends.com/cdn/img/${player.secondaryTreeIcon}`} 
+                  alt=''
                   className='tablet:w-4 h-3 tablet:h-3.5' 
+                  width={16} height={16}
                 />
               </div>
             </div>
           </div>
           <div className='flex flex-col ml-1 tablet:ml-2'> 
-            <a 
+            <Link
               href={`/summoners/${region}/${player.name}-${player.tagline}`}
               className='w-20 tablet:w-32 laptop:w-40 font-medium text-xs tablet:text-sm truncate'
             >
               {player.name}
-            </a>
+            </Link>
             <div className='flex tablet:hidden items-center mt-1 gap-x-0.5 text-xxs text-slate-900'>
               {player.kills}<span>/</span>{player.deaths}<span>/</span>{player.assists}
               <span className={`ml-auto font-medium ${player.kdaColor}`}>{`${player.kda}:1`}</span>
@@ -154,9 +160,11 @@ export default function AdvancedMatch({
             <div className='flex gap-x-0.5'>
               {player.items.map(item => (
                 (item !== 0)
-                ? <img 
-                    src={`${DDRAGON_URL_PATCH}/img/item/${item}.png`} 
+                ? <Image
+                    src={`${process.env.NEXT_PUBLIC_DDRAGON_URL}/img/item/${item}.png`} 
+                    alt=''
                     className='rounded-sm size-4 tablet:size-7'
+                    width={16} height={16}
                   />
                 : <div className={`rounded-sm size-4 tablet:size-7
                     ${player.itemBackgroundColor}`} 

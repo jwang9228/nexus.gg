@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 import { 
   GiTripleScratches, 
@@ -18,9 +20,6 @@ import summonerSpells from '../../../metadata/summoners.json';
 import runes from '../../../metadata/runes.json';
 
 function Match({matchData, summonerName, region}) {
-  const DDRAGON_URL = 'https://ddragon.leagueoflegends.com/cdn'
-  const DDRAGON_URL_PATCH = `${DDRAGON_URL}/${process.env.NEXT_PUBLIC_PATCH_VERSION}`;
-  const AWS_S3_URL = process.env.NEXT_PUBLIC_AWS_S3_URL;
   const metadata = matchData.metadata;
 	const matchInfo = matchData.info;
 
@@ -548,10 +547,12 @@ function Match({matchData, summonerName, region}) {
           <div className='flex tablet:flex-col grow tablet:grow-0 laptop:ml-5'>
             <div className='flex gap-x-2'>
               <div className='relative size-12 tablet:size-14 my-0.5 laptop:my-0'>
-                <a href={`/champions/${region}/${myPlayer.champion}`}>
-                  <img 
-                    src={`${DDRAGON_URL_PATCH}/img/champion/${myPlayer.champion}.png`}
+                <Link href={`/champions/${region}/${myPlayer.champion}`}>
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_DDRAGON_URL}/img/champion/${myPlayer.champion}.png`}
+                    alt=''
                     className='relative [clip-path:circle(45%)]'
+                    fill
                   />
                   <span className='flex absolute bottom-0 right-0 
                     items-center justify-center size-4 p-2 mr-0.5 mb-0.5 rounded-full
@@ -559,26 +560,33 @@ function Match({matchData, summonerName, region}) {
                   >
                     {myPlayer.level}
                   </span>
-                </a>
+                </Link>
               </div>
               <div className='flex flex-col mt-1 gap-y-1'>
                 <div className='flex gap-x-1.5'>
                   {myPlayerStats.summonerSpells.map(spell => (
-                    <img 
-                      src={`${AWS_S3_URL}/summoner-spells/${(summonerSpellsData[spell].name).toLowerCase()}.png`} 
+                    <Image 
+                      key={summonerSpellsData[spell].name}
+                      src={`${process.env.NEXT_PUBLIC_AWS_S3_URL}/summoner-spells/${(summonerSpellsData[spell].name).toLowerCase()}.png`} 
+                      alt=''
                       className='rounded size-5 tablet:size-6' 
+                      width={20} height={20}
                     />
                   ))}
                 </div>
                 <div className='flex gap-x-1.5'>
-                  <img 
-                    src={`${DDRAGON_URL}/img/${myPlayerStats.primaryRuneIcon}`} 
+                  <Image
+                    src={`https://ddragon.leagueoflegends.com/cdn/img/${myPlayerStats.primaryRuneIcon}`} 
+                    alt=''
                     className='size-5 tablet:size-6' 
+                    width={20} height={20}
                   />
                   <div className='flex items-center justify-center size-5 tablet:size-6'>
-                    <img 
-                      src={`${DDRAGON_URL}/img/${myPlayerStats.secondaryTreeIcon}`} 
+                    <Image
+                      src={`https://ddragon.leagueoflegends.com/cdn/img/${myPlayerStats.secondaryTreeIcon}`} 
+                      alt=''
                       className='tablet:w-5 h-4 tablet:h-[1.13rem]' 
+                      width={20} height={16}
                     />
                   </div>
                 </div>
@@ -588,11 +596,14 @@ function Match({matchData, summonerName, region}) {
               ml-auto tablet:ml-0 tablet:mt-auto'
             >
               <div className='flex mb-1.5 tablet:mb-0.5 laptop:mb-1 gap-x-1'>
-                {myPlayer.items.map((item) => (
+                {myPlayer.items.map((item, i) => (
                   (item !== 0)
-                  ? <img 
-                    src={`${DDRAGON_URL_PATCH}/img/item/${item}.png`} 
-                    className='rounded size-5 tablet:size-6 laptop:size-7'
+                  ? <Image 
+                      key={i}
+                      src={`${process.env.NEXT_PUBLIC_DDRAGON_URL}/img/item/${item}.png`} 
+                      alt=''
+                      className='rounded size-5 tablet:size-6 laptop:size-7'
+                      width={20} height={20}
                   />
                   : <div className={`rounded size-5 tablet:size-6 laptop:size-7 
                       ${myPlayerStats.itemBackgroundColor}`} 
@@ -639,25 +650,27 @@ function Match({matchData, summonerName, region}) {
             </div>
           </div>
           <div className='hidden tablet:flex ml-auto gap-x-4'>
-            {Object.values(teamData).map(team => (
-              <span className='flex flex-col gap-y-0.5'>
+            {Object.values(teamData).map((team, i) => (
+              <span key={i} className='flex flex-col gap-y-0.5'>
                 {orderTeamByRole(team).map(player => (
                   <div
                     key={player.name}
                     className='flex gap-x-1'
                   >
-                    <img
-                      src={`${DDRAGON_URL_PATCH}/img/champion/${player.champion}.png`}
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_DDRAGON_URL}/img/champion/${player.champion}.png`}
+                      alt=''
                       className='rounded-sm size-[1.13rem]'
+                      width={18} height={18}
                     />
-                    <a 
+                    <Link
                       href={`/summoners/${region}/${player.name}-${player.tagline}`}
                       className={`w-20 truncate hover:underline 
                       text-start text-xs font-[Raleway] 
                       ${myPlayer.name === player.name ? 'font-semibold' : 'font-medium'}`}
                     >
                       {player.name}
-                    </a>
+                    </Link>
                   </div>
                 ))}
               </span>
