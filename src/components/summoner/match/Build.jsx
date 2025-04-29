@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import runes from '../../../metadata/runes.json';
 import statmods from '../../../metadata/statmods.json';
 

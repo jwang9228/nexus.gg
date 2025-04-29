@@ -12,7 +12,6 @@ import {
 } from 'react-icons/gi';
 import { HiChevronDoubleUp } from 'react-icons/hi';
 import { PiDiamondsFour } from 'react-icons/pi';
-import TooltipContent from '../../utils/TooltipContent';
 import AdvancedMatch from './AdvancedMatch';
 import Build from './Build';
 import gameModes from '../../../metadata/gamemodes.json';
@@ -605,7 +604,7 @@ function Match({matchData, summonerName, region}) {
                       className='rounded size-5 tablet:size-6 laptop:size-7'
                       width={20} height={20}
                   />
-                  : <div className={`rounded size-5 tablet:size-6 laptop:size-7 
+                  : <div key={i} className={`rounded size-5 tablet:size-6 laptop:size-7 
                       ${myPlayerStats.itemBackgroundColor}`} 
                     />
                 ))}
