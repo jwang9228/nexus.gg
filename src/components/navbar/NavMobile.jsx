@@ -1,5 +1,3 @@
-'use client'
-
 import Link from 'next/link';
 import { IoMenu } from 'react-icons/io5';
 import { PiListNumbers } from 'react-icons/pi';

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { IoLanguageSharp } from 'react-icons/io5';
 import { AiOutlineMail } from 'react-icons/ai';
+import Languages from './Languages';
 
 export default function NavTop() {
   const patchVersion = '25.08';
@@ -40,12 +40,7 @@ export default function NavTop() {
           <AiOutlineMail className='size-[1.13rem] tablet:size-5'/>
         </a>
       </button>
-      <button 
-        type='button' 
-        className='p-2 rounded-full bg-slate-900 text-zinc-300/90'
-      >
-        <IoLanguageSharp className='size-[1.13rem] tablet:size-5'/>
-      </button>
+      <Languages />
     </div>
   )
 };
