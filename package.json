@@ -7,8 +7,6 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "sync": "aws s3 sync ./dist s3://nexus-react-app/",
-    "invalidate": "aws cloudfront create-invalidation --distribution-id E3CG3Z364G9I35 --paths /*",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
