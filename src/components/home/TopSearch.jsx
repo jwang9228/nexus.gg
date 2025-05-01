@@ -86,7 +86,7 @@ export default function TopSearch() {
             }}
             onBlur={() => setSearchbarActive(false)}
             className={`w-full py-[0.35rem] laptop:py-1.5 pl-14 pr-10 
-              rounded border-1.5 border-slate-950 focus:outline-none
+              rounded border-1.5 border-slate-950 focus:outline-hidden
               ${(showRegions || (searchbarActive 
                 && (summonerSearch.length > 0 || recentSearches.length > 0))) 
                 && 'rounded-b-none'
@@ -144,7 +144,7 @@ export default function TopSearch() {
                 <Image
                   src={`${process.env.NEXT_PUBLIC_DDRAGON_URL}/img/champion/${champion.image.full}`}
                   alt=''
-                  className='size-5 rounded-sm mr-2'
+                  className='size-5 rounded-xs mr-2'
                   width={20} height={20} priority
                 />
                 {`${champion.name.substring(0, summonerSearch.length).replace(' ', '\u00A0')}`}
@@ -168,7 +168,7 @@ export default function TopSearch() {
                   <Image
                     src={`${process.env.NEXT_PUBLIC_DDRAGON_URL}/img/profileicon/${search.profileIconId}.png`}
                     alt=''
-                    className='size-5 rounded-sm mr-2'
+                    className='size-5 rounded-xs mr-2'
                     width={20} height={20} priority
                   />
                   {summonerSearch.length === 0 ? (

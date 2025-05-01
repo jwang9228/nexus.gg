@@ -90,7 +90,7 @@ export default function HomePage() {
           key={background.index}
           style={{'--bg-image-url': `url(${process.env.NEXT_PUBLIC_AWS_S3_URL}/regions/images/${background.background}.jpeg)`}}
           className={`absolute size-full z-[-1] 
-            bg-cover bg-center bg-fixed bg-[image:var(--bg-image-url)]
+            bg-cover bg-center bg-fixed bg-(image:--bg-image-url)
             ${background.index === activeBackground.index ? 'opacity-100' : 'opacity-0'} 
             transition-opacity duration-1000 ease-out`}
         />
@@ -129,7 +129,7 @@ export default function HomePage() {
                 if (showRegions) setShowRegions(false);
               }}
               onBlur={() => setSearchbarActive(false)}
-              className='w-full py-3 pl-20 pr-12 rounded-md focus:outline-none 
+              className='w-full py-3 pl-20 pr-12 rounded-md focus:outline-hidden 
                 bg-slate-900 text-slate-200 text-xl truncate'
             />
             <button 
@@ -178,7 +178,7 @@ export default function HomePage() {
                   <Image 
                     src={`${process.env.NEXT_PUBLIC_DDRAGON_URL}/img/champion/${champion.image.full}`}
                     alt=''
-                    className='size-5 rounded-sm mr-2'
+                    className='size-5 rounded-xs mr-2'
                     width={20} height={20} priority
                   />
                   {`${champion.name.substring(0, summonerSearch.length).replace(' ', '\u00A0')}`}
@@ -203,7 +203,7 @@ export default function HomePage() {
                   <Image
                     src={`${process.env.NEXT_PUBLIC_DDRAGON_URL}/img/profileicon/${search.profileIconId}.png`}
                     alt=''
-                    className='size-5 rounded-sm mr-2'
+                    className='size-5 rounded-xs mr-2'
                     width={20} height={20} priority
                   />
                   {summonerSearch.length === 0 

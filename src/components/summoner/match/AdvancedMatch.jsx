@@ -80,7 +80,7 @@ export default function AdvancedMatch({
                 <Image
                   src={`${process.env.NEXT_PUBLIC_AWS_S3_URL}/summoner-spells/${(summonerSpellsData[spell].name).toLowerCase()}.png`} 
                   alt=''
-                  className='rounded-sm size-4 tablet:size-5' 
+                  className='rounded-xs size-4 tablet:size-5' 
                   width={16} height={16}
                 />
               ))}
@@ -163,7 +163,7 @@ export default function AdvancedMatch({
                 ? <Image
                     src={`${process.env.NEXT_PUBLIC_DDRAGON_URL}/img/item/${item}.png`} 
                     alt=''
-                    className='rounded-sm size-4 tablet:size-7'
+                    className='rounded-xs size-4 tablet:size-7'
                     width={16} height={16}
                   />
                 : <div className={`rounded-sm size-4 tablet:size-7

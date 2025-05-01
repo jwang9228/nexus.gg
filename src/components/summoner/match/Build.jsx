@@ -78,7 +78,7 @@ export default function Build({primaryTreeId, primaryRunes, secondaryTreeId, sec
   return (
     <div className='flex border-t-1.5 border-slate-900 bg-slate-800'>
       <div className='flex flex-col w-1/2 px-2 pb-2'>
-        <div className='flex items-center rounded m-2 py-0.5 bg-slate-900'>
+        <div className='flex items-center rounded-sm m-2 py-0.5 bg-slate-900'>
           <Image
             src={`https://ddragon.leagueoflegends.com/cdn/img/${myBuildStats.primaryTreeIcon}`}
             alt=''
@@ -120,7 +120,7 @@ export default function Build({primaryTreeId, primaryRunes, secondaryTreeId, sec
         </div>
       </div>
       <div className='flex flex-col w-1/2 gap-y-2 px-2 pb-2'>
-        <div className='flex items-center rounded mx-2 mt-2 mb-1 py-0.5 bg-slate-900'>
+        <div className='flex items-center rounded-sm mx-2 mt-2 mb-1 py-0.5 bg-slate-900'>
           <Image
             src={`https://ddragon.leagueoflegends.com/cdn/img/${myBuildStats.secondaryTreeIcon}`}
             alt=''

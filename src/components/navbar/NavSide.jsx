@@ -30,7 +30,7 @@ export default function NavSide({setModalStateDev}) {
           <span className={`overflow-hidden whitespace-nowrap transition-all
             ${expanded ? 'w-40 ml-2' : 'w-0'}`}
           >
-            <div className='bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-400 
+            <div className='bg-linear-to-r from-indigo-600 via-indigo-500 to-indigo-400 
               inline-block bg-clip-text text-transparent  tracking-widest'
             >
               {'NEXUS'}

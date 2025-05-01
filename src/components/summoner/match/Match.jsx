@@ -508,7 +508,7 @@ function Match({matchData, summonerName, region}) {
     enemyTeamStats.push(getPlayerMatchStats(player, enemyTeamOverallStats.kills)));
 
   return (
-    <div className={`rounded border-1.5 border-slate-950`}>
+    <div className={`rounded-sm border-1.5 border-slate-950`}>
       <div
         key={metadata.id}
         onClick={() => setShowFullDetails(!showFullDetails)}
@@ -568,7 +568,7 @@ function Match({matchData, summonerName, region}) {
                       key={summonerSpellsData[spell].name}
                       src={`${process.env.NEXT_PUBLIC_AWS_S3_URL}/summoner-spells/${(summonerSpellsData[spell].name).toLowerCase()}.png`} 
                       alt=''
-                      className='rounded size-5 tablet:size-6' 
+                      className='rounded-sm size-5 tablet:size-6' 
                       width={20} height={20}
                     />
                   ))}
@@ -601,7 +601,7 @@ function Match({matchData, summonerName, region}) {
                       key={i}
                       src={`${process.env.NEXT_PUBLIC_DDRAGON_URL}/img/item/${item}.png`} 
                       alt=''
-                      className='rounded size-5 tablet:size-6 laptop:size-7'
+                      className='rounded-sm size-5 tablet:size-6 laptop:size-7'
                       width={20} height={20}
                   />
                   : <div key={i} className={`rounded size-5 tablet:size-6 laptop:size-7 
@@ -659,7 +659,7 @@ function Match({matchData, summonerName, region}) {
                     <Image
                       src={`${process.env.NEXT_PUBLIC_DDRAGON_URL}/img/champion/${player.champion}.png`}
                       alt=''
-                      className='rounded-sm size-[1.13rem]'
+                      className='rounded-xs size-[1.13rem]'
                       width={18} height={18}
                     />
                     <Link
@@ -685,14 +685,14 @@ function Match({matchData, summonerName, region}) {
             <button 
               type='button' 
               onClick={() => setShowOverview(true)}
-              className={`px-3 py-0.5 rounded ${showOverview && 'bg-slate-700'}`}
+              className={`px-3 py-0.5 rounded-sm ${showOverview && 'bg-slate-700'} cursor-pointer`}
             >
               {'Overview'}
             </button>
             <button 
               type='button' 
               onClick={() => setShowOverview(false)}
-              className={`px-3 py-0.5 rounded ${!showOverview && 'bg-slate-700'}`}
+              className={`px-3 py-0.5 rounded-sm ${!showOverview && 'bg-slate-700'} cursor-pointer`}
             >
               {'Build'}
             </button>

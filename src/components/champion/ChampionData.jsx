@@ -26,7 +26,7 @@ export default function ChampionData({championName}) {
               <Image
                 src={`${process.env.NEXT_PUBLIC_DDRAGON_URL}/img/passive/${champion.passive.image.full}`}
                 alt=''
-                className='rounded size-8 tablet:size-9 laptop:size-10 border-2 border-black'
+                className='rounded-sm size-8 tablet:size-9 laptop:size-10 border-2 border-black'
                 width={32} height={32}
               />
               {['Q', 'W', 'E', 'R'].map((spellKey, i) => (
@@ -34,7 +34,7 @@ export default function ChampionData({championName}) {
                   <Image 
                     src={`${process.env.NEXT_PUBLIC_DDRAGON_URL}/img/spell/${champion.spells[i].image.full}`}
                     alt=''
-                    className='rounded size-8 tablet:size-9 laptop:size-10 border-2 border-black'
+                    className='rounded-sm size-8 tablet:size-9 laptop:size-10 border-2 border-black'
                     width={32} height={32}
                   />
                   <div className='absolute bottom-0 right-0 px-0.5 rounded
