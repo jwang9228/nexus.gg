@@ -1,9 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: {
+    files: ['./src/**/*.{js,ts,jsx,tsx}'],
+    sources: [
+      {
+        files: ['./src/**/*.{js,ts,jsx,tsx}'],
+        negated: false, 
+      }
+    ],
+  },
   theme: {
     borderWidth: {
       DEFAULT: '1px',
